@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+@import "tailwindcss";
+
+/* Base layer styles - applied before utilities so they can be overridden */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'VT323', monospace;
+    overflow: hidden;
+  }
+
+  #root {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+/* Utility for hiding scrollbars */
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Phantom fly-by event animations */
+@keyframes phantomFlyLeft {
+  0% {
+    left: -120px;
+  }
+  100% {
+    left: 100vw;
+  }
+}
+
+@keyframes phantomFlyRight {
+  0% {
+    left: 100vw;
+  }
+  100% {
+    left: -120px;
+  }
+}
