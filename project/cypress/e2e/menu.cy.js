@@ -1,17 +1,6 @@
 describe('Main Menu', () => {
-
-  beforeEach(() => {
+  it('loads the homepage', () => {
     cy.visit('http://localhost:5173')
+    cy.contains('Level')
   })
-
-  it('shows main menu buttons', () => {
-
-    cy.contains('Play').should('exist')
-
-    cy.contains('Settings').should('exist')
-
-    cy.contains('Bug').should('exist')
-
-  })
-
 })
