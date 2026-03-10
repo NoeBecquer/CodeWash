@@ -21,7 +21,7 @@ import { getRandomMob, getRandomFriendlyMob, getRandomMiniboss, getRandomBoss, g
 import { getRandomAura } from './utils/mobDisplayUtils';
 import { 
     BASE_ASSETS, THEME_CONFIG, SKILL_DATA, 
-    HOMOPHONES, DIFFICULTY_CONTENT, HOSTILE_MOBS, BOSS_MOBS, MINIBOSS_MOBS
+    HOMOPHONES, HOSTILE_MOBS
 } from './constants/gameData';
 import { 
     getBGMManager, setSfxVolume, 
