@@ -1,0 +1,125 @@
+@startuml after
+title CodeWash - Architecture After Refactor (Real Structure)
+
+top to bottom direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam ArrowColor #444444
+skinparam defaultFontName Arial
+
+skinparam package {
+  BorderColor #444444
+}
+
+skinparam component {
+  BorderColor #333333
+  BackgroundColor #FFFFFF
+}
+
+' ======================
+' ENTRY
+' ======================
+
+package "Entry" #D6EAF8 {
+  component "index.html" as index_html
+  component "main.jsx" as main_jsx
+  component "App.jsx" as app_jsx
+}
+
+' ======================
+' PRESENTATION LAYER
+' ======================
+
+package "components/" #EBF5FB {
+  package "drawers/" {
+    component MenuDrawer
+    component SettingsDrawer
+    component CosmeticsDrawer
+  }
+
+  package "modals/" {
+    component BugReportModal
+    component ResetModal
+  }
+
+  package "profile/" {
+    component ProfileCard
+  }
+
+  package "skills/" {
+    component SkillCard
+  }
+
+  package "ui/" {
+    component AchievementToast
+    component MobWithAura
+    component ParentVerificationModal
+    component PixelHeart
+    component SafeImage
+    component PhantomEvent
+  }
+}
+
+' ======================
+' APPLICATION LAYER (NEW)
+' ======================
+
+package "services/" #D5F5E3 {
+  component GameService
+  component ThemeService
+  component BugReportService
+  component AchievementService
+}
+
+' ======================
+' SHARED
+' ======================
+
+package "constants/" #FCF3CF {
+  component Constants
+}
+
+package "utils/" #FCF3CF {
+  component Utilities
+}
+
+' ======================
+' INFRASTRUCTURE
+' ======================
+
+package "infrastructure/" #FADBD8 {
+  component StorageAdapter
+  component ElectronAdapter
+  component AssetLoader
+}
+
+' ======================
+' DEPENDENCIES
+' ======================
+
+index_html --> main_jsx
+main_jsx --> app_jsx
+
+app_jsx --> MenuDrawer
+app_jsx --> SettingsDrawer
+app_jsx --> CosmeticsDrawer
+app_jsx --> ProfileCard
+app_jsx --> SkillCard
+app_jsx --> BugReportModal
+
+MenuDrawer --> GameService
+SettingsDrawer --> ThemeService
+BugReportModal --> BugReportService
+ProfileCard --> GameService
+SkillCard --> GameService
+
+GameService --> AchievementService
+GameService --> Utilities
+GameService --> Constants
+
+BugReportService --> StorageAdapter
+BugReportService --> ElectronAdapter
+
+GameService --> AssetLoader
+
+@enduml
