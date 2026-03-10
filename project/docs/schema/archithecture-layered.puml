@@ -1,0 +1,32 @@
+@startuml layered
+
+package "Presentation Layer" {
+  [React Components]
+  [App.jsx]
+}
+
+package "Application Layer" {
+  [Game Logic]
+  [Theme Logic]
+  [State Handling]
+}
+
+package "Shared Layer" {
+  [Utilities]
+  [Constants]
+}
+
+package "Infrastructure Layer" {
+  [Electron Adapter]
+  [Asset Loader]
+}
+
+[React Components] --> [Game Logic]
+[React Components] --> [Theme Logic]
+
+[Game Logic] --> [Utilities]
+[Game Logic] --> [Constants]
+
+[Electron Adapter] --> [React Components]
+
+@enduml

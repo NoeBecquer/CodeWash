@@ -1,0 +1,2 @@
+Creating log file
+[31;1merror: repository not found[0m

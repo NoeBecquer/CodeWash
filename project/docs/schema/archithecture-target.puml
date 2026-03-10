@@ -1,0 +1,34 @@
+@startuml target
+
+package "Presentation Layer" {
+  [Drawers]
+  [Modals]
+  [Profile UI]
+  [Skills UI]
+  [Reusable UI]
+}
+
+package "Application Layer" {
+  [Game Service]
+  [Theme Service]
+  [Bug Report Service]
+  [Achievement Service]
+}
+
+package "Domain Layer" {
+  [Game Rules]
+  [Level System]
+  [Reward System]
+}
+
+package "Infrastructure Layer" {
+  [Electron Adapter]
+  [File System Adapter]
+  [Storage Adapter]
+}
+
+[Presentation Layer] --> [Application Layer]
+[Application Layer] --> [Domain Layer]
+[Application Layer] --> [Infrastructure Layer]
+
+@enduml
