@@ -47,7 +47,7 @@ const MIC_OFF_TEXT = "Mic Off";
 const BOSS_HEALING_ANIMATION_DURATION = 600;
 
 const App = () => {
-    const [currentProfile, setCurrentProfile] = useState(() => localStorage.getItem('currentProfile_v1') ? parseInt(localStorage.getItem('currentProfile_v1')) : 1);
+    const [currentProfile, setCurrentProfile] = useState(() => localStorage.getItem('currentProfile_v1') ? Number.parseInt(localStorage.getItem('currentProfile_v1')) : 1);
     const [profileNames, setProfileNames] = useState(() => localStorage.getItem('heroProfileNames_v1') ? JSON.parse(localStorage.getItem('heroProfileNames_v1')) : { 1: "Player 1", 2: "Player 2", 3: "Player 3" });
     const [parentStatus, setParentStatus] = useState(() => localStorage.getItem('heroParentStatus_v1') ? JSON.parse(localStorage.getItem('heroParentStatus_v1')) : { 1: false, 2: false, 3: false });
     const [playerHealth, setPlayerHealth] = useState(10);
