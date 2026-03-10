@@ -4,7 +4,7 @@ describe('Navigation', () => {
 
     cy.visit('http://localhost:5173')
 
-    cy.contains('Play').click()
+    cy.contains('Play').should('be.visible').click()
 
     cy.url().should('not.eq', 'http://localhost:5173/')
   })
