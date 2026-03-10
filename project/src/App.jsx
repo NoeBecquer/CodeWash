@@ -46,6 +46,55 @@ const MIC_OFF_TEXT = "Mic Off";
 // Boss healing animation duration (ms)
 const BOSS_HEALING_ANIMATION_DURATION = 600;
 
+// Backward compatibility: Ensure basic skill fields exist
+const ensureBasicSkillFields = (skill) => {
+    if (typeof skill.difficulty !== 'number') skill.difficulty = 1;
+    if (!Array.isArray(skill.earnedBadges)) skill.earnedBadges = [];
+    if (typeof skill.mobHealth !== 'number') {
+        const diff = skill.difficulty || 1;
+        skill.mobHealth = calculateMobHealth(diff);
+        skill.mobMaxHealth = calculateMobHealth(diff);
+    }
+    if (typeof skill.lostLevel !== 'boolean') skill.lostLevel = false;
+    if (skill.recoveryDifficulty === undefined) skill.recoveryDifficulty = null;
+    return skill;
+};
+
+// Backward compatibility: Ensure skill-specific mobs exist
+const ensureSkillMobs = (skill, key) => {
+    const mobMappings = {
+        'memory': () => { if (!skill.memoryMob) skill.memoryMob = getRandomFriendlyMob(); },
+        'patterns': () => { if (!skill.patternMob) skill.patternMob = getRandomMob(null); },
+        'reading': () => { if (!skill.readingMob) skill.readingMob = getRandomMob(null); },
+        'math': () => { if (!skill.mathMob) skill.mathMob = getRandomMob(null); },
+        'writing': () => { if (!skill.writingMob) skill.writingMob = getRandomMob(null); }
+    };
+    if (mobMappings[key]) mobMappings[key]();
+    return skill;
+};
+
+// Backward compatibility: Ensure mob auras exist
+const ensureSkillAuras = (skill, key) => {
+    const auraMappings = {
+        'reading': () => { if (!skill.readingMobAura) skill.readingMobAura = getRandomAura(); },
+        'math': () => { if (!skill.mathMobAura) skill.mathMobAura = getRandomAura(); },
+        'writing': () => { if (!skill.writingMobAura) skill.writingMobAura = getRandomAura(); },
+        'patterns': () => { if (!skill.patternMobAura) skill.patternMobAura = getRandomAura(); }
+    };
+    if (auraMappings[key]) auraMappings[key]();
+    return skill;
+};
+
+// Backward compatibility: Ensure miniboss/boss exists for combat skills
+const ensureEncounterMobs = (skill, key) => {
+    if (key === 'cleaning' || key === 'memory') return skill;
+    if (!skill.currentMiniboss) skill.currentMiniboss = getRandomMiniboss();
+    if (!skill.currentBoss) skill.currentBoss = getRandomBoss();
+    if (!skill.currentMinibossAura) skill.currentMinibossAura = getRandomAura();
+    if (!skill.currentBossAura) skill.currentBossAura = getRandomAura();
+    return skill;
+};
+
 const App = () => {
     const [currentProfile, setCurrentProfile] = useState(() => localStorage.getItem('currentProfile_v1') ? Number.parseInt(localStorage.getItem('currentProfile_v1')) : 1);
     const [profileNames, setProfileNames] = useState(() => localStorage.getItem('heroProfileNames_v1') ? JSON.parse(localStorage.getItem('heroProfileNames_v1')) : { 1: "Player 1", 2: "Player 2", 3: "Player 3" });
@@ -87,82 +136,19 @@ const App = () => {
         });
         let saved = localStorage.getItem(getStorageKey(profileId));
         if (!saved && profileId === 1) saved = localStorage.getItem('heroSkills_v23');
-        try { 
-            if (saved) { 
-                const parsed = JSON.parse(saved); 
-                const data = parsed.skills || parsed; 
-                Object.keys(data).forEach(key => { 
+        try {
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                const data = parsed.skills || parsed;
+                Object.keys(data).forEach(key => {
                     initial[key] = { ...initial[key], ...data[key] };
-                    // Ensure difficulty exists (backward compatibility)
-                    if (typeof initial[key].difficulty !== 'number') {
-                        initial[key].difficulty = 1;
-                    }
-                    // Ensure earnedBadges array exists (backward compatibility)
-                    if (!Array.isArray(initial[key].earnedBadges)) {
-                        initial[key].earnedBadges = [];
-                    }
-                    // Ensure mobHealth exists (backward compatibility)
-                    if (typeof initial[key].mobHealth !== 'number') {
-                        const diff = initial[key].difficulty || 1;
-                        initial[key].mobHealth = calculateMobHealth(diff);
-                        initial[key].mobMaxHealth = calculateMobHealth(diff);
-                    }
-                    // Ensure death/recovery state exists
-                    if (typeof initial[key].lostLevel !== 'boolean') {
-                        initial[key].lostLevel = false;
-                    }
-                    if (initial[key].recoveryDifficulty === undefined) {
-                        initial[key].recoveryDifficulty = null;
-                    }
-                    // Ensure memoryMob exists for memory skill (backward compatibility)
-                    if (key === 'memory' && !initial[key].memoryMob) {
-                        initial[key].memoryMob = getRandomFriendlyMob();
-                    }
-                    // Ensure patternMob exists for patterns skill (backward compatibility)
-                    if (key === 'patterns' && !initial[key].patternMob) {
-                        initial[key].patternMob = getRandomMob(null);
-                    }
-                    // Ensure combat skill mobs exist (backward compatibility)
-                    if (key === 'reading' && !initial[key].readingMob) {
-                        initial[key].readingMob = getRandomMob(null);
-                    }
-                    if (key === 'math' && !initial[key].mathMob) {
-                        initial[key].mathMob = getRandomMob(null);
-                    }
-                    if (key === 'writing' && !initial[key].writingMob) {
-                        initial[key].writingMob = getRandomMob(null);
-                    }
-                    // Ensure auras exist for combat skill mobs (backward compatibility)
-                    if (key === 'reading' && !initial[key].readingMobAura) {
-                        initial[key].readingMobAura = getRandomAura();
-                    }
-                    if (key === 'math' && !initial[key].mathMobAura) {
-                        initial[key].mathMobAura = getRandomAura();
-                    }
-                    if (key === 'writing' && !initial[key].writingMobAura) {
-                        initial[key].writingMobAura = getRandomAura();
-                    }
-                    if (key === 'patterns' && !initial[key].patternMobAura) {
-                        initial[key].patternMobAura = getRandomAura();
-                    }
-                    // Ensure miniboss and boss mobs exist for combat skills (backward compatibility)
-                    // Only initialize for skills that use the encounter type system (not cleaning or memory)
-                    if (key !== 'cleaning' && key !== 'memory') {
-                        if (!initial[key].currentMiniboss) {
-                            initial[key].currentMiniboss = getRandomMiniboss();
-                        }
-                        if (!initial[key].currentBoss) {
-                            initial[key].currentBoss = getRandomBoss();
-                        }
-                        if (!initial[key].currentMinibossAura) {
-                            initial[key].currentMinibossAura = getRandomAura();
-                        }
-                        if (!initial[key].currentBossAura) {
-                            initial[key].currentBossAura = getRandomAura();
-                        }
-                    }
-                }); 
-                return initial; 
+                    // Apply backward compatibility fixes in sequence
+                    ensureBasicSkillFields(initial[key]);
+                    ensureSkillMobs(initial[key], key);
+                    ensureSkillAuras(initial[key], key);
+                    ensureEncounterMobs(initial[key], key);
+                });
+                return initial;
             } 
         } catch (e) {
             console.warn('Failed to parse saved skills:', e);
