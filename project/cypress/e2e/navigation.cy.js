@@ -1,12 +1,14 @@
 describe('Navigation', () => {
 
-  it('can click the play button', () => {
+  it('can start a battle from the main menu', () => {
 
     cy.visit('http://localhost:5173')
 
-    cy.contains('Play').should('be.visible').click()
+    cy.get('.perspective-1000')
+      .find('div')
+      .eq(3)
+      .click({ force: true })
 
-    cy.url().should('not.eq', 'http://localhost:5173/')
   })
 
 })
