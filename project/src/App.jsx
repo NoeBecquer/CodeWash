@@ -434,7 +434,7 @@ const App = () => {
             if (battlingSkillId) {
                 const currentSkillState = skills[battlingSkillId];
                 const encounterType = getEncounterType(currentSkillState.level);
-                
+
                 // Boss fights: heal the boss instead of damaging the player
                 if (encounterType === 'boss') {
                     setSkills(prev => {
@@ -447,17 +447,17 @@ const App = () => {
                             }
                         };
                     });
-                    
+
                     // Trigger boss healing animation
                     setBossHealing(battlingSkillId);
                     setTimeout(() => setBossHealing(null), BOSS_HEALING_ANIMATION_DURATION);
-                    
+
                     // Play fail sound to indicate mistake
                     playFail();
                     return;
                 }
             }
-            
+
             // Non-boss encounters: damage player
             setPlayerHealth(h => {
                 const newH = h - 1;
@@ -465,22 +465,22 @@ const App = () => {
                     // Death sequence - play UI death sound
                     playDeath();
                     setShowDeathOverlay(true);
-                    
+
                     // Track death in stats
                     setStats(prevStats => {
                         const newStats = {
                             ...prevStats,
                             totalDeaths: (prevStats.totalDeaths || 0) + 1
                         };
-                        
+
                         // Check achievements after death
                         setTimeout(() => {
                             checkAchievements(prevStats, newStats, skills, skills);
                         }, 100);
-                        
+
                         return newStats;
                     });
-                    
+
                     // Reduce player level by 1 for the active skill (minimum level 1)
                     if (battlingSkillId) {
                         setSkills(prev => {
@@ -498,13 +498,13 @@ const App = () => {
                             };
                         });
                     }
-                    
+
                     // End battle after short delay
                     setTimeout(() => {
                         setBattlingSkillId(null);
                         setShowDeathOverlay(false);
                     }, 2000);
-                    
+
                     return 10; // Heal to full health
                 }
                 // Player takes damage but doesn't die - play fail sound
@@ -523,7 +523,7 @@ const App = () => {
 
         // Calculate damage using new RPG formulas
         const damage = calculateDamage(playerLevel, skillDifficulty);
-        
+
         // Get encounter type for current level
         const encounterType = getEncounterType(playerLevel);
 
@@ -531,7 +531,7 @@ const App = () => {
         const isMiniboss = encounterType === 'miniboss' && skillConfig.id !== 'cleaning';
         const isInstantDefeat = skillConfig.id === 'cleaning' || skillConfig.id === 'memory' || isMiniboss;
         const actualDamage = isInstantDefeat ? currentSkillState.mobHealth : damage;
-        
+
         // Determine if this hit will defeat the mob
         const willDefeatMob = (currentSkillState.mobHealth - actualDamage) <= 0;
 
@@ -540,14 +540,14 @@ const App = () => {
             const id = ++damageIdRef.current;
             setDamageNumbers(prev => [...prev, { id, skillId, val: actualDamage, x: Math.random() * 100 - 50, y: Math.random() * 50 - 25 }]);
             setTimeout(() => setDamageNumbers(prev => prev.filter(n => n.id !== id)), 800);
-            
+
             // Play mob hurt or death sound based on if mob is defeated
             if (willDefeatMob) {
                 playMobDeath(currentMobName);
             } else {
                 playMobHurt(currentMobName);
             }
-            
+
             // Play successful hit UI sound
             playSuccessfulHit();
         }
@@ -577,7 +577,7 @@ const App = () => {
             let newPatternMobAura = current.patternMobAura;
             let newMinibossAura = current.currentMinibossAura;
             let newBossAura = current.currentBossAura;
-            
+
             // Calculate XP reward for this hit
             // Total XP is split evenly among all hits required to defeat the mob
             const totalXPReward = calculateXPReward(skillDifficulty, playerLevel);
@@ -586,7 +586,7 @@ const App = () => {
             const effectiveDamage = isInstantDefeat ? current.mobMaxHealth : damage;
             const hitsToKill = Math.ceil(current.mobMaxHealth / effectiveDamage);
             const xpPerHit = Math.floor(totalXPReward / hitsToKill);
-            
+
             // If this hit doesn't defeat the mob, award partial XP
             // If this hit defeats the mob, award any remaining XP (to account for rounding)
             const willDefeatMobInUpdate = newMobHealth <= 0;
@@ -594,7 +594,7 @@ const App = () => {
                 // Award partial XP for non-killing hit
                 newXp += xpPerHit;
             }
-            
+
             // Mob defeated!
             if (newMobHealth <= 0) {
                 // Calculate remaining XP to award (total - already awarded)
@@ -602,20 +602,20 @@ const App = () => {
                 const xpAlreadyAwarded = hitsDealt * xpPerHit;
                 const remainingXP = totalXPReward - xpAlreadyAwarded;
                 newXp += remainingXP;
-                
+
                 // Track stats for mob defeat
                 const encounterType = getEncounterType(current.level);
                 setStats(prevStats => {
                     const newStats = { ...prevStats };
-                    
+
                     // Increment battle session counter
                     newStats.battlesThisSession = (newStats.battlesThisSession || 0) + 1;
-                    
+
                     if (encounterType === 'boss') {
                         // Boss defeated
                         newStats.totalBossesDefeated = (newStats.totalBossesDefeated || 0) + 1;
                         newStats.uniqueBossesDefeated = addUniqueToArray(
-                            newStats.uniqueBossesDefeated || [], 
+                            newStats.uniqueBossesDefeated || [],
                             current.currentBoss
                         );
                     } else if (encounterType === 'miniboss') {
@@ -633,15 +633,15 @@ const App = () => {
                             current.currentMob
                         );
                     }
-                    
+
                     // Check achievements after stats update
                     setTimeout(() => {
                         checkAchievements(prevStats, newStats, prev, { ...prev, [skillId]: { ...current, level: newLevel } });
                     }, 100);
-                    
+
                     return newStats;
                 });
-                
+
                 // Update stable mobs for memory and patterns skills on completion
                 if (skillConfig.id === 'memory') {
                     newMemoryMob = getRandomFriendlyMob();
@@ -650,39 +650,39 @@ const App = () => {
                     newPatternMob = getRandomMob(current.currentMob);
                     newPatternMobAura = getRandomAura();
                 }
-                
+
                 // Update stable mobs for combat skills on completion
                 const combatSkillMobUpdates = {
-                    'reading': () => { 
+                    'reading': () => {
                         newReadingMob = getRandomMob(current.readingMob);
                         newReadingMobAura = getRandomAura();
                     },
-                    'math': () => { 
+                    'math': () => {
                         newMathMob = getRandomMob(current.mathMob);
                         newMathMobAura = getRandomAura();
                     },
-                    'writing': () => { 
+                    'writing': () => {
                         newWritingMob = getRandomMob(current.writingMob);
                         newWritingMobAura = getRandomAura();
                     }
                 };
-                
+
                 if (combatSkillMobUpdates[skillConfig.id]) {
                     combatSkillMobUpdates[skillConfig.id]();
                 }
-                
+
                 // Update miniboss when defeating a miniboss encounter
                 if (getEncounterType(current.level) === 'miniboss') {
                     newMiniboss = getRandomMiniboss();
                     newMinibossAura = getRandomAura();
                 }
-                
+
                 // Update boss when defeating a boss encounter
                 if (getEncounterType(current.level) === 'boss') {
                     newBoss = getRandomBoss();
                     newBossAura = getRandomAura();
                 }
-                
+
                 // Check for level restoration first
                 if (newLostLevel) {
                     newLevel += 1;
@@ -692,7 +692,7 @@ const App = () => {
                     setTimeout(() => setShowLevelRestored(false), 2000);
                     playNotification();
                 }
-                
+
                 // Process level ups - use difficulty-scaled XP requirement
                 const xpToLevel = calculateXPToLevel(newDifficulty, newLevel);
                 if (newXp >= xpToLevel) {
@@ -701,7 +701,7 @@ const App = () => {
                     newLevel += levelsGained;
                     newXp = newXp % xpToLevel;
                     leveledUp = true;
-                    
+
                     // Check if we just defeated a boss (leaving a boss level)
                     // Badge/difficulty increment happens when crossing FROM a boss level (e.g., 20->21)
                     // not when arriving AT a boss level (e.g., 19->20)
@@ -724,17 +724,17 @@ const App = () => {
                             }
                         }
                     }
-                    
+
                     // Get new mob if not at boss level
                     if (newLevel % 20 !== 0 && (newLevel - 1) % 20 !== 0) {
                         newMob = getRandomMob(current.currentMob);
                     }
-                    
+
                     if (leveledUp) {
                         playLevelUp();
                     }
                 }
-                
+
                 // Spawn new mob with fresh health
                 newMobMaxHealth = calculateMobHealth(newDifficulty);
                 newMobHealth = newMobMaxHealth;
@@ -742,7 +742,7 @@ const App = () => {
                     newMob = getRandomMob(current.currentMob);
                 }
             }
-            
+
             return {
                 ...prev,
                 [skillId]: {
@@ -772,7 +772,7 @@ const App = () => {
                 }
             };
         });
-        
+
         // Generate next challenge for continuous gameplay
         if (skillConfig.hasChallenge && skillConfig.id !== 'memory') {
             // Use the stored battle difficulty for consistent challenge generation throughout the battle
@@ -805,7 +805,7 @@ const App = () => {
             };
         });
     };
-    
+
     // Wrapper for setActiveTheme to track theme changes
     const handleThemeChange = useCallback((newTheme) => {
         if (newTheme !== activeTheme) {
@@ -815,17 +815,17 @@ const App = () => {
                     ...prevStats,
                     themeChanges: (prevStats.themeChanges || 0) + 1
                 };
-                
+
                 // Check achievements
                 setTimeout(() => {
                     checkAchievements(prevStats, newStats, skills, skills);
                 }, 100);
-                
+
                 return newStats;
             });
         }
     }, [activeTheme, skills, checkAchievements]);
-    
+
     // Wrapper for setSelectedBorder to track border changes
     const handleBorderChange = useCallback((newBorder) => {
         if (newBorder !== selectedBorder) {
@@ -835,12 +835,12 @@ const App = () => {
                     ...prevStats,
                     borderChanges: (prevStats.borderChanges || 0) + 1
                 };
-                
+
                 // Check achievements
                 setTimeout(() => {
                     checkAchievements(prevStats, newStats, skills, skills);
                 }, 100);
-                
+
                 return newStats;
             });
         }
@@ -849,10 +849,10 @@ const App = () => {
     // Award a free level from phantom click
     const handlePhantomLevelAward = (skillId) => {
         if (!skillId) return;
-        
+
         // Play level up sound
         playLevelUp();
-        
+
         setSkills(prev => {
             const current = prev[skillId];
             return {
@@ -863,14 +863,14 @@ const App = () => {
                 }
             };
         });
-        
+
         // Show celebration notification
         const skillConfig = SKILL_DATA.find(s => s.id === skillId);
         if (skillConfig) {
-            setLootBox({ 
-                level: skills[skillId].level + 1, 
-                skillName: skillConfig.fantasyName, 
-                item: "Phantom Bonus!", 
+            setLootBox({
+                level: skills[skillId].level + 1,
+                skillName: skillConfig.fantasyName,
+                item: "Phantom Bonus!",
                 img: HOSTILE_MOBS['Phantom']
             });
             playNotification();
@@ -878,21 +878,21 @@ const App = () => {
     };
 
     const startBattle = (id) => {
-        const skill = SKILL_DATA.find(s => s.id === id); 
+        const skill = SKILL_DATA.find(s => s.id === id);
         setBattlingSkillId(id);
         // Use the skill's current difficulty setting
         const currentDiff = skills[id].difficulty || 1;
         const playerLevel = skills[id].level;
-        
+
         // For miniboss encounters, use difficulty+1 for content (capped at 7)
         const encounterType = getEncounterType(playerLevel);
-        const challengeDiff = encounterType === 'miniboss' 
-            ? Math.min(7, currentDiff + 1) 
+        const challengeDiff = encounterType === 'miniboss'
+            ? Math.min(7, currentDiff + 1)
             : currentDiff;
-        
+
         // Store the battle's challenge difficulty so it remains consistent throughout the battle
         setBattleDifficulty(challengeDiff);
-        
+
         setChallengeData(generateChallenge(skill.challengeType, challengeDiff));
         playClick();
         startBGM(); // Start BGM on first battle (user interaction)
@@ -922,7 +922,7 @@ const App = () => {
     };
     const handleParentVerified = (profileId, verified) => {
         setParentStatus(prev => ({ ...prev, [profileId]: verified }));
-        
+
         if (verified && profileId === currentProfile) {
             // When parent verification passes, apply parent privileges to all skills
             setSkills(prev => {
@@ -940,7 +940,7 @@ const App = () => {
                 });
                 return updated;
             });
-            
+
             // Force a re-render to ensure UI immediately reflects the new levels
             setTimeout(() => {
                 setSkills(current => ({ ...current }));
@@ -951,19 +951,16 @@ const App = () => {
         // Remove skills data for current profile
         localStorage.removeItem(getStorageKey(currentProfile));
         if (currentProfile === 1) localStorage.removeItem('heroSkills_v23');
-        
         // Update parent status in localStorage directly
         const currentParentStatus = localStorage.getItem('heroParentStatus_v1');
         const parentStatusObj = currentParentStatus ? JSON.parse(currentParentStatus) : { 1: false, 2: false, 3: false };
         parentStatusObj[currentProfile] = false;
         localStorage.setItem('heroParentStatus_v1', JSON.stringify(parentStatusObj));
-        
         // Update profile name in localStorage directly
         const currentProfileNames = localStorage.getItem('heroProfileNames_v1');
         const profileNamesObj = currentProfileNames ? JSON.parse(currentProfileNames) : { 1: "Player 1", 2: "Player 2", 3: "Player 3" };
         profileNamesObj[currentProfile] = `Player ${currentProfile}`;
         localStorage.setItem('heroProfileNames_v1', JSON.stringify(profileNamesObj));
-        
         window.location.reload();
     };
 
@@ -987,18 +984,18 @@ const App = () => {
             console.warn('[Speech Recognition] Web Speech API not available');
             return;
         }
-        
+
         // If recognition already exists and is active, don't reinitialize
         if (recognitionRef.current) {
             console.log('[Speech Recognition] Already initialized, skipping');
             return;
         }
-        
+
         console.log('[Speech Recognition] Initializing for skill:', targetId);
         recognitionRef.current = new window.webkitSpeechRecognition();
         recognitionRef.current.lang = 'en-US';
         recognitionRef.current.continuous = true;
-        
+
         recognitionRef.current.onstart = () => { 
             console.log('[Speech Recognition] Started listening');
             setIsListening(true); 
