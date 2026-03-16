@@ -1,0 +1,110 @@
+@startuml before
+title CodeWash - Architecture Before Refactor (Real Structure)
+
+top to bottom direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam ArrowColor #555555
+skinparam defaultFontName Arial
+
+skinparam package {
+  BorderColor #444444
+  BackgroundColor #F4F6F7
+}
+
+skinparam component {
+  BorderColor #333333
+  BackgroundColor #FFFFFF
+}
+
+' ======================
+' ENTRY POINT
+' ======================
+
+package "Entry" #D6EAF8 {
+  component index_html as "index.html"
+  component main_jsx as "main.jsx"
+  component app_jsx as "App.jsx"
+}
+
+' ======================
+' COMPONENTS
+' ======================
+
+package "components/" #EBF5FB {
+  package "drawers/" {
+    component MenuDrawer
+    component SettingsDrawer
+    component CosmeticsDrawer
+  }
+
+  package "modals/" {
+    component BugReportModal
+    component ResetModal
+  }
+
+  package "profile/" {
+    component ProfileCard
+  }
+
+  package "skills/" {
+    component SkillCard
+  }
+
+  package "ui/" {
+    component AchievementToast
+    component MobWithAura
+    component ParentVerificationModal
+    component PixelHeart
+    component SafeImage
+    component PhantomEvent
+  }
+}
+
+' ======================
+' SHARED
+' ======================
+
+package "constants/" #FCF3CF {
+  component Constants
+}
+
+package "utils/" #FCF3CF {
+  component Utilities
+}
+
+package "assets/" #FADBD8 {
+  component Assets
+}
+
+package "electron/" #F5B7B1 {
+  component ElectronMain
+}
+
+' ======================
+' CURRENT DEPENDENCIES
+' ======================
+
+index_html --> main_jsx
+main_jsx --> app_jsx
+
+app_jsx --> MenuDrawer
+app_jsx --> SettingsDrawer
+app_jsx --> CosmeticsDrawer
+app_jsx --> ProfileCard
+app_jsx --> SkillCard
+app_jsx --> BugReportModal
+
+MenuDrawer --> Utilities
+SettingsDrawer --> Utilities
+BugReportModal --> Utilities
+
+MenuDrawer --> Constants
+SkillCard --> Constants
+
+BugReportModal --> ElectronMain
+BugReportModal --> Assets
+
+Utilities --> Constants
+
+@enduml

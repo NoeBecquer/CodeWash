@@ -1,0 +1,95 @@
+@startuml
+title CodeWash - Governed Layered Architecture
+
+top to bottom direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam ArrowColor #444444
+skinparam defaultFontName Arial
+
+skinparam package {
+  BorderColor #444444
+}
+
+skinparam component {
+  BorderColor #333333
+  BackgroundColor #FFFFFF
+}
+
+' ======================
+' PRESENTATION LAYER
+' ======================
+
+package "Presentation Layer\n(React UI)" #D6EAF8 {
+  component Drawers
+  component Modals
+  component ReusableUI
+}
+
+' ======================
+' APPLICATION LAYER
+' ======================
+
+package "Application Layer\n(Game & Features)" #D5F5E3 {
+  component GameService
+  component ThemeService
+  component BugReportService
+  component AchievementService
+}
+
+' ======================
+' SHARED LAYER
+' ======================
+
+package "Shared Layer" #FCF3CF {
+  component Utilities
+  component Constants
+}
+
+' ======================
+' INFRASTRUCTURE LAYER
+' ======================
+
+package "Infrastructure Layer" #FADBD8 {
+  component ElectronAdapter
+  component StorageAdapter
+  component AssetLoader
+}
+
+' ======================
+' ALLOWED DEPENDENCIES
+' ======================
+
+Drawers --> GameService
+Modals --> BugReportService
+ReusableUI --> GameService
+
+GameService --> Utilities
+GameService --> Constants
+GameService --> AchievementService
+
+BugReportService --> StorageAdapter
+GameService --> AssetLoader
+
+ElectronAdapter --> Drawers
+
+' ======================
+' FORBIDDEN DEPENDENCIES
+' ======================
+
+Drawers -[#red,dashed,thickness=2]-> StorageAdapter : Forbidden
+ReusableUI -[#red,dashed,thickness=2]-> ElectronAdapter : Forbidden
+Utilities -[#red,dashed,thickness=2]-> GameService : Forbidden
+Constants -[#red,dashed,thickness=2]-> Drawers : Forbidden
+
+' ======================
+' LEGEND
+' ======================
+
+legend right
+|= Symbol |= Meaning |
+| Solid Arrow | Allowed Dependency |
+| Red Dashed Arrow | Forbidden Dependency |
+endlegend
+
+@enduml

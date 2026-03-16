@@ -1,0 +1,46 @@
+@startuml current
+
+package "Frontend (React + Vite)" {
+
+  [index.html]
+
+  package "Entry Layer" {
+    [main.jsx]
+  }
+
+  package "Application Root" {
+    [App.jsx]
+  }
+
+  package "UI Components" {
+    [components/]
+  }
+
+  package "Shared Modules" {
+    [constants/]
+    [utils/]
+  }
+
+  package "Static Assets" {
+    [assets/]
+    [index.css]
+  }
+}
+
+package "Desktop Wrapper" {
+  [electron/]
+}
+
+index.html --> main.jsx
+main.jsx --> App.jsx
+App.jsx --> [components/]
+
+[components/] --> [utils/]
+[components/] --> [constants/]
+
+App.jsx --> [assets/]
+App.jsx --> index.css
+
+[electron/] --> index.html
+
+@enduml

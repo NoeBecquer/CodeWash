@@ -1,0 +1,52 @@
+@startuml features
+
+package "UI Containers" {
+  [MenuDrawer]
+  [SettingsDrawer]
+  [CosmeticsDrawer]
+}
+
+package "Modals" {
+  [BugReportModal]
+  [ResetModal]
+  [ParentVerificationModal]
+}
+
+package "Profile & Skills" {
+  [ProfileCard]
+  [SkillCard]
+}
+
+package "Reusable UI" {
+  [AchievementToast]
+  [MobWithAura]
+  [PixelHeart]
+  [SafeImage]
+  [PhantomEvent]
+}
+
+package "Core Application" {
+  [App.jsx]
+  [main.jsx]
+}
+
+package "Shared" {
+  [constants]
+  [utils]
+}
+
+main.jsx --> App.jsx
+App.jsx --> MenuDrawer
+App.jsx --> SettingsDrawer
+App.jsx --> CosmeticsDrawer
+
+App.jsx --> ProfileCard
+App.jsx --> SkillCard
+
+App.jsx --> BugReportModal
+
+MenuDrawer --> constants
+SettingsDrawer --> utils
+BugReportModal --> utils
+
+@enduml
