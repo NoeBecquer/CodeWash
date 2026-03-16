@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { 
+import {
     Menu, Sparkles, Gift, Maximize, Minimize, Settings, Bug
 } from 'lucide-react';
 
@@ -19,17 +19,17 @@ import AchievementToast from './components/ui/AchievementToast';
 // Utils & Constants
 import { getRandomMob, getRandomFriendlyMob, getRandomMiniboss, getRandomBoss, getMobForSkill, getEncounterType, generateMathProblem, getReadingWord, getWordForDifficulty, calculateDamage, calculateMobHealth, calculateXPReward, calculateXPToLevel } from './utils/gameUtils';
 import { getRandomAura } from './utils/mobDisplayUtils';
-import { 
-    BASE_ASSETS, THEME_CONFIG, SKILL_DATA, 
+import {
+    BASE_ASSETS, THEME_CONFIG, SKILL_DATA,
     HOMOPHONES, HOSTILE_MOBS
 } from './constants/gameData';
-import { 
-    getBGMManager, setSfxVolume, 
+import {
+    getBGMManager, setSfxVolume,
     playActionCardLeft, playActionCardRight, playClick, 
     playDeath, playFail, playLevelUp, playNotification, playSuccessfulHit,
     playMobHurt, playMobDeath, playAchievement
 } from './utils/soundManager';
-import { 
+import {
     getDefaultStats, getNewlyUnlockedAchievements, getNewTierAchievements,
     addUniqueToArray, isAchievementUnlocked
 } from './utils/achievementUtils';
@@ -100,17 +100,17 @@ const App = () => {
     const [profileNames, setProfileNames] = useState(() => localStorage.getItem('heroProfileNames_v1') ? JSON.parse(localStorage.getItem('heroProfileNames_v1')) : { 1: "Player 1", 2: "Player 2", 3: "Player 3" });
     const [parentStatus, setParentStatus] = useState(() => localStorage.getItem('heroParentStatus_v1') ? JSON.parse(localStorage.getItem('heroParentStatus_v1')) : { 1: false, 2: false, 3: false });
     const [playerHealth, setPlayerHealth] = useState(10);
-    
+
     const getStorageKey = (profileId) => `heroSkills_v23_p${profileId}`;
     const loadSkills = (profileId) => {
         const initial = {};
         // Initialize each skill with level, xp, currentMob, difficulty (1-7), earnedBadges array,
         // mobHealth for HP-based combat, and death/recovery state
-        SKILL_DATA.forEach(skill => { 
+        SKILL_DATA.forEach(skill => {
             const initialDifficulty = 1;
-            initial[skill.id] = { 
-                level: 1, 
-                xp: 0, 
+            initial[skill.id] = {
+                level: 1,
+                xp: 0,
                 currentMob: getRandomMob(null),
                 difficulty: initialDifficulty,  // Per-skill difficulty (1-7)
                 earnedBadges: [], // Array of earned badge tier numbers (1-7)
@@ -132,7 +132,7 @@ const App = () => {
                 patternMobAura: skill.id === 'patterns' ? getRandomAura() : null,
                 currentMinibossAura: getRandomAura(), // Aura for miniboss encounters
                 currentBossAura: getRandomAura() // Aura for boss encounters
-            }; 
+            };
         });
         let saved = localStorage.getItem(getStorageKey(profileId));
         if (!saved && profileId === 1) saved = localStorage.getItem('heroSkills_v23');
@@ -149,7 +149,7 @@ const App = () => {
                     ensureEncounterMobs(initial[key], key);
                 });
                 return initial;
-            } 
+            }
         } catch (e) {
             console.warn('Failed to parse saved skills:', e);
         }
@@ -167,7 +167,7 @@ const App = () => {
         }
         return 'minecraft';
     };
-    
+
     const loadStats = (profileId) => {
         let saved = localStorage.getItem(getStorageKey(profileId));
         if (!saved && profileId === 1) {
@@ -184,11 +184,11 @@ const App = () => {
         }
         return getDefaultStats();
     };
-    
+
     const getProfileStats = (id, liveSkills = null) => {
         const initial = {};
         SKILL_DATA.forEach(skill => { initial[skill.id] = { level: 1 }; });
-        
+
         // Use live skills if provided (for current profile with pending state changes)
         if (liveSkills) {
             let totalLevel = 0;
@@ -201,7 +201,7 @@ const App = () => {
             });
             return { totalLevel, highestLevel, skills: liveSkills, theme: activeTheme };
         }
-        
+
         const key = getStorageKey(id);
         let saved = localStorage.getItem(key);
         if (!saved && id === 1) saved = localStorage.getItem('heroSkills_v23');
@@ -255,7 +255,7 @@ const App = () => {
     const [bgmVol, setBgmVol] = useState(0.3);
     const [sfxVol, setSfxVolState] = useState(0.5);
     const bgmManager = useRef(getBGMManager());
-    
+
     // Cosmetics state
     const [selectedBorder, setSelectedBorder] = useState(() => {
         const saved = localStorage.getItem(`borderEffect_p${currentProfile}`);
@@ -266,26 +266,26 @@ const App = () => {
         return saved || '#FFD700';
     });
 
-    useEffect(() => { 
+    useEffect(() => {
         const dataToSave = { skills: skills, theme: activeTheme, stats: stats };
-        localStorage.setItem(getStorageKey(currentProfile), JSON.stringify(dataToSave)); 
+        localStorage.setItem(getStorageKey(currentProfile), JSON.stringify(dataToSave));
         localStorage.setItem('currentProfile_v1', currentProfile);
         localStorage.setItem('heroProfileNames_v1', JSON.stringify(profileNames));
         localStorage.setItem('heroParentStatus_v1', JSON.stringify(parentStatus));
     }, [skills, currentProfile, activeTheme, profileNames, parentStatus, stats]);
-    
+
     // Save cosmetics preferences
     useEffect(() => {
         localStorage.setItem(`borderEffect_p${currentProfile}`, selectedBorder);
         localStorage.setItem(`borderColor_p${currentProfile}`, borderColor);
     }, [selectedBorder, borderColor, currentProfile]);
-    
+
     // Calculate unlocked borders based on earned badges (memoized)
     const unlockedBorders = React.useMemo(() => {
         const unlockedBadges = new Set();
         // Tier to badge name mapping
         const tierToBadge = ['Wood', 'Stone', 'Gold', 'Iron', 'Emerald', 'Diamond', 'Netherite', 'Obsidian'];
-        
+
         Object.values(skills).forEach(skill => {
             if (skill.earnedBadges && Array.isArray(skill.earnedBadges)) {
                 skill.earnedBadges.forEach(tier => {
@@ -302,49 +302,49 @@ const App = () => {
         });
         return Array.from(unlockedBadges);
     }, [skills]);
-    
+
     // Calculate unlocked achievements (memoized)
     const unlockedAchievements = React.useMemo(() => {
         const unlocked = [];
         const achievementIds = ['speed_demon', 'world_ender', 'monster_manual', 'perfectionist', 'full_set'];
-        
+
         achievementIds.forEach(id => {
             if (isAchievementUnlocked(id, stats, skills)) {
                 unlocked.push(id);
             }
         });
-        
+
         return unlocked;
     }, [stats, skills]);
 
     // Update BGM volume
-    useEffect(() => { 
-        bgmManager.current.setVolume(bgmVol); 
+    useEffect(() => {
+        bgmManager.current.setVolume(bgmVol);
     }, [bgmVol]);
-    
+
     // Update SFX volume in sound manager
     useEffect(() => {
         setSfxVolume(sfxVol);
     }, [sfxVol]);
-    
+
     // Keep challengeDataRef in sync with challengeData state for voice listener
     useEffect(() => {
         challengeDataRef.current = challengeData;
     }, [challengeData]);
-    
+
     // Listen for fullscreen changes
     useEffect(() => {
         const handleFullscreenChange = () => {
             setIsFullscreen(!!document.fullscreenElement);
         };
-        
+
         document.addEventListener('fullscreenchange', handleFullscreenChange);
-        
+
         return () => {
             document.removeEventListener('fullscreenchange', handleFullscreenChange);
         };
     }, []);
-    
+
     // Start BGM on first user interaction
     const startBGM = useCallback(() => {
         if (!bgmManager.current.isPlaying) {
@@ -408,10 +408,10 @@ const App = () => {
     const checkAchievements = useCallback((oldStats, newStats, oldSkills, newSkills) => {
         // Check for newly unlocked one-time achievements
         const newlyUnlocked = getNewlyUnlockedAchievements(oldStats, newStats, oldSkills, newSkills);
-        
+
         // Check for tiered achievement progress
         const newTiers = getNewTierAchievements(oldStats, newStats, oldSkills, newSkills);
-        
+
         // Show toast for the first achievement/tier unlocked
         if (newlyUnlocked.length > 0) {
             // Show first newly unlocked achievement
@@ -441,14 +441,14 @@ const App = () => {
                     }
                 };
             });
-            
+
             // Trigger boss healing animation
             setBossHealing(battlingSkillId);
             setTimeout(() => setBossHealing(null), BOSS_HEALING_ANIMATION_DURATION);
             playFail();
             return;
         }
-        
+
         // Non-boss encounters: damage player
         setPlayerHealth(h => {
             const newH = h - 1;
@@ -465,22 +465,22 @@ const App = () => {
     const handlePlayerDeath = () => {
         playDeath();
         setShowDeathOverlay(true);
-        
+
         // Track death in stats
         setStats(prevStats => {
             const newStats = {
                 ...prevStats,
                 totalDeaths: (prevStats.totalDeaths || 0) + 1
             };
-            
+
             // Check achievements after death
             setTimeout(() => {
                 checkAchievements(prevStats, newStats, skills, skills);
             }, 100);
-            
+
             return newStats;
         });
-        
+
         // Reduce player level by 1 for the active skill (minimum level 1)
         if (battlingSkillId) {
             setSkills(prev => {
@@ -498,7 +498,7 @@ const App = () => {
                 };
             });
         }
-        
+
         // End battle after short delay
         setTimeout(() => {
             setBattlingSkillId(null);
@@ -515,33 +515,33 @@ const App = () => {
             newState.newPatternMob = getRandomMob(current.currentMob);
             newState.newPatternMobAura = getRandomAura();
         }
-        
+
         // Update stable mobs for combat skills on completion
         const combatSkillMobUpdates = {
-            'reading': () => { 
+            'reading': () => {
                 newState.newReadingMob = getRandomMob(current.readingMob);
                 newState.newReadingMobAura = getRandomAura();
             },
-            'math': () => { 
+            'math': () => {
                 newState.newMathMob = getRandomMob(current.mathMob);
                 newState.newMathMobAura = getRandomAura();
             },
-            'writing': () => { 
+            'writing': () => {
                 newState.newWritingMob = getRandomMob(current.writingMob);
                 newState.newWritingMobAura = getRandomAura();
             }
         };
-        
+
         if (combatSkillMobUpdates[skillConfig.id]) {
             combatSkillMobUpdates[skillConfig.id]();
         }
-        
+
         // Update miniboss when defeating a miniboss encounter
         if (getEncounterType(current.level) === 'miniboss') {
             newState.newMiniboss = getRandomMiniboss();
             newState.newMinibossAura = getRandomAura();
         }
-        
+
         // Update boss when defeating a boss encounter
         if (getEncounterType(current.level) === 'boss') {
             newState.newBoss = getRandomBoss();
@@ -559,10 +559,29 @@ const App = () => {
             setTimeout(() => setShowLevelRestored(false), 2000);
             playNotification();
         }
-        
+
         const xpToLevel = calculateXPToLevel(newState.newDifficulty, newState.newLevel);
         if (newState.newXp >= xpToLevel) {
             processMultipleLevelUps(skillConfig, newState, xpToLevel);
+        }
+    };
+
+    const loopOvernewState = (oldLevel, newState, skillConfig) => {
+
+        for (let lvl = oldLevel; lvl < newState.newLevel; lvl++) {
+            if (lvl % 20 === 0 && lvl > 0) {
+                // Boss at level lvl was just defeated
+                const newTier = Math.floor(lvl / 20);
+                if (newState.newDifficulty < 7) {
+                    newState.newDifficulty++;
+                }
+                // Award badge for this tier if not already earned
+                if (!newState.newBadges.includes(newTier) && newTier <= 7) {
+                    newState.newBadges.push(newTier);
+                    setLootBox({ level: lvl, skillName: skillConfig.fantasyName, item: "New Rank!", img: BASE_ASSETS.badges.Wood });
+                    playNotification();
+                }
+            }
         }
     };
 
@@ -572,31 +591,15 @@ const App = () => {
         const oldLevel = newState.newLevel;
         newState.newLevel += levelsGained;
         newState.newXp = newState.newXp % xpToLevel;
-        
+
         // Only process boss progression if not cleaning skill
         if (skillConfig.id !== 'cleaning') {
-            for (let lvl = oldLevel; lvl < newState.newLevel; lvl++) {
-                if (lvl % 20 === 0 && lvl > 0) {
-                    // Boss at level lvl was just defeated
-                    const newTier = Math.floor(lvl / 20);
-                    if (newState.newDifficulty < 7) {
-                        newState.newDifficulty++;
-                    }
-                    // Award badge for this tier if not already earned
-                    if (!newState.newBadges.includes(newTier) && newTier <= 7) {
-                        newState.newBadges.push(newTier);
-                        setLootBox({ level: lvl, skillName: skillConfig.fantasyName, item: "New Rank!", img: BASE_ASSETS.badges.Wood });
-                        playNotification();
-                    }
-                }
-            }
-        }
-        
+            loopOvernewState(oldLevel, newState, skillConfig);
         // Get new mob if not at boss level
         if (newState.newLevel % 20 !== 0 && (newState.newLevel - 1) % 20 !== 0) {
             newState.newMob = getRandomMob(newState.newMob);
         }
-        
+
         playLevelUp();
     };
 
@@ -609,39 +612,39 @@ const App = () => {
             }
             return;
         }
-        
+
         if (!skillId) return;
         const skillConfig = SKILL_DATA.find(s => s.id === skillId);
         const currentSkillState = skills[skillId];
         const skillDifficulty = currentSkillState.difficulty || 1;
         const playerLevel = currentSkillState.level;
         const currentMobName = currentSkillState.currentMob;
-        
+
         // Calculate damage using new RPG formulas
         const damage = calculateDamage(playerLevel, skillDifficulty);
         const encounterType = getEncounterType(playerLevel);
-        
+
         // Cleaning/memory/miniboss are defeated in single hit
         const isMiniboss = encounterType === 'miniboss' && skillConfig.id !== 'cleaning';
         const isInstantDefeat = skillConfig.id === 'cleaning' || skillConfig.id === 'memory' || isMiniboss;
         const actualDamage = isInstantDefeat ? currentSkillState.mobHealth : damage;
         const willDefeatMob = (currentSkillState.mobHealth - actualDamage) <= 0;
-        
+
         // Show damage numbers and play sounds
         if (skillConfig.id !== 'memory') {
             const id = ++damageIdRef.current;
             setDamageNumbers(prev => [...prev, { id, skillId, val: actualDamage, x: Math.random() * 100 - 50, y: Math.random() * 50 - 25 }]);
             setTimeout(() => setDamageNumbers(prev => prev.filter(n => n.id !== id)), 800);
-            
+
             if (willDefeatMob) {
                 playMobDeath(currentMobName);
             } else {
                 playMobHurt(currentMobName);
             }
-            
+
             playSuccessfulHit();
         }
-        
+
         setSkills(prev => {
             const current = prev[skillId];
             const newState = {
