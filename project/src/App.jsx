@@ -1387,7 +1387,8 @@ const App = () => {
                         
                         return (
                         <div 
-                            key={item.key} 
+                            key={item.key}
+                            data-active={item.offset === 0}
                             className="absolute transition-all duration-500 ease-out" 
                             style={{ 
                                 transform: `translateX(${item.offset * 320}px) translateY(${translateY}px) rotateX(${rotateX}deg) scale(${item.offset === 0 ? 1.1 : 0.85})`, 
