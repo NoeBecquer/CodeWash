@@ -95,6 +95,28 @@ const ensureEncounterMobs = (skill, key) => {
     return skill;
 };
 
+// Map offsets to specific UI values to avoid if/else logic
+const OFFSET_CONFIG = {
+    0: { translateY: -55, rotateX: 0, scale: 1.1, opacity: 1, zIndex: 20 },
+    1: { translateY: -30, rotateX: -4, scale: 0.85, opacity: 0.6, zIndex: 9 },
+    2: { translateY: 20, rotateX: -8, scale: 0.85, opacity: 0.3, zIndex: 8 },
+    3: { translateY: 75, rotateX: -12, scale: 0.85, opacity: 0, zIndex: 7 },
+};
+
+const getCardStyle = (offset, isItemBattling) => {
+    const absOffset = Math.abs(offset);
+    const config = OFFSET_CONFIG[absOffset] || OFFSET_CONFIG[3];
+    
+    return {
+        transform: `translateX(${offset * 320}px) translateY(${config.translateY}px) rotateX(${config.rotateX}deg) scale(${config.scale})`,
+        opacity: config.opacity,
+        zIndex: isItemBattling ? 50 : config.zIndex,
+        filter: offset === 0 ? 'none' : 'brightness(0.5) blur(1px)',
+        cursor: (offset !== 0 && !isItemBattling) ? 'pointer' : 'default',
+        transitionTimingFunction: 'cubic-bezier(0.4, 0.0, 0.2, 1)'
+    };
+};
+
 const App = () => {
     const [currentProfile, setCurrentProfile] = useState(() => localStorage.getItem('currentProfile_v1') ? Number.parseInt(localStorage.getItem('currentProfile_v1')) : 1);
     const [profileNames, setProfileNames] = useState(() => localStorage.getItem('heroProfileNames_v1') ? JSON.parse(localStorage.getItem('heroProfileNames_v1')) : { 1: "Player 1", 2: "Player 2", 3: "Player 3" });
@@ -1056,47 +1078,21 @@ const App = () => {
                 >
                     {getVisibleItems().map((item) => {
                         const isItemBattling = item.offset === 0 && battlingSkillId === item.id;
-                        // Calculate curved positioning based on offset
-                        const getVerticalOffset = (offset) => {
-                            if (offset === 0) return -55; // Center card lowered by 5px (was -60)
-                            if (Math.abs(offset) === 1) return -30; // Adjacent cards at intermediate height
-                            if (Math.abs(offset) === 2) return 20; // Outer cards at lowest position
-                            return 75; // Hidden positions (±3) - off-screen, continuing the parabolic curve
-                        };
-                        const translateY = getVerticalOffset(item.offset);
-                        // Add subtle rotation for 3D effect - negative values warp outward
-                        const rotateX = Math.abs(item.offset) === 3 ? -12 : (Math.abs(item.offset) === 2 ? -8 : (Math.abs(item.offset) === 1 ? -4 : 0));
-                        
+                        const style = getCardStyle(item.offset, isItemBattling);
+
                         return (
-                        <div 
-                            key={item.key} 
-                            className="absolute transition-all duration-500 ease-out" 
-                            style={{ 
-                                transform: `translateX(${item.offset * 320}px) translateY(${translateY}px) rotateX(${rotateX}deg) scale(${item.offset === 0 ? 1.1 : 0.85})`, 
-                                opacity: item.offset === 0 ? 1 : (Math.abs(item.offset) === 3 ? 0 : (Math.abs(item.offset) === 2 ? 0.3 : 0.6)), 
-                                zIndex: isItemBattling ? 50 : (item.offset === 0 ? 20 : 10 - Math.abs(item.offset)), 
-                                filter: item.offset === 0 ? 'none' : 'brightness(0.5) blur(1px)', 
-                                cursor: item.offset !== 0 && !battlingSkillId ? 'pointer' : 'default',
-                                // Smooth entry/exit transitions along the parabola
-                                transitionTimingFunction: 'cubic-bezier(0.4, 0.0, 0.2, 1)'
-                            }} 
-                            onClick={() => handleCardClick(item.offset)}
-                        >
-                            <SkillCard 
-                                config={item} data={skills[item.id]} themeData={currentThemeData} isCenter={item.offset === 0} isBattling={item.offset === 0 && battlingSkillId === item.id}
-                                mobName={getMobForSkill(item, skills[item.id])} 
-                                mobAura={getAuraForSkill(item, skills[item.id])}
-                                challenge={challengeData} isListening={isListening} spokenText={spokenText} damageNumbers={damageNumbers.filter(d => d.skillId === item.id)}
-                                onStartBattle={() => startBattle(item.id)} onEndBattle={endBattle}
-                                onMathSubmit={(val) => handleSuccessHit(item.id, val)} onMicClick={() => toggleMicListener(item.id)}
-                                difficulty={skills[item.id].difficulty || 1} 
-                                setDifficulty={(newDiff) => setSkillDifficulty(item.id, newDiff)} 
-                                unlockedDifficulty={Math.min(7, Math.floor(skills[item.id].level / 20) + 1)}
-                                selectedBorder={selectedBorder}
-                                borderColor={borderColor}
-                                bossHealing={bossHealing === item.id}
-                            />
-                        </div>
+                            <div
+                                key={item.key}
+                                className="absolute transition-all duration-500 ease-out"
+                                style={style}
+                                onClick={() => handleCardClick(item.offset)}
+                            >
+                                <SkillCard
+                                    skill={skills[item.id]}
+                                    config={SKILL_DATA.find(s => s.id === item.id)}
+                                    // ... rest of your SkillCard props
+                                />
+                            </div>
                         );
                     })}
                 </div>
