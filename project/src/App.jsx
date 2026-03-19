@@ -405,28 +405,9 @@ const App = () => {
     // The startBattle function already sets battleDifficulty correctly
 
     // Check for achievement unlocks
-    const checkAchievements = useCallback((oldStats, newStats, oldSkills, newSkills) => {
-        // Check for newly unlocked one-time achievements
-        const newlyUnlocked = getNewlyUnlockedAchievements(oldStats, newStats, oldSkills, newSkills);
-
-        // Check for tiered achievement progress
-        const newTiers = getNewTierAchievements(oldStats, newStats, oldSkills, newSkills);
-
-        // Show toast for the first achievement/tier unlocked
-        if (newlyUnlocked.length > 0) {
-            // Show first newly unlocked achievement
-            setAchievementToast({ achievementId: newlyUnlocked[0], tierIndex: null });
-            playAchievement();
-        } else if (newTiers.length > 0) {
-            // Show first new tier
-            setAchievementToast({ 
-                achievementId: newTiers[0].achievementId, 
-                tierIndex: newTiers[0].tierIndex 
-            });
-            playAchievement();
-        }
-    }, []);
-
+    // --- REFACTORED HELPERS ---
+    
+    // Helper: Handles death sequence (Nesting Level 2)
     const processPlayerDeath = (activeSkillId) => {
         playDeath();
         setShowDeathOverlay(true);
@@ -437,24 +418,22 @@ const App = () => {
         });
 
         if (activeSkillId) {
-            setSkills(prev => {
-                const cur = prev[activeSkillId];
-                return {
-                    ...prev,
-                    [activeSkillId]: {
-                        ...cur,
-                        level: Math.max(1, cur.level - 1),
-                        lostLevel: cur.level > 1,
-                        recoveryDifficulty: Math.max(1, (cur.difficulty || 1) - 1)
-                    }
-                };
-            });
+            setSkills(prev => ({
+                ...prev,
+                [activeSkillId]: {
+                    ...prev[activeSkillId],
+                    level: Math.max(1, prev[activeSkillId].level - 1),
+                    lostLevel: prev[activeSkillId].level > 1,
+                    recoveryDifficulty: Math.max(1, (prev[activeSkillId].difficulty || 1) - 1)
+                }
+            }));
         }
         setTimeout(() => { setBattlingSkillId(null); setShowDeathOverlay(false); }, 2000);
-        return 10;
+        return 10; // Reset player health
     };
 
-    const processMobDefeat = (skillId, current, skillConfig, xpGained) => {
+    // Helper: Handles Mob Defeat calculations (Nesting Level 2)
+    const processMobDefeat = (skillId, current, config, xpGained) => {
         let { level: nLvl, xp: nXp, difficulty: nDiff, earnedBadges: nBadges, lostLevel: nLost } = current;
         nXp += xpGained;
 
@@ -470,27 +449,40 @@ const App = () => {
             nLvl += Math.floor(nXp / xpReq);
             nXp %= xpReq;
             playLevelUp();
-            if (skillConfig.id !== 'cleaning') {
-                const tier = Math.floor((nLvl - 1) / 20);
-                if (tier > 0 && tier <= 7 && !nBadges.includes(tier)) {
-                    nBadges.push(tier);
-                    nDiff = Math.min(7, nDiff + 1);
-                    setLootBox({ level: nLvl, skillName: skillConfig.fantasyName, item: "New Rank!", img: BASE_ASSETS.badges.Wood });
-                }
+            
+            const tier = Math.floor((nLvl - 1) / 20);
+            if (config.id !== 'cleaning' && tier > 0 && tier <= 7 && !nBadges.includes(tier)) {
+                nBadges.push(tier);
+                nDiff = Math.min(7, nDiff + 1);
+                setLootBox({ level: nLvl, skillName: config.fantasyName, item: "New Rank!", img: BASE_ASSETS.badges.Wood });
             }
         }
 
-        const newHealth = calculateMobHealth(nDiff);
-        return {
+        const newH = calculateMobHealth(nDiff);
+        return { 
             level: nLvl, xp: nXp, difficulty: nDiff, earnedBadges: nBadges, lostLevel: nLost,
-            mobHealth: newHealth, mobMaxHealth: newHealth,
-            currentMob: nLvl % 20 !== 0 ? getRandomMob(current.currentMob) : current.currentMob,
+            mobHealth: newH, mobMaxHealth: newH,
+            currentMob: nLvl % 20 !== 0 ? getRandomMob(current.currentMob) : current.currentMob 
         };
     };
 
+    // Helper: Visual and Audio feedback (Nesting Level 2)
+    const triggerHitVisuals = (skillId, finalDmg, isKill, curMob, isMemory) => {
+        if (isMemory) return;
+        const id = ++damageIdRef.current;
+        setDamageNumbers(p => [...p, { id, skillId, val: finalDmg, x: Math.random() * 100 - 50, y: Math.random() * 50 - 25 }]);
+        setTimeout(() => setDamageNumbers(p => p.filter(n => n.id !== id)), 800);
+        isKill ? playMobDeath(curMob) : playMobHurt(curMob);
+        playSuccessfulHit();
+    };
+
+    // --- REFACTORED MAIN FUNCTION ---
+
     const handleSuccessHit = (skillId, isWrong) => {
+        // 1. Logic for Mistakes/Death
         if (isWrong === 'WRONG') {
-            if (battlingSkillId && getEncounterType(skills[battlingSkillId].level) === 'boss') {
+            const isBoss = battlingSkillId && getEncounterType(skills[battlingSkillId].level) === 'boss';
+            if (isBoss) {
                 setSkills(p => ({ ...p, [battlingSkillId]: { ...p[battlingSkillId], mobHealth: p[battlingSkillId].mobMaxHealth } }));
                 setBossHealing(battlingSkillId);
                 setTimeout(() => setBossHealing(null), BOSS_HEALING_ANIMATION_DURATION);
@@ -501,33 +493,33 @@ const App = () => {
 
         if (!skillId) return;
 
+        // 2. Variable Setup
         const cur = skills[skillId];
         const config = SKILL_DATA.find(s => s.id === skillId);
         const type = getEncounterType(cur.level);
         const dmg = calculateDamage(cur.level, cur.difficulty || 1);
         const isInsta = config.id === 'cleaning' || config.id === 'memory' || (type === 'miniboss' && config.id !== 'cleaning');
+        
         const finalDmg = isInsta ? cur.mobHealth : dmg;
         const willKill = (cur.mobHealth - finalDmg) <= 0;
 
-        if (config.id !== 'memory') {
-            const id = ++damageIdRef.current;
-            setDamageNumbers(p => [...p, { id, skillId, val: finalDmg, x: Math.random() * 100 - 50, y: Math.random() * 50 - 25 }]);
-            setTimeout(() => setDamageNumbers(p => p.filter(n => n.id !== id)), 800);
-            willKill ? playMobDeath(cur.currentMob) : playMobHurt(cur.currentMob);
-            playSuccessfulHit();
-        }
+        // 3. Execution
+        triggerHitVisuals(skillId, finalDmg, willKill, cur.currentMob, config.id === 'memory');
 
         setSkills(prev => {
             const state = prev[skillId];
             if (willKill) {
-                setStats(ps => ({ ...ps, battlesThisSession: (ps.battlesThisSession || 0) + 1 })); 
+                setStats(ps => ({ ...ps, battlesThisSession: (ps.battlesThisSession || 0) + 1 }));
                 const updates = processMobDefeat(skillId, state, config, calculateXPReward(state.difficulty, state.level));
                 return { ...prev, [skillId]: { ...state, ...updates } };
             }
-            const xpTick = Math.floor(calculateXPReward(state.difficulty, state.level) / Math.ceil(state.mobMaxHealth / (isInsta ? state.mobMaxHealth : dmg)));
+            // Partial XP Reward
+            const hits = Math.ceil(state.mobMaxHealth / (isInsta ? state.mobMaxHealth : dmg));
+            const xpTick = Math.floor(calculateXPReward(state.difficulty, state.level) / hits);
             return { ...prev, [skillId]: { ...state, mobHealth: state.mobHealth - finalDmg, xp: state.xp + xpTick } };
         });
 
+        // 4. Next Challenge Logic
         if (config.id === 'memory') {
             setBattlingSkillId(null);
         } else if (config.hasChallenge) {
@@ -535,63 +527,6 @@ const App = () => {
             if (config.challengeType === 'reading') setSpokenText('');
         }
     };
-
-    // Helper function to set difficulty for a specific skill
-    const setSkillDifficulty = (skillId, newDiff) => {
-        setSkills(prev => {
-            const current = prev[skillId];
-            const newMobMaxHealth = calculateMobHealth(newDiff);
-            return {
-                ...prev,
-                [skillId]: {
-                    ...current,
-                    difficulty: newDiff,
-                    mobHealth: newMobMaxHealth,
-                    mobMaxHealth: newMobMaxHealth
-                }
-            };
-        });
-    };
-
-    // Wrapper for setActiveTheme to track theme changes
-    const handleThemeChange = useCallback((newTheme) => {
-        if (newTheme !== activeTheme) {
-            setActiveTheme(newTheme);
-            setStats(prevStats => {
-                const newStats = {
-                    ...prevStats,
-                    themeChanges: (prevStats.themeChanges || 0) + 1
-                };
-
-                // Check achievements
-                setTimeout(() => {
-                    checkAchievements(prevStats, newStats, skills, skills);
-                }, 100);
-
-                return newStats;
-            });
-        }
-    }, [activeTheme, skills, checkAchievements]);
-
-    // Wrapper for setSelectedBorder to track border changes
-    const handleBorderChange = useCallback((newBorder) => {
-        if (newBorder !== selectedBorder) {
-            setSelectedBorder(newBorder);
-            setStats(prevStats => {
-                const newStats = {
-                    ...prevStats,
-                    borderChanges: (prevStats.borderChanges || 0) + 1
-                };
-
-                // Check achievements
-                setTimeout(() => {
-                    checkAchievements(prevStats, newStats, skills, skills);
-                }, 100);
-
-                return newStats;
-            });
-        }
-    }, [selectedBorder, skills, checkAchievements]);
 
     // Award a free level from phantom click
     const handlePhantomLevelAward = (skillId) => {
