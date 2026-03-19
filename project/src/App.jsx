@@ -490,11 +490,31 @@ const App = () => {
 
     // Helper: Visual and Audio feedback (Nesting Level 2)
     const triggerHitVisuals = (skillId, finalDmg, isKill, curMob, isMemory) => {
-        if (isMemory) return;
+         // 1. Guard clause (Depth 0)
+         if (isMemory) return;
+
+        // 2. Prepare Data
         const id = ++damageIdRef.current;
-        setDamageNumbers(p => [...p, { id, skillId, val: finalDmg, x: Math.random() * 100 - 50, y: Math.random() * 50 - 25 }]);
-        setTimeout(() => setDamageNumbers(p => p.filter(n => n.id !== id)), 800);
-        isKill ? playMobDeath(curMob) : playMobHurt(curMob);
+        const x = Math.random() * 100 - 50;
+        const y = Math.random() * 50 - 25;
+        const newDamage = { id, skillId, val: finalDmg, x, y };
+
+        // 3. Add damage number (Depth 1)
+        setDamageNumbers(prev => [...prev, newDamage]);
+
+        // 4. Cleanup Logic (Extracted to keep nesting shallow)
+        const removeDamageNumber = () => {
+            setDamageNumbers(currentList => 
+                currentList.filter(n => n.id !== id)
+            );
+        };
+        setTimeout(removeDamageNumber, 800);
+        // 5. Audio Feedback
+        if (isKill) {
+            playMobDeath(curMob);
+        } else {
+            playMobHurt(curMob);
+        }
         playSuccessfulHit();
     };
 
