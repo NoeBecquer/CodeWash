@@ -8,15 +8,9 @@ import {
 import GlobalStyles from './components/ui/GlobalStyles';
 import SafeImage from './components/ui/SafeImage';
 import PixelHeart from './components/ui/PixelHeart';
-import ResetModal from './components/modals/ResetModal';
-import BugReportModal from './components/modals/BugReportModal';
-import SettingsDrawer from './components/drawers/SettingsDrawer';
-import CosmeticsDrawer from './components/drawers/CosmeticsDrawer';
-import MenuDrawer from './components/drawers/MenuDrawer';
-import SkillCard from './components/skills/SkillCard';
 import PhantomEvent from './components/PhantomEvent';
 import AchievementToast from './components/ui/AchievementToast';
-
+import MainHUD from './components/layout/MainHUD';
 // Utils & Constants
 import { getRandomMob, getRandomFriendlyMob, getRandomMiniboss, getRandomBoss, getMobForSkill, getEncounterType, generateMathProblem, getReadingWord, getWordForDifficulty, normalizeText, calculateDamage, calculateMobHealth, calculateXPReward, calculateXPToLevel } from './utils/gameUtils';
 import { getRandomAura } from './utils/mobDisplayUtils';
@@ -25,8 +19,7 @@ import {
     HOMOPHONES, HOSTILE_MOBS
 } from './constants/gameData';
 import {
-    getBGMManager, setSfxVolume,
-    playActionCardLeft, playActionCardRight, playClick, 
+    getBGMManager, setSfxVolume, playClick, 
     playDeath, playFail, playLevelUp, playNotification, playSuccessfulHit,
     playMobHurt, playMobDeath, playAchievement
 } from './utils/soundManager';
@@ -34,6 +27,8 @@ import {
     getDefaultStats, getNewlyUnlockedAchievements, getNewTierAchievements,
     addUniqueToArray, isAchievementUnlocked
 } from './utils/achievementUtils';
+import GameCarousel from './components/layout/GameCarousel';
+
 
 // Parent verification privilege constants
 const PARENT_PRIVILEGE_LEVEL = 200;
@@ -235,20 +230,12 @@ const App = () => {
     const [battleDifficulty, setBattleDifficulty] = useState(null); // Track battle's starting difficulty for consistent challenge generation
     const [challengeData, setChallengeData] = useState(null);
     const [lootBox, setLootBox] = useState(null); 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const [isCosmeticsOpen, setIsCosmeticsOpen] = useState(false);
-    const [isResetOpen, setIsResetOpen] = useState(false);
-    const [isBugReportOpen, setIsBugReportOpen] = useState(false);
     const [isListening, setIsListening] = useState(false);
     const [spokenText, setSpokenText] = useState("");
     const [damageNumbers, setDamageNumbers] = useState([]);
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const [isDragging, setIsDragging] = useState(false);
-    const [dragStartX, setDragStartX] = useState(0);
     const [showDeathOverlay, setShowDeathOverlay] = useState(false);
     const [showLevelRestored, setShowLevelRestored] = useState(false);
-    const [isFullscreen, setIsFullscreen] = useState(false);
     const [bossHealing, setBossHealing] = useState(null); // skillId of boss being healed
     const recognitionRef = useRef(null);
     const challengeDataRef = useRef(null);
@@ -334,39 +321,12 @@ const App = () => {
         challengeDataRef.current = challengeData;
     }, [challengeData]);
 
-    // Listen for fullscreen changes
-    useEffect(() => {
-        const handleFullscreenChange = () => {
-            setIsFullscreen(!!document.fullscreenElement);
-        };
-
-        document.addEventListener('fullscreenchange', handleFullscreenChange);
-
-        return () => {
-            document.removeEventListener('fullscreenchange', handleFullscreenChange);
-        };
-    }, []);
-
     // Start BGM on first user interaction
     const startBGM = useCallback(() => {
         if (!bgmManager.current.isPlaying) {
             bgmManager.current.play();
         }
     }, []);
-
-    // Toggle fullscreen mode
-    const toggleFullscreen = () => {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(err => {
-                console.warn('Failed to enter fullscreen:', err);
-            });
-        } else {
-            document.exitFullscreen().catch(err => {
-                console.warn('Failed to exit fullscreen:', err);
-            });
-        }
-        playClick();
-    };
 
     const generateChallenge = (type, diff) => {
         const locale = i18n.language;
@@ -1125,39 +1085,6 @@ const App = () => {
     const currentThemeData = THEME_CONFIG[activeTheme] || THEME_CONFIG.minecraft;
     const containerStyle = { ...currentThemeData.style, fontFamily: '"VT323", monospace' };
 
-    // Drag handlers for carousel navigation
-    const handleDragStart = (clientX) => {
-        if (battlingSkillId) return;
-        setIsDragging(true);
-        setDragStartX(clientX);
-    };
-    const handleDragMove = (clientX) => {
-        if (!isDragging || battlingSkillId) return;
-        const diff = dragStartX - clientX;
-        if (Math.abs(diff) >= 100) {
-            if (diff > 0) {
-                setSelectedIndex(p => p + 1);
-                playActionCardRight();
-            } else {
-                setSelectedIndex(p => p - 1);
-                playActionCardLeft();
-            }
-            setIsDragging(false);
-        }
-    };
-    const handleDragEnd = () => {
-        setIsDragging(false);
-    };
-    const handleCardClick = (offset) => {
-        if (battlingSkillId || offset === 0) return;
-        setSelectedIndex(p => p + offset);
-        if (offset > 0) {
-            playActionCardRight();
-        } else {
-            playActionCardLeft();
-        }
-    };
-
     // Helper to get the aura for the current mob encounter
     const getAuraForSkill = (skillConfig, userSkill) => {
         // Memory and Cleaning don't use auras
@@ -1189,40 +1116,8 @@ const App = () => {
     return (
         <div className="min-h-screen overflow-hidden relative flex flex-col bg-cover bg-center bg-no-repeat font-sans text-stone-100" style={containerStyle}>
             <GlobalStyles />
-            <div className="absolute inset-0 bg-black/30 pointer-events-none z-0"></div>
-            
-            {/* Top Left Buttons */}
-            {/* Button dimensions: p-3 (12px) + icon(48px) + p-3 (12px) + border-2*2 (4px) = 76px + 8px gap = 84px spacing */}
-            <button 
-                onClick={() => { setIsMenuOpen(false); setIsCosmeticsOpen(false); setIsSettingsOpen(true); playClick(); }} 
-                className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg" 
-                style={{ top: '24px', left: '24px' }}
-                data-cy="settings-button"
-            >
-                <Settings size={48} className="text-slate-400" />
-            </button>
-            <button 
-                onClick={() => { setIsMenuOpen(false); setIsSettingsOpen(false); setIsCosmeticsOpen(true); playClick(); }} 
-                className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg" 
-                style={{ top: '24px', left: 'calc(24px + 76px + 12px)' }}
-                data-cy="theme-button"
-            >
-                <Sparkles size={48} className="text-purple-400" />
-            </button>
-            
-            {/* Player Health Display - Centered */}
-            <div className="absolute z-40 flex gap-1.5" style={{ bottom: '20px', left: '50%', transform: 'translateX(-50%)' }}>{Array(10).fill(0).map((_, i) => (<PixelHeart key={i} size={48} filled={i < playerHealth} />))}</div>
-            
-            {/* Cosmetics drawer overlay - click to close */}
-            {isCosmeticsOpen && (
-                <div
-                    className="fixed inset-0 bg-black/50 z-40"
-                    onClick={() => { setIsCosmeticsOpen(false); playClick(); }}
-                />
-            )}
-            <CosmeticsDrawer 
-                isOpen={isCosmeticsOpen} 
-                activeTheme={activeTheme} 
+            <MainHUD
+                activeTheme={activeTheme}
                 setActiveTheme={handleThemeChange}
                 selectedBorder={selectedBorder}
                 setSelectedBorder={handleBorderChange}
@@ -1230,73 +1125,24 @@ const App = () => {
                 setBorderColor={setBorderColor}
                 unlockedBorders={unlockedBorders}
                 unlockedAchievements={unlockedAchievements}
-            />
-            
-            {/* Settings drawer overlay - click to close */}
-            {isSettingsOpen && (
-                <div
-                    className="fixed inset-0 bg-black/50 z-40"
-                    onClick={() => { setIsSettingsOpen(false); playClick(); }}
+                bgmVol={bgmVol}
+                setBgmVol={setBgmVol}
+                sfxVol={sfxVol}
+                setSfxVol={setSfxVolState}
+                currentProfile={currentProfile}
+                onSwitchProfile={handleSwitchProfile}
+                profileNames={profileNames}
+                onRenameProfile={handleRenameProfile}
+                getProfileStats={getProfileStats}
+                parentStatus={parentStatus}
+                onParentVerified={handleParentVerified}
+                skills={skills}
+                stats={stats}
+                onReset={handleReset}
                 />
-            )}
-            <SettingsDrawer 
-                isOpen={isSettingsOpen} 
-                onReset={() => setIsResetOpen(true)} 
-                bgmVol={bgmVol} 
-                setBgmVol={setBgmVol} 
-                sfxVol={sfxVol} 
-                setSfxVol={setSfxVolState} 
-                currentProfile={currentProfile} 
-                onSwitchProfile={handleSwitchProfile} 
-                profileNames={profileNames} 
-                onRenameProfile={handleRenameProfile} 
-                getProfileStats={getProfileStats} 
-                parentStatus={parentStatus} 
-                onParentVerified={handleParentVerified} 
-                currentSkills={skills} 
-            />
-            <ResetModal isOpen={isResetOpen} onClose={() => setIsResetOpen(false)} onConfirm={handleReset} />
-            <BugReportModal isOpen={isBugReportOpen} onClose={() => setIsBugReportOpen(false)} />
-            
-            {/* Top Right Buttons */}
-            {/* Button dimensions: p-3 (12px) + icon(48px) + p-3 (12px) + border-2*2 (4px) = 76px + 8px gap = 84px spacing */}
-            <button 
-                onClick={toggleFullscreen} 
-                className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg" 
-                style={{ top: '24px', right: 'calc(24px + 76px + 12px)' }} 
-                aria-label={isFullscreen ? t('fullscreen.exit') : t('fullscreen.enter')}
-                title={isFullscreen ? t('fullscreen.exit') : t('fullscreen.enter')}
-                data-cy="fullscreen-button"
-            >
-                {isFullscreen ? <Minimize size={48} /> : <Maximize size={48} />}
-            </button>
-            <button 
-                onClick={() => { setIsSettingsOpen(false); setIsCosmeticsOpen(false); setIsMenuOpen(true); playClick(); }} 
-                className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg" 
-                style={{ top: '24px', right: '24px' }}
-                data-cy="achievement-button"
-            >
-                <Menu size={48} />
-            </button>
-            
-            {/* Achievement drawer overlay - click to close */}
-            {isMenuOpen && (
-                <div
-                    className="fixed inset-0 bg-black/50 z-40"
-                    onClick={() => { setIsMenuOpen(false); playClick(); }}
-                />
-            )}
-            <MenuDrawer isOpen={isMenuOpen} skills={skills} stats={stats} />
-            
-            {/* Bottom Right Bug Report Button */}
-            <button 
-                onClick={() => { setIsMenuOpen(false); setIsCosmeticsOpen(false); setIsSettingsOpen(false); setIsBugReportOpen(true); playClick(); }} 
-                className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg" 
-                style={{ bottom: '24px', right: '24px' }}
-                data-cy="bug-button"
-            >
-                <Bug size={48} className="text-red-400" />
-            </button>
+            <div className="absolute inset-0 bg-black/30 pointer-events-none z-0"></div>
+            {/* Player Health Display - Centered */}
+            <div className="absolute z-40 flex gap-1.5" style={{ bottom: '20px', left: '50%', transform: 'translateX(-50%)' }}>{Array(10).fill(0).map((_, i) => (<PixelHeart key={i} size={48} filled={i < playerHealth} />))}</div>
             
             {/* Backdrop overlay when battling - click to exit */}
             {battlingSkillId && (
@@ -1310,117 +1156,29 @@ const App = () => {
                 <div className="z-10 relative mb-[-30px] md:mb-[-50px] pointer-events-none opacity-90"><SafeImage src={currentThemeData.assets.logo} fallbackSrc="https://placehold.co/800x300/333/FFD700?text=LOGO+PLACEHOLDER&font=monsterrat" alt="Game Logo" className="w-[480px] md:w-[720px] lg:w-[960px] object-contain drop-shadow-2xl" /></div>
                 <h1 className="text-9xl text-yellow-400 tracking-widest uppercase mt-[-20px] mb-[95px] z-20 relative drop-shadow-[4px_4px_0_#000]" style={{ textShadow: '6px 6px 0 #000' }}>Level Up!</h1>
                 
-                {/* Left Chevron - Parenthesis style with gradient fade */}
-                <button 
-                    onClick={() => {setSelectedIndex(p => p - 1); playActionCardLeft();}} 
-                    className="flex absolute left-0 z-30 items-center justify-center h-full"
-                    style={{ 
-                        background: 'linear-gradient(to right, rgba(100, 100, 100, 0.6), transparent)',
-                        width: '80px',
-                        padding: '0'
-                    }}
-                >
-                    <svg 
-                        width="60" 
-                        height="450" 
-                        viewBox="0 0 60 450" 
-                        className="animate-chevron-left"
-                        style={{ opacity: 0.8 }}
-                    >
-                        <path 
-                            d="M 50 25 Q 15 225 50 425" 
-                            stroke="rgba(150, 150, 150, 0.9)" 
-                            strokeWidth="8" 
-                            fill="none" 
-                            strokeLinecap="round"
-                        />
-                    </svg>
-                </button>
-                
-                {/* Right Chevron - Parenthesis style with gradient fade */}
-                <button 
-                    onClick={() => {setSelectedIndex(p => p + 1); playActionCardRight();}} 
-                    className="flex absolute right-0 z-30 items-center justify-center h-full"
-                    style={{ 
-                        background: 'linear-gradient(to left, rgba(100, 100, 100, 0.6), transparent)',
-                        width: '80px',
-                        padding: '0'
-                    }}
-                >
-                    <svg 
-                        width="60" 
-                        height="450" 
-                        viewBox="0 0 60 450" 
-                        className="animate-chevron-right"
-                        style={{ opacity: 0.8 }}
-                    >
-                        <path 
-                            d="M 10 25 Q 45 225 10 425" 
-                            stroke="rgba(150, 150, 150, 0.9)" 
-                            strokeWidth="8" 
-                            fill="none" 
-                            strokeLinecap="round"
-                        />
-                    </svg>
-                </button>
-                <div 
-                    className={`relative w-full flex items-center justify-center perspective-1000 h-[650px] mb-12 ${battlingSkillId ? 'z-50' : ''}`}
-                    style={{ cursor: battlingSkillId ? 'default' : (isDragging ? 'grabbing' : 'grab') }}
-                    onMouseDown={(e) => handleDragStart(e.clientX)}
-                    onMouseMove={(e) => handleDragMove(e.clientX)}
-                    onMouseUp={handleDragEnd}
-                    onMouseLeave={handleDragEnd}
-                    onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
-                    onTouchMove={(e) => { e.preventDefault(); handleDragMove(e.touches[0].clientX); }}
-                    onTouchEnd={handleDragEnd}
-                >
-                    {getVisibleItems().map((item) => {
-                        const isItemBattling = item.offset === 0 && battlingSkillId === item.id;
-                        // Calculate curved positioning based on offset
-                        const getVerticalOffset = (offset) => {
-                            if (offset === 0) return -55; // Center card lowered by 5px (was -60)
-                            if (Math.abs(offset) === 1) return -30; // Adjacent cards at intermediate height
-                            if (Math.abs(offset) === 2) return 20; // Outer cards at lowest position
-                            return 75; // Hidden positions (±3) - off-screen, continuing the parabolic curve
-                        };
-                        const translateY = getVerticalOffset(item.offset);
-                        // Add subtle rotation for 3D effect - negative values warp outward
-                        const rotateX = Math.abs(item.offset) === 3 ? -12 : (Math.abs(item.offset) === 2 ? -8 : (Math.abs(item.offset) === 1 ? -4 : 0));
-                        
-                        return (
-                        <div 
-                            key={item.key}
-                            data-active={item.offset === 0}
-                            className="absolute transition-all duration-500 ease-out" 
-                            style={{ 
-                                transform: `translateX(${item.offset * 320}px) translateY(${translateY}px) rotateX(${rotateX}deg) scale(${item.offset === 0 ? 1.1 : 0.85})`, 
-                                opacity: item.offset === 0 ? 1 : (Math.abs(item.offset) === 3 ? 0 : (Math.abs(item.offset) === 2 ? 0.3 : 0.6)), 
-                                zIndex: isItemBattling ? 50 : (item.offset === 0 ? 20 : 10 - Math.abs(item.offset)), 
-                                filter: item.offset === 0 ? 'none' : 'brightness(0.5) blur(1px)', 
-                                cursor: item.offset !== 0 && !battlingSkillId ? 'pointer' : 'default',
-                                // Smooth entry/exit transitions along the parabola
-                                transitionTimingFunction: 'cubic-bezier(0.4, 0.0, 0.2, 1)'
-                            }} 
-                            onClick={() => handleCardClick(item.offset)}
-                        >
-                            <SkillCard 
-                                config={item} data={skills[item.id]} themeData={currentThemeData} isCenter={item.offset === 0} isBattling={item.offset === 0 && battlingSkillId === item.id}
-                                mobName={getMobForSkill(item, skills[item.id])} 
-                                mobAura={getAuraForSkill(item, skills[item.id])}
-                                challenge={challengeData} isListening={isListening} spokenText={spokenText} damageNumbers={damageNumbers.filter(d => d.skillId === item.id)}
-                                onStartBattle={() => startBattle(item.id)} onEndBattle={endBattle}
-                                onMathSubmit={(val) => handleSuccessHit(item.id, val)} onMicClick={() => toggleMicListener(item.id)}
-                                difficulty={skills[item.id].difficulty || 1} 
-                                setDifficulty={(newDiff) => setSkillDifficulty(item.id, newDiff)} 
-                                unlockedDifficulty={Math.min(7, Math.floor(skills[item.id].level / 20) + 1)}
-                                selectedBorder={selectedBorder}
-                                borderColor={borderColor}
-                                bossHealing={bossHealing === item.id}
-                            />
-                        </div>
-                        );
-                    })}
-                </div>
+                    <GameCarousel
+                      skills={skills}
+                      selectedIndex={selectedIndex}
+                      setSelectedIndex={setSelectedIndex}
+                      battlingSkillId={battlingSkillId}
+                      challengeData={challengeData}
+                      isListening={isListening}
+                      spokenText={spokenText}
+                      damageNumbers={damageNumbers}
+                      selectedBorder={selectedBorder}
+                      borderColor={borderColor}
+                      bossHealing={bossHealing}
+
+                      startBattle={startBattle}
+                      endBattle={endBattle}
+                      handleSuccessHit={handleSuccessHit}
+                      toggleMicListener={toggleMicListener}
+                      setSkillDifficulty={setSkillDifficulty}
+
+                      getVisibleItems={getVisibleItems}
+                      getAuraForSkill={getAuraForSkill}
+                      currentThemeData={currentThemeData}
+                    />
             </main>
             {lootBox && <div className="fixed bottom-8 left-1/2 z-50 animate-toast w-full max-w-2xl pointer-events-none transform -translate-x-1/2"><div className="bg-black/80 border-4 border-yellow-500 rounded-full p-4 px-12 flex items-center justify-between shadow-[0_0_30px_rgba(255,215,0,0.6)] backdrop-blur-md mx-4"><div className="flex items-center gap-4"><div className="bg-yellow-500/20 p-3 rounded-full border-2 border-yellow-400"><Gift size={32} className="text-yellow-300 animate-bounce" /></div><div className="text-left"><h2 className="text-2xl text-yellow-400 font-bold leading-none mb-1">{t('battle.level_reached', { level: lootBox.level })}</h2><p className="text-stone-300 text-sm">{lootBox.skillName}</p></div></div><div className="text-right pl-8 border-l-2 border-stone-600 flex items-center gap-4"><SafeImage src={lootBox.img} alt="Badge" className="w-12 h-12 object-contain" /><div><p className="text-stone-400 text-xs uppercase tracking-wider">{t('battle.unlocked_item')}</p><p className="text-2xl text-green-400 font-bold">{lootBox.item}</p></div></div></div></div>}
             
