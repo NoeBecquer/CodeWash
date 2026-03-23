@@ -1,4 +1,39 @@
-import { HOSTILE_MOBS, FRIENDLY_MOBS, CHEST_BLOCKS, SPECIAL_CHESTS, MINIBOSS_MOBS, BOSS_MOBS, READING_WORDS, FUNNY_LONG_WORDS, SPELLING_ITEMS, DIFFICULTY_CONTENT, BASE_ASSETS, WRITING_WORD_INDEX, WRITING_DIFFICULTY_POOLS } from '../constants/gameData';
+import { HOSTILE_MOBS, FRIENDLY_MOBS, CHEST_BLOCKS, SPECIAL_CHESTS, MINIBOSS_MOBS, BOSS_MOBS, DIFFICULTY_CONTENT } from '../constants/gameData';
+import gameContentEn from '../locales/en/gameContent.json';
+import gameContentFr from '../locales/fr/gameContent.json';
+import gameContentAr from '../locales/ar/gameContent.json';
+import gameContentBn from '../locales/bn/gameContent.json';
+import gameContentEs from '../locales/es/gameContent.json';
+import gameContentHi from '../locales/hi/gameContent.json';
+import gameContentPt from '../locales/pt/gameContent.json';
+import gameContentRu from '../locales/ru/gameContent.json';
+import gameContentUr from '../locales/ur/gameContent.json';
+import gameContentZh from '../locales/zh/gameContent.json';
+
+const GAME_CONTENT = {
+    en: gameContentEn,
+    fr: gameContentFr,
+    ar: gameContentAr,
+    bn: gameContentBn,
+    es: gameContentEs,
+    hi: gameContentHi,
+    pt: gameContentPt,
+    ru: gameContentRu,
+    ur: gameContentUr,
+    zh: gameContentZh,
+};
+
+const buildWritingDifficultyPools = (wordIndex) => ({
+    1: wordIndex.filter(w => w.length >= 3 && w.length <= 5),
+    2: wordIndex.filter(w => w.length >= 5 && w.length <= 7),
+    3: wordIndex.filter(w => w.length >= 6 && w.length <= 8),
+    4: wordIndex.filter(w => w.length >= 7 && w.length <= 10),
+    5: wordIndex.filter(w => w.length >= 9 && w.length <= 15),
+});
+
+// Normalize text for comparison: strip diacritics, uppercase
+// Allows matching "CHÂTEAU" === "CHATEAU", "CAFÉ" === "CAFE"
+export const normalizeText = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
 
 export const getRandomMob = (exclude) => { 
     const pool = Object.keys(HOSTILE_MOBS).filter(m => m !== exclude); 
@@ -167,14 +202,15 @@ export const calculateXPToLevel = (difficulty, playerLevel) => {
 
 // ===== Reading Word Selection =====
 
-// Get a reading word based on difficulty level
-export const getReadingWord = (difficulty) => {
+// Get a reading word based on difficulty level and locale
+export const getReadingWord = (difficulty, locale = 'en') => {
+    const content = GAME_CONTENT[locale] || GAME_CONTENT['en'];
     if (difficulty === 7) {
-        return FUNNY_LONG_WORDS[Math.floor(Math.random() * FUNNY_LONG_WORDS.length)];
+        return content.funnyLongWords[Math.floor(Math.random() * content.funnyLongWords.length)];
     }
     const config = DIFFICULTY_CONTENT.reading[difficulty] || DIFFICULTY_CONTENT.reading[1];
-    const charLength = config.charLength || 3;
-    const words = READING_WORDS[charLength] || READING_WORDS[3];
+    const charLength = String(config.charLength || 3);
+    const words = content.readingWords[charLength] || content.readingWords['3'];
     return words[Math.floor(Math.random() * words.length)];
 };
 
@@ -288,77 +324,21 @@ export const generateMathProblem = (difficulty) => {
 
 // ===== Writing/Spelling Item Selection =====
 
-// Get a word from the appropriate difficulty pool
-// Uses difficulty pools with overlapping character ranges to ensure variety
-export const getWordForDifficulty = (difficulty) => {
+// Get a word from the appropriate difficulty pool, locale-aware
+export const getWordForDifficulty = (difficulty, locale = 'en') => {
+    const content = GAME_CONTENT[locale] || GAME_CONTENT['en'];
+    const pools = buildWritingDifficultyPools(content.writingWordIndex);
     // Map difficulty (1-7) to pool (1-5), with difficulties 6-7 using pool 5
     const poolNumber = Math.min(difficulty, 5);
-    const pool = WRITING_DIFFICULTY_POOLS[poolNumber];
-    
+    const pool = pools[poolNumber];
+
     if (!pool || pool.length === 0) {
-        // Fallback to difficulty 1 pool if something goes wrong
-        const fallbackPool = WRITING_DIFFICULTY_POOLS[1];
+        const fallbackPool = pools[1];
         const item = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
-        return {
-            word: item.word.toUpperCase(),
-            displayName: item.displayName,
-            image: item.imagePath
-        };
+        return { word: item.word.toUpperCase(), displayName: item.displayName, image: item.imagePath };
     }
-    
-    // Select a random word from the pool
+
     const item = pool[Math.floor(Math.random() * pool.length)];
-    return {
-        word: item.word.toUpperCase(),
-        displayName: item.displayName,
-        image: item.imagePath
-    };
+    return { word: item.word.toUpperCase(), displayName: item.displayName, image: item.imagePath };
 };
 
-// Legacy function: Get items for a target character length
-// This is kept for backward compatibility but now uses the comprehensive word index
-// Returns single item or combination of items
-export const getItemsForLength = (targetLength) => {
-    // First, try to find a single item matching the length from the comprehensive index
-    const matchingWords = WRITING_WORD_INDEX.filter(item => item.length === targetLength);
-    if (matchingWords.length > 0) {
-        const item = matchingWords[Math.floor(Math.random() * matchingWords.length)];
-        return {
-            items: [{ word: item.word.toUpperCase(), length: item.length }],
-            combinedAnswer: item.word.toUpperCase(),
-            images: [item.imagePath]
-        };
-    }
-    
-    // If no single item, try combinations
-    // For simplicity, try combining two items
-    for (let i = 0; i < SPELLING_ITEMS.length; i++) {
-        for (let j = 0; j < SPELLING_ITEMS.length; j++) {
-            if (i !== j) {
-                const item1 = SPELLING_ITEMS[i];
-                const item2 = SPELLING_ITEMS[j];
-                if (item1.length + item2.length === targetLength) {
-                    return {
-                        items: [item1, item2],
-                        combinedAnswer: item1.word + item2.word,
-                        images: [
-                            BASE_ASSETS.items[item1.word] || BASE_ASSETS.items['TNT'],
-                            BASE_ASSETS.items[item2.word] || BASE_ASSETS.items['TNT']
-                        ]
-                    };
-                }
-            }
-        }
-    }
-    
-    // Fallback: return the closest single item from comprehensive index
-    const sortedByLength = [...WRITING_WORD_INDEX].sort((a, b) => 
-        Math.abs(a.length - targetLength) - Math.abs(b.length - targetLength)
-    );
-    const fallbackItem = sortedByLength[0];
-    return {
-        items: [{ word: fallbackItem.word.toUpperCase(), length: fallbackItem.length }],
-        combinedAnswer: fallbackItem.word.toUpperCase(),
-        images: [fallbackItem.imagePath]
-    };
-};

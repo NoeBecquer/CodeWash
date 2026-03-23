@@ -1,0 +1,299 @@
+{
+  "settings": {
+    "title": "设置",
+    "select_file": "选择文件",
+    "audio_configuration": "音频设置",
+    "music_volume": "音乐音量",
+    "sfx_volume": "音效音量",
+    "danger_zone": "危险区域",
+    "delete_profile_progress": "删除进度",
+    "language": "语言"
+  },
+  "achievements_drawer": {
+    "title": "成就",
+    "total_level": "总等级：",
+    "badges": "徽章：",
+    "achievements": "成就：",
+    "lvl": "等级",
+    "special_achievements": "特殊成就",
+    "max_tier_reached": "已达到最高等级！",
+    "unlocked": "✓ 已解锁",
+    "locked": "🔒 已锁定",
+    "progress": "进度：",
+    "next": "下一个：",
+    "legendary_badge": "传奇！（等级 180+）"
+  },
+  "cosmetics": {
+    "title": "主题与外观",
+    "theme_select": "选择主题",
+    "border_effects": "边框效果",
+    "active": "已激活",
+    "color": "颜色",
+    "locked_x": "✗ 已锁定",
+    "badge_required": "需要徽章 {{badge}}",
+    "earn_badge_unlock": "获得徽章 {{badge}} 以解锁此效果",
+    "unlocked_check": "✓ 已解锁"
+  },
+  "battle": {
+    "you_died": "你已死亡",
+    "level_minus_1": "等级 -1",
+    "take_a_rest": "休息一下吧...",
+    "level_restored": "等级已恢复！",
+    "welcome_back_hero": "欢迎回来，英雄！",
+    "level_reached": "达到等级 {{level}}！",
+    "unlocked_item": "已解锁",
+    "phantom_bonus": "幽灵奖励！",
+    "new_rank": "新等级！",
+    "hp": "生命值",
+    "xp": "经验值",
+    "battle_header": "⚔ 战斗 ⚔",
+    "target": "目标",
+    "skill_label": "技能",
+    "level_label": "等级",
+    "quest": "任务",
+    "lvl": "等级"
+  },
+  "skill_card": {
+    "tap_to_speak": "点击说话",
+    "complete": "完成！",
+    "skip_manual_success": "跳过 / 手动成功",
+    "round": "回合：",
+    "watch": "观察！",
+    "your_turn": "轮到你了！",
+    "game_over_rounds": "游戏结束！回合数：",
+    "retry": "重试"
+  },
+  "modals": {
+    "delete_progress_title": "删除进度？",
+    "delete_progress_confirm": "确定要删除此档案的所有进度吗？",
+    "delete_progress_irreversible": "此操作无法撤销！",
+    "type_delete_confirm": "输入 DELETE 以确认：",
+    "please_type_delete": "请输入 DELETE 以确认。",
+    "cancel": "取消",
+    "delete": "删除",
+    "bug_title": "发现漏洞了吗？",
+    "bug_subtitle": "哦不……这不太好……",
+    "parental_title": "这是什么？",
+    "parental_error": "答案错误，请重试！",
+    "parental_submit": "确认"
+  },
+  "profile": {
+    "parent": "家长",
+    "parent_question": "你是家长吗？",
+    "skill_proficiency": "技能熟练度",
+    "player_name1": "玩家 1",
+    "player_name2": "玩家 2",
+    "player_name3": "玩家 3",
+    "lv": "等级"
+  },
+  "mic": {
+    "off": "麦克风关闭",
+    "listening": "正在聆听..."
+  },
+  "achievement_toast": {
+    "unlocked": "成就已解锁！",
+    "tier": "等级"
+  },
+  "phantom": {
+    "plus_level": "+1 等级！"
+  },
+  "fullscreen": {
+    "enter": "全屏",
+    "exit": "退出全屏"
+  },
+  "skills": {
+    "reading": {
+      "name": "阅读",
+      "fantasyName": "附魔台",
+      "taskDescription": "念出古老咒语来施展魔法并击败敌人！",
+      "actionName": "附魔！"
+    },
+    "math": {
+      "name": "数学",
+      "fantasyName": "心算",
+      "taskDescription": "激活你的电路来设置陷阱并击败敌人！",
+      "actionName": "计算！"
+    },
+    "writing": {
+      "name": "写作",
+      "fantasyName": "工作台",
+      "taskDescription": "拼写配方来打造传奇武器和护甲！",
+      "actionName": "制作！"
+    },
+    "cleaning": {
+      "name": "整理",
+      "fantasyName": "箱子管理",
+      "taskDescription": "整理你的物品并准备迎接新的冒险！",
+      "actionName": "整理！"
+    },
+    "memory": {
+      "name": "记忆",
+      "fantasyName": "配对孵化",
+      "taskDescription": "找到配对以孵化稀有生物！",
+      "actionName": "匹配！"
+    },
+    "patterns": {
+      "name": "规律",
+      "fantasyName": "逻辑建造",
+      "taskDescription": "破解序列以解锁古老机关和宝藏！",
+      "actionName": "解决！"
+    }
+  },
+  "achievements": {
+    "phantom_hunter": {
+      "name": "幽灵猎手",
+      "description": "捕捉幽灵"
+    },
+    "combined_levels": {
+      "name": "终极力量",
+      "description": "达到高综合等级"
+    },
+    "skill_mastery": {
+      "name": "全能高手",
+      "description": "均衡提升所有技能"
+    },
+    "first_steps": {
+      "name": "初出茅庐",
+      "description": "击败第一个敌人"
+    },
+    "level_up": {
+      "name": "升级！",
+      "description": "在任意技能达到等级 2"
+    },
+    "fashion_forward": {
+      "name": "时尚达人",
+      "description": "首次更换主题"
+    },
+    "framed": {
+      "name": "装饰完成！",
+      "description": "首次更换边框效果"
+    },
+    "ouch": {
+      "name": "哎呀！",
+      "description": "首次死亡"
+    },
+    "dragon_slayer": {
+      "name": "屠龙者",
+      "description": "击败第一个Boss"
+    },
+    "mini_menace": {
+      "name": "小威胁",
+      "description": "击败第一个小Boss"
+    },
+    "mini_master": {
+      "name": "小Boss大师",
+      "description": "至少击败所有小Boss一次"
+    },
+    "world_ender": {
+      "name": "世界终结者",
+      "description": "至少击败所有Boss一次"
+    },
+    "monster_manual": {
+      "name": "怪物图鉴",
+      "description": "至少击败所有普通怪物一次"
+    },
+    "perfectionist": {
+      "name": "完美主义者",
+      "description": "无错误完成记忆游戏"
+    },
+    "speed_demon": {
+      "name": "速度之王",
+      "description": "在一次会话中完成10场战斗"
+    },
+    "dedicated": {
+      "name": "坚持者",
+      "description": "在3天内进行游戏"
+    },
+    "high_roller": {
+      "name": "高手",
+      "description": "在任意技能达到难度7"
+    },
+    "badge_collector": {
+      "name": "徽章收藏家",
+      "description": "获得第一个徽章"
+    },
+    "full_set": {
+      "name": "完整收藏",
+      "description": "在一个技能中获得所有徽章等级"
+    }
+  },
+  "borders": {
+    "solid": { "name": "默认", "description": "永恒金色光辉" },
+    "solid-picker": { "name": "默认", "description": "可自定义光辉" },
+    "gradient": { "name": "铜色", "description": "神秘旋转效果" },
+    "sparkle": { "name": "云雾", "description": "星尘闪烁" },
+    "electric": { "name": "避雷针", "description": "电能爆发" },
+    "lifestream": { "name": "生命流", "description": "流动能量" },
+    "frost": { "name": "霜冻", "description": "冰晶之美" },
+    "fire": { "name": "熔岩", "description": "烈焰之怒" },
+    "shadow": { "name": "下界传送门", "description": "虚空低语" },
+    "rainbow": { "name": "传奇！", "description": "彩虹光环" },
+    "livewire": { "name": "电线", "description": "电弧闪烁" },
+    "void": { "name": "宇宙虚空", "description": "无限空间" },
+    "toxic": { "name": "毒性", "description": "腐蚀液滴" },
+    "holo": { "name": "全息", "description": "数字故障" },
+    "crystal": { "name": "水晶", "description": "晶体网络" }
+  },
+  "game": {
+    "spell_it": "拼写单词！",
+    "simon_says": "西蒙说！",
+    "find_pairs": "找配对！",
+    "task_complete": "任务完成了吗？"
+  },
+  "tier_names": {
+    "0": "青铜",
+    "1": "白银",
+    "2": "黄金",
+    "3": "铂金",
+    "4": "翡翠",
+    "5": "钻石",
+    "6": "传奇",
+    "7": "神话"
+  },
+  "badges": {
+    "wood": "Wood",
+    "stone": "Stone",
+    "gold": "Gold",
+    "iron": "Iron",
+    "emerald": "Emerald",
+    "diamond": "Diamond",
+    "netherite": "Netherite",
+    "obsidian": "Obsidian"
+  },
+  "mobs": {
+    "blaze": "Blaze",
+    "bogged": "Bogged",
+    "breeze": "Breeze",
+    "creeper": "Creeper",
+    "drowned": "Drowned",
+    "enderman": "Enderman",
+    "evoker": "Evoker",
+    "ghast": "Ghast",
+    "guardian": "Guardian",
+    "hoglin": "Hoglin",
+    "magma_cube": "Magma Cube",
+    "parched": "Parched",
+    "phantom": "Phantom",
+    "piglin": "Piglin",
+    "pillager": "Pillager",
+    "skeleton": "Skeleton",
+    "slime": "Slime",
+    "spider": "Spider",
+    "witch": "Witch",
+    "zombie": "Zombie",
+    "ender_dragon": "Ender Dragon",
+    "herobrine": "Herobrine",
+    "warden": "Warden",
+    "wither": "Wither",
+    "creaking": "Creaking",
+    "elder_guardian": "Elder Guardian",
+    "ravager": "Ravager",
+    "wither_skeleton": "Wither Skeleton",
+    "chest": "Chest",
+    "trapped_chest": "Trapped Chest",
+    "barrel": "Barrel",
+    "bundle": "Bundle",
+    "shulker_box": "Shulker Box",
+    "ender_chest": "Ender Chest"
+  }
+}

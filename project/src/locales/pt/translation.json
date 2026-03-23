@@ -1,0 +1,299 @@
+{
+  "settings": {
+    "title": "Configurações",
+    "select_file": "Selecionar arquivo",
+    "audio_configuration": "Configuração de áudio",
+    "music_volume": "Volume da música",
+    "sfx_volume": "Volume dos efeitos",
+    "danger_zone": "Zona de perigo",
+    "delete_profile_progress": "EXCLUIR PROGRESSO",
+    "language": "Idioma"
+  },
+  "achievements_drawer": {
+    "title": "Conquistas",
+    "total_level": "Nível total:",
+    "badges": "Distintivos:",
+    "achievements": "Conquistas:",
+    "lvl": "Nível",
+    "special_achievements": "Conquistas especiais",
+    "max_tier_reached": "NÍVEL MÁXIMO ALCANÇADO!",
+    "unlocked": "✓ Desbloqueado",
+    "locked": "🔒 Bloqueado",
+    "progress": "Progresso:",
+    "next": "Próximo:",
+    "legendary_badge": "LENDÁRIO! (Nível 180+)"
+  },
+  "cosmetics": {
+    "title": "Temas e cosméticos",
+    "theme_select": "Escolher tema",
+    "border_effects": "Efeitos de borda",
+    "active": "ATIVO",
+    "color": "Cor",
+    "locked_x": "✗ Bloqueado",
+    "badge_required": "Distintivo {{badge}} necessário",
+    "earn_badge_unlock": "Obtenha o distintivo {{badge}} para desbloquear este efeito",
+    "unlocked_check": "✓ Desbloqueado"
+  },
+  "battle": {
+    "you_died": "VOCÊ MORREU",
+    "level_minus_1": "Nível -1",
+    "take_a_rest": "Tire um momento para descansar...",
+    "level_restored": "NÍVEL RESTAURADO!",
+    "welcome_back_hero": "Bem-vindo de volta, herói!",
+    "level_reached": "NÍVEL {{level}} ALCANÇADO!",
+    "unlocked_item": "Desbloqueado",
+    "phantom_bonus": "Bônus fantasma!",
+    "new_rank": "Novo ranking!",
+    "hp": "PV",
+    "xp": "XP",
+    "battle_header": "⚔ COMBATE ⚔",
+    "target": "Alvo",
+    "skill_label": "Habilidade",
+    "level_label": "Nível",
+    "quest": "Missão",
+    "lvl": "Nível"
+  },
+  "skill_card": {
+    "tap_to_speak": "Toque para falar",
+    "complete": "Concluído!",
+    "skip_manual_success": "Pular / Sucesso manual",
+    "round": "Rodada:",
+    "watch": "Observe!",
+    "your_turn": "Sua vez!",
+    "game_over_rounds": "Jogo terminado! Rodadas:",
+    "retry": "Tentar novamente"
+  },
+  "modals": {
+    "delete_progress_title": "Excluir progresso?",
+    "delete_progress_confirm": "Tem certeza de que deseja excluir todo o progresso deste perfil?",
+    "delete_progress_irreversible": "Esta ação é irreversível!",
+    "type_delete_confirm": "Digite DELETE para confirmar:",
+    "please_type_delete": "Por favor, digite DELETE para confirmar.",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "bug_title": "Você encontrou um bug?",
+    "bug_subtitle": "Oh não... isso é ruim...",
+    "parental_title": "O que é isso?",
+    "parental_error": "Resposta incorreta. Tente novamente!",
+    "parental_submit": "Confirmar"
+  },
+  "profile": {
+    "parent": "Responsável",
+    "parent_question": "Você é responsável?",
+    "skill_proficiency": "Domínio das habilidades",
+    "player_name1": "Jogador 1",
+    "player_name2": "Jogador 2",
+    "player_name3": "Jogador 3",
+    "lv": "NÍV."
+  },
+  "mic": {
+    "off": "Microfone desligado",
+    "listening": "Ouvindo..."
+  },
+  "achievement_toast": {
+    "unlocked": "CONQUISTA DESBLOQUEADA!",
+    "tier": "Nível"
+  },
+  "phantom": {
+    "plus_level": "+1 Nível!"
+  },
+  "fullscreen": {
+    "enter": "Tela cheia",
+    "exit": "Sair da tela cheia"
+  },
+  "skills": {
+    "reading": {
+      "name": "Leitura",
+      "fantasyName": "Mesa de encantamentos",
+      "taskDescription": "Pronuncie palavras antigas para canalizar encantamentos e derrotar seus inimigos!",
+      "actionName": "Encantar!"
+    },
+    "math": {
+      "name": "Matemática",
+      "fantasyName": "Cálculo mental",
+      "taskDescription": "Ative seus circuitos para acionar armadilhas e derrotar inimigos!",
+      "actionName": "Calcular!"
+    },
+    "writing": {
+      "name": "Escrita",
+      "fantasyName": "Mesa de criação",
+      "taskDescription": "Soletre a receita para forjar armas e armaduras lendárias!",
+      "actionName": "Criar!"
+    },
+    "cleaning": {
+      "name": "Organização",
+      "fantasyName": "Gerenciamento de baús",
+      "taskDescription": "Organize seu loot e prepare seu inventário para as próximas aventuras!",
+      "actionName": "Organizar!"
+    },
+    "memory": {
+      "name": "Memória",
+      "fantasyName": "Combinar e chocar",
+      "taskDescription": "Encontre os pares para chocar criaturas raras!",
+      "actionName": "Combinar!"
+    },
+    "patterns": {
+      "name": "Padrões",
+      "fantasyName": "Construção lógica",
+      "taskDescription": "Decifre a sequência para desbloquear mecanismos antigos e tesouros ocultos!",
+      "actionName": "Resolver!"
+    }
+  },
+  "achievements": {
+    "phantom_hunter": {
+      "name": "Caçador de fantasmas",
+      "description": "Capture fantasmas"
+    },
+    "combined_levels": {
+      "name": "Poder absoluto",
+      "description": "Alcance um nível combinado alto"
+    },
+    "skill_mastery": {
+      "name": "Versátil",
+      "description": "Evolua todas as habilidades igualmente"
+    },
+    "first_steps": {
+      "name": "Primeiros passos",
+      "description": "Derrote seu primeiro inimigo"
+    },
+    "level_up": {
+      "name": "Subiu de nível!",
+      "description": "Alcance o nível 2 em qualquer habilidade"
+    },
+    "fashion_forward": {
+      "name": "Estiloso",
+      "description": "Mude de tema pela primeira vez"
+    },
+    "framed": {
+      "name": "Emoldurado!",
+      "description": "Mude o efeito de borda pela primeira vez"
+    },
+    "ouch": {
+      "name": "Ai!",
+      "description": "Morra pela primeira vez"
+    },
+    "dragon_slayer": {
+      "name": "Matador de dragões",
+      "description": "Derrote seu primeiro chefe"
+    },
+    "mini_menace": {
+      "name": "Pequena ameaça",
+      "description": "Derrote seu primeiro mini-chefe"
+    },
+    "mini_master": {
+      "name": "Mestre dos mini-chefes",
+      "description": "Derrote todos os mini-chefes pelo menos uma vez"
+    },
+    "world_ender": {
+      "name": "Fim do mundo",
+      "description": "Derrote todos os chefes pelo menos uma vez"
+    },
+    "monster_manual": {
+      "name": "Manual dos monstros",
+      "description": "Derrote todos os monstros comuns pelo menos uma vez"
+    },
+    "perfectionist": {
+      "name": "Perfeccionista",
+      "description": "Complete o jogo de memória sem erros"
+    },
+    "speed_demon": {
+      "name": "Demônio da velocidade",
+      "description": "Complete 10 batalhas em uma sessão"
+    },
+    "dedicated": {
+      "name": "Dedicado",
+      "description": "Jogue em 3 dias diferentes"
+    },
+    "high_roller": {
+      "name": "Grande jogador",
+      "description": "Alcance dificuldade 7 em qualquer habilidade"
+    },
+    "badge_collector": {
+      "name": "Colecionador de distintivos",
+      "description": "Obtenha seu primeiro distintivo"
+    },
+    "full_set": {
+      "name": "Coleção completa",
+      "description": "Obtenha todos os níveis de distintivos em uma habilidade"
+    }
+  },
+  "borders": {
+    "solid": { "name": "Padrão", "description": "Brilho dourado eterno" },
+    "solid-picker": { "name": "Padrão", "description": "Brilho personalizável" },
+    "gradient": { "name": "Cobre", "description": "Rotação arcana encantadora" },
+    "sparkle": { "name": "Nublado", "description": "Brilho de poeira celestial" },
+    "electric": { "name": "Para-raios", "description": "Descarga elétrica poderosa" },
+    "lifestream": { "name": "Fluxo vital", "description": "Energia etérea fluida" },
+    "frost": { "name": "Geada", "description": "Majestade dos cristais de gelo" },
+    "fire": { "name": "Lava", "description": "Fúria infernal ardente" },
+    "shadow": { "name": "Portal do Nether", "description": "Sussurros do vazio" },
+    "rainbow": { "name": "Lendário!", "description": "Aura prismática lendária" },
+    "livewire": { "name": "Fio elétrico", "description": "Arcos elétricos voláteis" },
+    "void": { "name": "Vazio cósmico", "description": "Expansão estelar infinita" },
+    "toxic": { "name": "Tóxico", "description": "Gotas de ácido corrosivo" },
+    "holo": { "name": "Holograma", "description": "Falha digital" },
+    "crystal": { "name": "Cristalino", "description": "Rede de fragmentos prismáticos" }
+  },
+  "game": {
+    "spell_it": "Soletre a palavra!",
+    "simon_says": "Simão diz!",
+    "find_pairs": "Encontre os pares!",
+    "task_complete": "Tarefa concluída?"
+  },
+  "tier_names": {
+    "0": "Bronze",
+    "1": "Prata",
+    "2": "Ouro",
+    "3": "Platina",
+    "4": "Esmeralda",
+    "5": "Diamante",
+    "6": "Lendário",
+    "7": "Mítico"
+  },
+  "badges": {
+    "wood": "Madeira",
+    "stone": "Pedra",
+    "gold": "Ouro",
+    "iron": "Ferro",
+    "emerald": "Esmeralda",
+    "diamond": "Diamante",
+    "netherite": "Netherita",
+    "obsidian": "Obsidiana"
+  },
+  "mobs": {
+    "blaze": "Blaze",
+    "bogged": "Atolado",
+    "breeze": "Brisa",
+    "creeper": "Creeper",
+    "drowned": "Afogado",
+    "enderman": "Enderman",
+    "evoker": "Evocador",
+    "ghast": "Ghast",
+    "guardian": "Guardião",
+    "hoglin": "Hoglin",
+    "magma_cube": "Cubo de magma",
+    "parched": "Ressecado",
+    "phantom": "Fantasma",
+    "piglin": "Piglin",
+    "pillager": "Saqueador",
+    "skeleton": "Esqueleto",
+    "slime": "Slime",
+    "spider": "Aranha",
+    "witch": "Bruxa",
+    "zombie": "Zumbi",
+    "ender_dragon": "Dragão do Ender",
+    "herobrine": "Herobrine",
+    "warden": "Guardião",
+    "wither": "Wither",
+    "creaking": "Rangendo",
+    "elder_guardian": "Guardião ancião",
+    "ravager": "Devastador",
+    "wither_skeleton": "Esqueleto Wither",
+    "chest": "Baú",
+    "trapped_chest": "Baú armadilha",
+    "barrel": "Barril",
+    "bundle": "Pacote",
+    "shulker_box": "Caixa shulker",
+    "ender_chest": "Baú do Ender"
+  }
+}
