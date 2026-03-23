@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
 import SkillCard from '../skills/SkillCard'
 import { playActionCardLeft, playActionCardRight } from '../../utils/soundManager'
+import { SKILL_DATA } from '../../constants/gameData';
 
 const GameCarousel = ({
   skills,
@@ -21,14 +22,13 @@ const GameCarousel = ({
   toggleMicListener,
   setSkillDifficulty,
 
-  getVisibleItems,
   getAuraForSkill,
   currentThemeData
 }) => {
   const [isDragging, setIsDragging] = useState(false)
   const [dragStartX, setDragStartX] = useState(0)
 
-  const handleDragStart = (clientX) => {
+  const DragStart = (clientX) => {
     if (battlingSkillId) return
     setIsDragging(true)
     setDragStartX(clientX)
@@ -63,6 +63,52 @@ const GameCarousel = ({
     else playActionCardLeft()
   }
 
+  const handleStartBattle = useCallback((id) => {
+    startBattle(id)
+  }, [startBattle])
+
+  const handleSubmit = useCallback((id, val) => {
+    handleSuccessHit(id, val)
+  }, [handleSuccessHit])
+
+  const handleMic = useCallback((id) => {
+    toggleMicListener(id)
+  }, [toggleMicListener])
+
+  const handleDifficulty = useCallback((id, diff) => {
+    setSkillDifficulty(id, diff)
+  }, [setSkillDifficulty])
+
+  const visibleItems = useMemo(() => {
+    const items = [];
+
+    for (let i = -3; i <= 3; i++) {
+      const idx = selectedIndex + i;
+
+      const dataIndex =
+        ((idx % SKILL_DATA.length) + SKILL_DATA.length) % SKILL_DATA.length;
+
+      const skill = SKILL_DATA[dataIndex];
+
+      items.push({
+        ...skill,
+        offset: i,
+        key: idx,
+      });
+    }
+
+    return items;
+  }, [selectedIndex]);
+
+  const damageBySkill = useMemo(() => {
+    const map = {};
+    damageNumbers.forEach(d => {
+      if (!map[d.skillId]) map[d.skillId] = [];
+      map[d.skillId].push(d);
+    });
+    return map;
+  }, [damageNumbers]);
+
   return (
     <div
       className={`relative w-full flex items-center justify-center perspective-1000 h-[650px] mb-12 ${battlingSkillId ? 'z-50' : ''}`}
@@ -75,7 +121,11 @@ const GameCarousel = ({
       onTouchMove={(e) => { e.preventDefault(); handleDragMove(e.touches[0].clientX) }}
       onTouchEnd={handleDragEnd}
     >
-      {getVisibleItems().map((item) => {
+      {visibleItems.map((item) => {
+        const skillData = skills[item.id];
+
+        if (!skillData)
+            return null;
         const isItemBattling = item.offset === 0 && battlingSkillId === item.id
 
         const getVerticalOffset = (offset) => {
@@ -116,13 +166,13 @@ const GameCarousel = ({
               challenge={challengeData}
               isListening={isListening}
               spokenText={spokenText}
-              damageNumbers={damageNumbers.filter(d => d.skillId === item.id)}
-              onStartBattle={() => startBattle(item.id)}
+              damageNumbers={damageBySkill[item.id] || []}
+              onStartBattle={handleStartBattle}
               onEndBattle={endBattle}
-              onMathSubmit={(val) => handleSuccessHit(item.id, val)}
-              onMicClick={() => toggleMicListener(item.id)}
+              onMathSubmit={handleSubmit}
+              onMicClick={handleMic}
               difficulty={skills[item.id].difficulty || 1}
-              setDifficulty={(newDiff) => setSkillDifficulty(item.id, newDiff)}
+              setDifficulty={handleDifficulty}
               unlockedDifficulty={Math.min(7, Math.floor(skills[item.id].level / 20) + 1)}
               selectedBorder={selectedBorder}
               borderColor={borderColor}

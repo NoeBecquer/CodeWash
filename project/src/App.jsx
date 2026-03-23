@@ -124,13 +124,10 @@ const App = () => {
     const [battlingSkillId,  setBattlingSkillId]  = useState(null);
     const [battleDifficulty, setBattleDifficulty] = useState(null);
     const [challengeData,    setChallengeData]    = useState(null);
-
+    const [selectedIndex, setSelectedIndex] = useState(0);
     const [achievementToast, setAchievementToast] = useState(null);
     const [isListening,      setIsListening]       = useState(false);
     const [spokenText,       setSpokenText]        = useState('');
-    const [selectedIndex,    setSelectedIndex]     = useState(0);
-    const [isDragging,       setIsDragging]        = useState(false);
-    const [dragStartX,       setDragStartX]        = useState(0);
 
     // ------------------------------------------------------------------- refs
     const challengeDataRef = useRef(null);
@@ -175,19 +172,6 @@ const App = () => {
       setPlayerHealth,
       generateChallenge,
     });
-
-    const handleMathSubmit = useCallback((skillId, val, damage) => {
-      handleSuccessHit(skillId, val, damage);
-    }, [handleSuccessHit]);
-
-    const damageBySkill = useMemo(() => {
-        const map = {};
-        damageNumbers.forEach(d => {
-            if (!map[d.skillId]) map[d.skillId] = [];
-            map[d.skillId].push(d);
-      });
-      return map;
-    }, [damageNumbers]);
 
     useEffect(() => {
         const onFSChange = () => setIsFullscreen(!!document.fullscreenElement);
@@ -299,9 +283,16 @@ const App = () => {
       toggleMicListener(id);
     }, [toggleMicListener]);
 
+    const setSkillDifficulty = (skillId, newDiff) => {
+        setSkills(prev => {
+            const maxH = calculateMobHealth(newDiff);
+            return { ...prev, [skillId]: { ...prev[skillId], difficulty: newDiff, mobHealth: maxH, mobMaxHealth: maxH } };
+        });
+    };
+
     const handleSetDifficulty = useCallback((id, diff) => {
       setSkillDifficulty(id, diff);
-    }, []);
+    }, [setSkillDifficulty]);
 
     const endBattle = () => {
         setBattlingSkillId(null);
@@ -309,14 +300,6 @@ const App = () => {
         setChallengeData(null);
         stopVoiceRecognition();
         playClick();
-    };
-
-    // --------------------------------------------------- skill difficulty
-    const setSkillDifficulty = (skillId, newDiff) => {
-        setSkills(prev => {
-            const maxH = calculateMobHealth(newDiff);
-            return { ...prev, [skillId]: { ...prev[skillId], difficulty: newDiff, mobHealth: maxH, mobMaxHealth: maxH } };
-        });
     };
 
     const handleReset = () => {
@@ -344,44 +327,24 @@ const App = () => {
         });
     }, [selectedBorder, skills, checkAchievements]);
 
-    // -------------------------------------------------- carousel helpers
-    const getVisibleItems = () => {
-        const items = [];
-        for (let i = -3; i <= 3; i++) {
-            let idx       = selectedIndex + i;
-            let dataIndex = ((idx % SKILL_DATA.length) + SKILL_DATA.length) % SKILL_DATA.length;
-            items.push({ ...SKILL_DATA[dataIndex], id: SKILL_DATA[dataIndex].id, offset: i, key: idx });
-        }
-        return items;
-    };
-
-    const handleDragStart = (clientX) => {
-        if (battlingSkillId) return;
-        setIsDragging(true);
-        setDragStartX(clientX);
-    };
-    const handleDragMove = (clientX) => {
-        if (!isDragging || battlingSkillId) return;
-        const diff = dragStartX - clientX;
-        if (Math.abs(diff) < 100) return;
-        if (diff > 0) { setSelectedIndex(p => p + 1); playActionCardRight(); }
-        else          { setSelectedIndex(p => p - 1); playActionCardLeft();  }
-        setIsDragging(false);
-    };
-    const handleDragEnd  = () => setIsDragging(false);
-    const handleCardClick = (offset) => {
-        if (battlingSkillId || offset === 0) return;
-        setSelectedIndex(p => p + offset);
-        if (offset > 0) playActionCardRight(); else playActionCardLeft();
-    };
-
     // ------------------------------------------------ aura & profile stats
     const getAuraForSkill = (skillConfig, userSkill) => {
+        if (!userSkill) return null; // 🛡️ ADD THIS
+    
         if (skillConfig.id === 'memory' || skillConfig.id === 'cleaning') return null;
+    
         const type = getEncounterType(userSkill.level);
-        if (type === 'boss')     return userSkill.currentBossAura;
+    
+        if (type === 'boss') return userSkill.currentBossAura;
         if (type === 'miniboss') return userSkill.currentMinibossAura;
-        const auraMap = { reading: userSkill.readingMobAura, math: userSkill.mathMobAura, writing: userSkill.writingMobAura, patterns: userSkill.patternMobAura };
+    
+        const auraMap = {
+            reading: userSkill.readingMobAura,
+            math: userSkill.mathMobAura,
+            writing: userSkill.writingMobAura,
+            patterns: userSkill.patternMobAura
+        };
+    
         return auraMap[skillConfig.id] || null;
     };
 
@@ -463,64 +426,28 @@ const App = () => {
                 </div>
                 <h1 className="text-9xl text-yellow-400 tracking-widest uppercase mt-[-20px] mb-[95px] z-20 relative drop-shadow-[4px_4px_0_#000]"
                     style={{ textShadow: '6px 6px 0 #000' }}>Level Up!</h1>
-
-                {/* Left chevron */}
-                <button onClick={() => { setSelectedIndex(p => p - 1); playActionCardLeft(); }}
-                    className="flex absolute left-0 z-30 items-center justify-center h-full"
-                    style={{ background: 'linear-gradient(to right, rgba(100,100,100,0.6), transparent)', width: '80px', padding: 0 }}>
-                    <svg width="60" height="450" viewBox="0 0 60 450" className="animate-chevron-left" style={{ opacity: 0.8 }}>
-                        <path d="M 50 25 Q 15 225 50 425" stroke="rgba(150,150,150,0.9)" strokeWidth="8" fill="none" strokeLinecap="round" />
-                    </svg>
-                </button>
-
-                {/* Right chevron */}
-                <button onClick={() => { setSelectedIndex(p => p + 1); playActionCardRight(); }}
-                    className="flex absolute right-0 z-30 items-center justify-center h-full"
-                    style={{ background: 'linear-gradient(to left, rgba(100,100,100,0.6), transparent)', width: '80px', padding: 0 }}>
-                    <svg width="60" height="450" viewBox="0 0 60 450" className="animate-chevron-right" style={{ opacity: 0.8 }}>
-                        <path d="M 10 25 Q 45 225 10 425" stroke="rgba(150,150,150,0.9)" strokeWidth="8" fill="none" strokeLinecap="round" />
-                    </svg>
-                </button>
-
-                {/* Card carousel */}
-                <div className={`relative w-full flex items-center justify-center perspective-1000 h-[650px] mb-12 ${battlingSkillId ? 'z-50' : ''}`}
-                    style={{ cursor: battlingSkillId ? 'default' : (isDragging ? 'grabbing' : 'grab') }}
-                    onMouseDown={(e) => handleDragStart(e.clientX)}
-                    onMouseMove={(e) => handleDragMove(e.clientX)}
-                    onMouseUp={handleDragEnd} onMouseLeave={handleDragEnd}
-                    onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
-                    onTouchMove={(e) => { e.preventDefault(); handleDragMove(e.touches[0].clientX); }}
-                    onTouchEnd={handleDragEnd}>
-
-                    {getVisibleItems().map((item) => {
-                        const isItemBattling = item.offset === 0 && battlingSkillId === item.id;
-                        return (
-                            <div key={item.key}
-                                className="absolute transition-all duration-500 ease-out"
-                                style={getCardStyle(item.offset, isItemBattling, !!battlingSkillId)}
-                                onClick={() => handleCardClick(item.offset)}>
-                                <SkillCard
-                                    config={item} data={skills[item.id]} themeData={currentThemeData}
-                                    isCenter={item.offset === 0}
-                                    isBattling={isItemBattling}
-                                    mobName={getMobForSkill(item, skills[item.id])}
-                                    mobAura={getAuraForSkill(item, skills[item.id])}
-                                    challenge={challengeData} isListening={isListening} spokenText={spokenText}
-                                    damageNumbers={damageBySkill[item.id] || []}
-                                    onStartBattle={() => startBattle(item.id)}
-                                    onEndBattle={endBattle}
-                                    onMathSubmit={handleMathSubmit}
-                                    onMicClick={handleMicClick}
-                                    difficulty={skills[item.id].difficulty || 1}
-                                    setDifficulty={handleSetDifficulty}
-                                    unlockedDifficulty={Math.min(7, Math.floor(skills[item.id].level / 20) + 1)}
-                                    selectedBorder={selectedBorder} borderColor={borderColor}
-                                    bossHealing={bossHealing === item.id}
-                                />
-                            </div>
-                        );
-                    })}
-                </div>
+            <GameCarousel
+              skills={skills}
+              selectedIndex={selectedIndex}
+              setSelectedIndex={setSelectedIndex}
+              battlingSkillId={battlingSkillId}
+              challengeData={challengeData}
+              isListening={isListening}
+              spokenText={spokenText}
+              damageNumbers={damageNumbers}
+              selectedBorder={selectedBorder}
+              borderColor={borderColor}
+              bossHealing={bossHealing}
+                
+              startBattle={handleStartBattle}
+              endBattle={endBattle}
+              handleSuccessHit={handleSuccessHit}
+              toggleMicListener={handleMicClick}
+              setSkillDifficulty={handleSetDifficulty}
+                
+              getAuraForSkill={getAuraForSkill}
+              currentThemeData={currentThemeData}
+            />
             </main>
             
             <BattleLayer

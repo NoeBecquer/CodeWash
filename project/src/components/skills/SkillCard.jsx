@@ -556,7 +556,7 @@ const SkillCard = ({ config, data, themeData, isCenter, isBattling, mobName, mob
                                                 );
                                             });
                                         })()}</div></div>}
-                                        {config.challengeType === 'reading' && <button onClick={onMicClick} className={`w-full text-center p-2 rounded border-2 transition-colors flex items-center justify-center gap-2 ${isListening ? 'border-red-500 bg-red-900/20' : 'border-gray-600 hover:bg-white/10'}`}>{isListening ? <Mic className="inline animate-pulse text-red-500" /> : <><Mic className="inline text-gray-500" /><span className="text-xs uppercase font-bold text-stone-400">{t('skill_card.tap_to_speak')}</span></>}</button>}
+                                        {config.challengeType === 'reading' && <button onClick={() => onMicClick(config.id)} className={`w-full text-center p-2 rounded border-2 transition-colors flex items-center justify-center gap-2 ${isListening ? 'border-red-500 bg-red-900/20' : 'border-gray-600 hover:bg-white/10'}`}>{isListening ? <Mic className="inline animate-pulse text-red-500" /> : <><Mic className="inline text-gray-500" /><span className="text-xs uppercase font-bold text-stone-400">{t('skill_card.tap_to_speak')}</span></>}</button>}
                                         {config.challengeType === 'cleaning' && <button onClick={() => setShowParentalModal(true)} className="w-full bg-green-600 hover:bg-green-500 text-white text-3xl font-bold py-4 rounded shadow-[0_4px_0_#166534] active:shadow-none active:translate-y-[4px] transition-all">{t('skill_card.complete')}</button>}
                                         {config.challengeType !== 'cleaning' && config.challengeType !== 'writing' && config.challengeType !== 'math' && <button onClick={() => onMathSubmit(config.id, challenge?.answer)} className="mt-auto text-xs text-gray-500 underline hover:text-white self-center">{t('skill_card.skip_manual_success')}</button>}
                                     </>
@@ -586,7 +586,7 @@ const SkillCard = ({ config, data, themeData, isCenter, isBattling, mobName, mob
                 ) : (
                     <div className="flex-1 flex flex-col items-center justify-center">
                         <p className="text-gray-400 text-center mb-4 px-2">{taskDescription}</p>
-                        <button onClick={onStartBattle} data-cy="battle-button" style={buttonStyle} className={`w-full text-white text-3xl font-bold py-6 rounded-lg active:shadow-none active:translate-y-[6px] transition-all border-2 uppercase tracking-wider`}>
+                        <button onClick={() => onStartBattle(config.id)} data-cy="battle-button" style={buttonStyle} className={`w-full text-white text-3xl font-bold py-6 rounded-lg active:shadow-none active:translate-y-[6px] transition-all border-2 uppercase tracking-wider`}>
                             {actionName}
                         </button>
                     </div>
@@ -704,7 +704,7 @@ const SkillCard = ({ config, data, themeData, isCenter, isBattling, mobName, mob
             {/* Difficulty adjuster positioned above the card */}
             {(!isBattling || config.id !== 'memory') && config.id !== 'cleaning' && unlockedDifficulty > 1 && (
                 <div className="absolute -top-10 left-0 flex items-center gap-2 z-20">
-                    <button onClick={() => setDifficulty(Math.max(1, difficulty - 1))} className="bg-stone-700 text-white rounded p-1 border border-stone-500 hover:bg-stone-600"><Minus size={16} /></button>
+                    <button onClick={() => setDifficulty(config.id, Math.max(1, difficulty - 1))} className="bg-stone-700 text-white rounded p-1 border border-stone-500 hover:bg-stone-600"><Minus size={16} /></button>
                     <div className="relative">
                         <SafeImage
                             src={DIFFICULTY_IMAGES[difficulty] || DIFFICULTY_IMAGES[1]}
@@ -715,7 +715,7 @@ const SkillCard = ({ config, data, themeData, isCenter, isBattling, mobName, mob
                             {difficulty}
                         </span>
                     </div>
-                    <button onClick={() => setDifficulty(Math.min(unlockedDifficulty, difficulty + 1))} className="bg-stone-700 text-white rounded p-1 border border-stone-500 hover:bg-stone-600"><Plus size={16} /></button>
+                    <button onClick={() => setDifficulty(config.id, Math.min(unlockedDifficulty, difficulty + 1))} className="bg-stone-700 text-white rounded p-1 border border-stone-500 hover:bg-stone-600"><Plus size={16} /></button>
                 </div>
             )}
             {cardContent}
