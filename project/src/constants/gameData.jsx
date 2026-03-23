@@ -180,7 +180,7 @@ export const THEME_CONFIG = {
             logo: 'assets/themes/minecraft_logo.png', cardBack: 'assets/themes/memorycard.jpg',
             mobs: { 'Zombie': 'assets/mobs/hostile/zombie.png', 'Creeper': 'assets/mobs/hostile/creeper.png', 'Skeleton': 'assets/mobs/hostile/skeleton.png', 'Ender Dragon': 'assets/mobs/boss/enderdragon.gif', 'Axolotl': 'assets/mobs/axolotl/axolotl_pink.gif', 'Spider': 'assets/mobs/hostile/spider.png', 'Phantom': 'assets/mobs/hostile/phantom.gif', 'Enderman': 'assets/mobs/hostile/enderman.png', 'Blaze': 'assets/mobs/hostile/blaze.gif', 'Ghast': 'assets/mobs/hostile/ghast.gif', 'Slime': 'assets/mobs/hostile/slime.png', 'Witch': 'assets/mobs/hostile/witch.png', 'Pillager': 'assets/mobs/hostile/pillager.png', 'Wither': 'assets/mobs/boss/wither.png', 'Warden': 'assets/mobs/boss/warden.gif' }
         },
-        skills: { reading: { name: 'Reading', boss: 'Ender Dragon', mobType: 'Standard' }, math: { name: 'Math', boss: 'Wither', mobType: 'Creeper' }, writing: { name: 'Writing', boss: 'Warden', mobType: 'Skeleton' }, cleaning: { name: 'Cleaning', boss: 'Ender Chest', mobType: 'Chest' }, memory: { name: 'Memory', boss: 'Axolotl', mobType: 'Mascot' }, patterns: { name: 'Pattern Recognition', boss: 'Iron Golem', mobType: 'Standard' } }
+        skills: { reading: { mobType: 'Standard' }, math: { mobType: 'Creeper' }, writing: { mobType: 'Skeleton' }, cleaning: { mobType: 'Chest' }, memory: { mobType: 'Mascot' }, patterns: { mobType: 'Standard' } }
     },
     'kpop': {
         name: 'K-Pop Demon Hunters',
@@ -214,88 +214,7 @@ export const THEME_CONFIG = {
 export const THEMES_LIST = [ { id: 'minecraft', name: 'Minecraft', img: 'assets/themes/minecraft.png' }, { id: 'kpop', name: 'K-Pop Demon Hunters', img: 'assets/themes/kpop.jpg' }, { id: 'pokemon', name: 'Pokemon', img: 'assets/themes/pokemon.jpg' }, { id: 'spy', name: 'Spy', img: 'assets/themes/spy.png' } ];
 export const BADGE_TIERS = [ { level: 20, title: "Wood" }, { level: 40, title: "Stone" }, { level: 60, title: "Gold" }, { level: 80, title: "Iron" }, { level: 100, title: "Emerald" }, { level: 120, title: "Diamond" }, { level: 140, title: "Netherite" }, { level: 160, title: "Obsidian" } ];
 
-// Reading words organized by character length for difficulty scaling
-export const READING_WORDS = {
-    3: ["CAT", "DOG", "SUN", "BAT", "HAT", "RUN", "BIG", "RED", "FOX", "MOM", "DAD", "CUP", "BUS", "PEN", "ANT", "BEE"],
-    4: ["BOOK", "TREE", "FISH", "BALL", "CAKE", "BIRD", "FROG", "PLAY", "JUMP", "MILK", "DOOR", "DUCK", "STAR", "MOON", "RAIN"],
-    5: ["APPLE", "HOUSE", "WATER", "HAPPY", "MUSIC", "TIGER", "BEACH", "PLANT", "CLOUD", "SMILE", "PIZZA", "GRAPE", "HORSE", "SHEEP"],
-    6: ["BANANA", "ORANGE", "PURPLE", "GARDEN", "FRIEND", "SCHOOL", "FLOWER", "RABBIT", "MONKEY", "BUTTON", "CASTLE", "DRAGON", "FOREST"],
-    7: ["DIAMOND", "EMERALD", "CHICKEN", "RAINBOW", "DOLPHIN", "PENGUIN", "GIRAFFE", "PUMPKIN", "VOLCANO", "TORNADO", "MONSTER", "TEACHER"],
-    8: ["SKELETON", "ELEPHANT", "TREASURE", "CROCODILE", "FIREWORK", "BIRTHDAY", "SANDWICH", "DINOSAUR", "COMPUTER", "MUSHROOM", "I LOVE MOM"]
-};
 
-// Humorously long words for difficulty 7 (adult assistance)
-export const FUNNY_LONG_WORDS = [
-    "ANTIDISESTABLISHMENTARIANISM",
-    "PNEUMONOULTRAMICROSCOPICSILICOVOLCANOCONIOSIS",
-    "HIPPOPOTOMONSTROSESQUIPPEDALIOPHOBIA",
-    "SUPERCALIFRAGILISTICEXPIALIDOCIOUS",
-    "FLOCCINAUCINIHILIPILIFICATION",
-    "PSEUDOPSEUDOHYPOPARATHYROIDISM",
-    "INCOMPREHENSIBILITIES",
-    "HONORIFICABILITUDINITY"
-];
-
-// Spelling items with length property for writing skill
-export const SPELLING_ITEMS = [
-    { word: "TNT", length: 3 },
-    { word: "BED", length: 3 },
-    { word: "BOW", length: 3 },
-    { word: "MAP", length: 3 },
-    { word: "EGG", length: 3 },
-    { word: "ICE", length: 3 },
-    { word: "AXE", length: 3 },
-    { word: "HOE", length: 3 },
-    { word: "BOOK", length: 4 },
-    { word: "CAKE", length: 4 },
-    { word: "BOAT", length: 4 },
-    { word: "DOOR", length: 4 },
-    { word: "WOOL", length: 4 },
-    { word: "SAND", length: 4 },
-    { word: "DIRT", length: 4 },
-    { word: "MILK", length: 4 },
-    { word: "APPLE", length: 5 },
-    { word: "SWORD", length: 5 },
-    { word: "TORCH", length: 5 },
-    { word: "ARROW", length: 5 },
-    { word: "CHEST", length: 5 },
-    { word: "STONE", length: 5 },
-    { word: "BUCKET", length: 6 },
-    { word: "POTION", length: 6 },
-    { word: "CARROT", length: 6 },
-    { word: "COOKIE", length: 6 },
-    { word: "HELMET", length: 6 },
-    { word: "SADDLE", length: 6 },
-    { word: "DIAMOND", length: 7 },
-    { word: "EMERALD", length: 7 },
-    { word: "REDSTONE", length: 8 },
-    { word: "OBSIDIAN", length: 8 },
-    { word: "SKELETON", length: 8 },
-    { word: "NETHERITE", length: 9 }
-];
-
-// Helper function to format multi-word display names
-// Converts "coppergolem" -> "Copper Golem", "witherskeleton" -> "Wither Skeleton"
-export const formatDisplayName = (word) => {
-    const multiWordMap = {
-        'coppergolem': 'Copper Golem',
-        'irongolem': 'Iron Golem',
-        'snowgolem': 'Snow Golem',
-        'glowsquid': 'Glow Squid',
-        'polarbear': 'Polar Bear',
-        'magmacube': 'Magma Cube',
-        'elderguardian': 'Elder Guardian',
-        'enderdragon': 'Ender Dragon',
-        'witherskeleton': 'Wither Skeleton',
-        'ender_chest': 'Ender Chest',
-        'shulker_box': 'Shulker Box',
-        'trapped_chest': 'Trapped Chest'
-    };
-    
-    return multiWordMap[word.toLowerCase()] || word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-};
-
-// Comprehensive writing word index from all mobs (excluding axolotls), blocks, and items
 export const WRITING_WORD_INDEX = [
     // Mobs from friendly
     { word: 'allay', displayName: 'Allay', length: 5, imagePath: 'assets/mobs/friendly/allay.gif' },
@@ -384,26 +303,6 @@ export const WRITING_WORD_INDEX = [
     { word: 'wool', displayName: 'Wool', length: 4, imagePath: 'assets/items/wool.png' }
 ];
 
-// Difficulty pools with overlapping character ranges
-export const WRITING_DIFFICULTY_POOLS = {
-    1: WRITING_WORD_INDEX.filter(w => w.length >= 3 && w.length <= 5),  // Easy: 3-5 chars
-    2: WRITING_WORD_INDEX.filter(w => w.length >= 5 && w.length <= 7),  // Normal: 5-7 chars
-    3: WRITING_WORD_INDEX.filter(w => w.length >= 6 && w.length <= 8),  // Medium: 6-8 chars
-    4: WRITING_WORD_INDEX.filter(w => w.length >= 7 && w.length <= 10), // Hard: 7-10 chars
-    5: WRITING_WORD_INDEX.filter(w => w.length >= 9 && w.length <= 15)  // Expert: 9-15 chars
-};
-
-// Writing items organized by length for quick lookup
-export const WRITING_ITEMS_BY_LENGTH = {
-    3: SPELLING_ITEMS.filter(i => i.length === 3),
-    4: SPELLING_ITEMS.filter(i => i.length === 4),
-    5: SPELLING_ITEMS.filter(i => i.length === 5),
-    6: SPELLING_ITEMS.filter(i => i.length === 6),
-    7: SPELLING_ITEMS.filter(i => i.length === 7),
-    8: SPELLING_ITEMS.filter(i => i.length === 8),
-    9: SPELLING_ITEMS.filter(i => i.length >= 9)
-};
-
 export const HOMOPHONES = { "SEE": ["SEA", "C"], "TO": ["TWO", "TOO", "2"], "FOR": ["FOUR", "4"], "SUN": ["SON"], "RED": ["READ"], "NO": ["KNOW"], "ARE": ["R", "OUR"], "YOU": ["U", "EWE"], "EYE": ["I"], "BEE": ["BE"], "ONE": ["WON", "1"] };
 export const MOB_KEYS = Object.keys(HOSTILE_MOBS);
 
@@ -412,6 +311,6 @@ export const SKILL_DATA = [
     { id: 'math', name: 'Math', class: 'Math', fantasyName: 'Redstone', actionName: 'Calculate!', taskDescription: "Power up your redstone circuits to activate traps and outsmart hostile mobs!", img: BASE_ASSETS.skillIcons['Math'], colorStyle: { background: 'linear-gradient(to bottom, #b91c1c, #9a3412)' }, accent: 'text-red-400', boss: 'The Wither', hasChallenge: true, challengeType: 'math', mobOffset: 4 },
     { id: 'writing', name: 'Writing', class: 'Spelling', fantasyName: 'Crafting Table', actionName: 'Craft!', taskDescription: "Spell out the recipe to forge legendary weapons and armor!", img: BASE_ASSETS.skillIcons['Writing'], colorStyle: { background: 'linear-gradient(to bottom, #0369a1, #1e40af)' }, accent: 'text-cyan-400', boss: 'The Warden', hasChallenge: true, challengeType: 'writing', mobOffset: 8 },
     { id: 'cleaning', name: 'Cleaning', class: 'Cleaning', fantasyName: 'Chest Management', actionName: 'Organize!', taskDescription: "Sort your loot and prepare your inventory for the adventures ahead!", img: BASE_ASSETS.skillIcons['Cleaning'], colorStyle: { background: 'linear-gradient(to bottom, #059669, #15803d)' }, accent: 'text-emerald-400', boss: 'Ender Chest', hasChallenge: true, challengeType: 'cleaning', mobOffset: 12 },
-    { id: 'memory', name: 'Memory', class: 'Memory', fantasyName: 'Match n\' Hatch', actionName: 'Match!', taskDescription: "Find the matching pairs to hatch rare creatures for your farm!", img: BASE_ASSETS.skillIcons['Memory'], colorStyle: { background: 'linear-gradient(to bottom, #db2777, #be123c)' }, accent: 'text-pink-400', boss: 'Axolotl Mascot', hasChallenge: true, challengeType: 'memory', mobOffset: 16 },
+    { id: 'memory', name: 'Mmory', class: 'Memory', fantasyName: 'Match n\' Hatch', actionName: 'Match!', taskDescription: "Find the matching pairs to hatch rare creatures for your farm!", img: BASE_ASSETS.skillIcons['Memory'], colorStyle: { background: 'linear-gradient(to bottom, #db2777, #be123c)' }, accent: 'text-pink-400', boss: 'Axolotl Mascot', hasChallenge: true, challengeType: 'mmory', mobOffset: 16 },
     { id: 'patterns', name: 'Patterns', class: 'Patterns', fantasyName: 'Logic Building', actionName: 'Solve!', taskDescription: "Decipher the sequence to unlock ancient mechanisms and hidden treasures!", img: BASE_ASSETS.skillIcons['Patterns'], colorStyle: { background: 'linear-gradient(to bottom, #ea580c, #c2410c)' }, accent: 'text-orange-400', boss: 'Iron Golem', hasChallenge: true, challengeType: 'patterns', mobOffset: 20 },
 ];

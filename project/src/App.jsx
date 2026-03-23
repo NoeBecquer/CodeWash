@@ -31,6 +31,8 @@ import {
     getDefaultStats, getNewlyUnlockedAchievements, getNewTierAchievements,
     isAchievementUnlocked,
 } from './utils/achievementUtils';
+import GameCarousel from './components/layout/GameCarousel';
+
 
 // Extracted modules
 import { getStorageKey, loadSkills, loadTheme, loadStats, readStoredProfileStats } from './utils/profileStorage';

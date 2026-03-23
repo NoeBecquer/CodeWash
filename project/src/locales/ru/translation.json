@@ -1,0 +1,299 @@
+{
+  "settings": {
+    "title": "Настройки",
+    "select_file": "Выбрать файл",
+    "audio_configuration": "Настройки аудио",
+    "music_volume": "Громкость музыки",
+    "sfx_volume": "Громкость эффектов",
+    "danger_zone": "Опасная зона",
+    "delete_profile_progress": "УДАЛИТЬ ПРОГРЕСС",
+    "language": "Язык"
+  },
+  "achievements_drawer": {
+    "title": "Достижения",
+    "total_level": "Общий уровень:",
+    "badges": "Значки:",
+    "achievements": "Достижения:",
+    "lvl": "Ур.",
+    "special_achievements": "Особые достижения",
+    "max_tier_reached": "ДОСТИГНУТ МАКСИМАЛЬНЫЙ УРОВЕНЬ!",
+    "unlocked": "✓ Открыто",
+    "locked": "🔒 Заблокировано",
+    "progress": "Прогресс:",
+    "next": "Далее:",
+    "legendary_badge": "ЛЕГЕНДАРНЫЙ! (Ур. 180+)"
+  },
+  "cosmetics": {
+    "title": "Темы и косметика",
+    "theme_select": "Выбрать тему",
+    "border_effects": "Эффекты рамки",
+    "active": "АКТИВНО",
+    "color": "Цвет",
+    "locked_x": "✗ Заблокировано",
+    "badge_required": "Требуется значок {{badge}}",
+    "earn_badge_unlock": "Получите значок {{badge}}, чтобы разблокировать этот эффект",
+    "unlocked_check": "✓ Открыто"
+  },
+  "battle": {
+    "you_died": "ВЫ ПОГИБЛИ",
+    "level_minus_1": "Уровень -1",
+    "take_a_rest": "Сделайте небольшой перерыв...",
+    "level_restored": "УРОВЕНЬ ВОССТАНОВЛЕН!",
+    "welcome_back_hero": "С возвращением, герой!",
+    "level_reached": "ДОСТИГНУТ УРОВЕНЬ {{level}}!",
+    "unlocked_item": "Разблокировано",
+    "phantom_bonus": "Бонус призрака!",
+    "new_rank": "Новый ранг!",
+    "hp": "HP",
+    "xp": "XP",
+    "battle_header": "⚔ БОЙ ⚔",
+    "target": "Цель",
+    "skill_label": "Навык",
+    "level_label": "Уровень",
+    "quest": "Задание",
+    "lvl": "Ур."
+  },
+  "skill_card": {
+    "tap_to_speak": "Нажмите, чтобы говорить",
+    "complete": "Завершено!",
+    "skip_manual_success": "Пропустить / Ручной успех",
+    "round": "Раунд:",
+    "watch": "Смотрите!",
+    "your_turn": "Ваш ход!",
+    "game_over_rounds": "Игра окончена! Раунды:",
+    "retry": "Повторить"
+  },
+  "modals": {
+    "delete_progress_title": "Удалить прогресс?",
+    "delete_progress_confirm": "Вы уверены, что хотите удалить весь прогресс этого профиля?",
+    "delete_progress_irreversible": "Это действие необратимо!",
+    "type_delete_confirm": "Введите DELETE для подтверждения:",
+    "please_type_delete": "Пожалуйста, введите DELETE для подтверждения.",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "bug_title": "Вы нашли баг?",
+    "bug_subtitle": "О нет... это плохо...",
+    "parental_title": "Что это?",
+    "parental_error": "Неверный ответ. Попробуйте снова!",
+    "parental_submit": "Подтвердить"
+  },
+  "profile": {
+    "parent": "Родитель",
+    "parent_question": "Вы родитель?",
+    "skill_proficiency": "Мастерство навыков",
+    "player_name1": "Игрок 1",
+    "player_name2": "Игрок 2",
+    "player_name3": "Игрок 3",
+    "lv": "УР."
+  },
+  "mic": {
+    "off": "Микрофон выключен",
+    "listening": "Слушаю..."
+  },
+  "achievement_toast": {
+    "unlocked": "ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО!",
+    "tier": "Ранг"
+  },
+  "phantom": {
+    "plus_level": "+1 уровень!"
+  },
+  "fullscreen": {
+    "enter": "Полный экран",
+    "exit": "Выйти из полного экрана"
+  },
+  "skills": {
+    "reading": {
+      "name": "Чтение",
+      "fantasyName": "Стол зачарования",
+      "taskDescription": "Произнесите древние слова, чтобы активировать заклинания и победить врагов!",
+      "actionName": "Зачаровать!"
+    },
+    "math": {
+      "name": "Математика",
+      "fantasyName": "Устный счёт",
+      "taskDescription": "Запустите свои схемы, чтобы активировать ловушки и перехитрить врагов!",
+      "actionName": "Рассчитать!"
+    },
+    "writing": {
+      "name": "Письмо",
+      "fantasyName": "Верстак",
+      "taskDescription": "Соберите рецепт, чтобы создать легендарное оружие и броню!",
+      "actionName": "Создать!"
+    },
+    "cleaning": {
+      "name": "Уборка",
+      "fantasyName": "Управление сундуками",
+      "taskDescription": "Сортируйте добычу и подготовьте инвентарь к новым приключениям!",
+      "actionName": "Организовать!"
+    },
+    "memory": {
+      "name": "Память",
+      "fantasyName": "Найди пару",
+      "taskDescription": "Найдите пары, чтобы вывести редких существ!",
+      "actionName": "Сопоставить!"
+    },
+    "patterns": {
+      "name": "Последовательности",
+      "fantasyName": "Логическое строительство",
+      "taskDescription": "Разгадайте последовательность, чтобы открыть древние механизмы и сокровища!",
+      "actionName": "Решить!"
+    }
+  },
+  "achievements": {
+    "phantom_hunter": {
+      "name": "Охотник на призраков",
+      "description": "Поймайте призраков"
+    },
+    "combined_levels": {
+      "name": "Абсолютная сила",
+      "description": "Достигните высокого общего уровня"
+    },
+    "skill_mastery": {
+      "name": "Мастер на все руки",
+      "description": "Развивайте все навыки равномерно"
+    },
+    "first_steps": {
+      "name": "Первые шаги",
+      "description": "Победите первого врага"
+    },
+    "level_up": {
+      "name": "Повышение уровня!",
+      "description": "Достигните уровня 2 в любом навыке"
+    },
+    "fashion_forward": {
+      "name": "Стильный",
+      "description": "Смените тему впервые"
+    },
+    "framed": {
+      "name": "В рамке!",
+      "description": "Смените эффект рамки впервые"
+    },
+    "ouch": {
+      "name": "Ай!",
+      "description": "Умрите впервые"
+    },
+    "dragon_slayer": {
+      "name": "Убийца драконов",
+      "description": "Победите первого босса"
+    },
+    "mini_menace": {
+      "name": "Маленькая угроза",
+      "description": "Победите первого мини-босса"
+    },
+    "mini_master": {
+      "name": "Мастер мини-боссов",
+      "description": "Победите всех мини-боссов хотя бы один раз"
+    },
+    "world_ender": {
+      "name": "Конец света",
+      "description": "Победите всех боссов хотя бы один раз"
+    },
+    "monster_manual": {
+      "name": "Справочник монстров",
+      "description": "Победите всех обычных монстров хотя бы один раз"
+    },
+    "perfectionist": {
+      "name": "Перфекционист",
+      "description": "Завершите игру на память без ошибок"
+    },
+    "speed_demon": {
+      "name": "Демон скорости",
+      "description": "Завершите 10 боёв за одну сессию"
+    },
+    "dedicated": {
+      "name": "Преданный",
+      "description": "Играйте в 3 разных дня"
+    },
+    "high_roller": {
+      "name": "Высокий уровень",
+      "description": "Достигните сложности 7 в любом навыке"
+    },
+    "badge_collector": {
+      "name": "Коллекционер значков",
+      "description": "Получите свой первый значок"
+    },
+    "full_set": {
+      "name": "Полный набор",
+      "description": "Получите все ранги значков в одном навыке"
+    }
+  },
+  "borders": {
+    "solid": { "name": "По умолчанию", "description": "Вечное золотое сияние" },
+    "solid-picker": { "name": "По умолчанию", "description": "Настраиваемое сияние" },
+    "gradient": { "name": "Медь", "description": "Мистическое вращение" },
+    "sparkle": { "name": "Облачный", "description": "Сияние небесной пыли" },
+    "electric": { "name": "Громоотвод", "description": "Электрический разряд" },
+    "lifestream": { "name": "Поток жизни", "description": "Поток энергии" },
+    "frost": { "name": "Иней", "description": "Ледяная красота" },
+    "fire": { "name": "Лава", "description": "Огненная ярость" },
+    "shadow": { "name": "Портал Незера", "description": "Шёпот пустоты" },
+    "rainbow": { "name": "Легендарный!", "description": "Радужная аура" },
+    "livewire": { "name": "Электрический провод", "description": "Искры электричества" },
+    "void": { "name": "Космическая пустота", "description": "Бесконечное пространство" },
+    "toxic": { "name": "Токсичный", "description": "Капли кислоты" },
+    "holo": { "name": "Голограмма", "description": "Цифровой сбой" },
+    "crystal": { "name": "Кристалл", "description": "Сеть кристаллов" }
+  },
+  "game": {
+    "spell_it": "Произнеси слово по буквам!",
+    "simon_says": "Саймон говорит!",
+    "find_pairs": "Найди пары!",
+    "task_complete": "Задание выполнено?"
+  },
+  "tier_names": {
+    "0": "Бронза",
+    "1": "Серебро",
+    "2": "Золото",
+    "3": "Платина",
+    "4": "Изумруд",
+    "5": "Алмаз",
+    "6": "Легендарный",
+    "7": "Мифический"
+  },
+  "badges": {
+    "wood": "Дерево",
+    "stone": "Камень",
+    "gold": "Золото",
+    "iron": "Железо",
+    "emerald": "Изумруд",
+    "diamond": "Алмаз",
+    "netherite": "Незерит",
+    "obsidian": "Обсидиан"
+  },
+  "mobs": {
+    "blaze": "Огненник",
+    "bogged": "Болотный скелет",
+    "breeze": "Бриз",
+    "creeper": "Крипер",
+    "drowned": "Утопленник",
+    "enderman": "Эндермен",
+    "evoker": "Заклинатель",
+    "ghast": "Гаст",
+    "guardian": "Страж",
+    "hoglin": "Хоглин",
+    "magma_cube": "Куб магмы",
+    "parched": "Иссушённый",
+    "phantom": "Фантом",
+    "piglin": "Пиглин",
+    "pillager": "Мародёр",
+    "skeleton": "Скелет",
+    "slime": "Слизень",
+    "spider": "Паук",
+    "witch": "Ведьма",
+    "zombie": "Зомби",
+    "ender_dragon": "Дракон Края",
+    "herobrine": "Хиробрайн",
+    "warden": "Хранитель",
+    "wither": "Иссушитель",
+    "creaking": "Скрипун",
+    "elder_guardian": "Старший страж",
+    "ravager": "Опустошитель",
+    "wither_skeleton": "Скелет иссушителя",
+    "chest": "Сундук",
+    "trapped_chest": "Сундук-ловушка",
+    "barrel": "Бочка",
+    "bundle": "Узелок",
+    "shulker_box": "Ящик шалкера",
+    "ender_chest": "Эндер-сундук"
+  }
+}

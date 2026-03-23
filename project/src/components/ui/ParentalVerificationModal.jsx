@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Save, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const ParentalVerificationModal = ({ isOpen, onClose, onVerified }) => {
+    const { t } = useTranslation();
     const [answer, setAnswer] = useState('');
     const [error, setError] = useState(false);
     const correctAnswer = 'FLOPPY DISK';
@@ -76,7 +78,7 @@ const ParentalVerificationModal = ({ isOpen, onClose, onVerified }) => {
                     <div className="bg-blue-600/20 p-6 rounded-full mb-4 border-2 border-blue-600">
                         <Save size={64} className="text-blue-400" />
                     </div>
-                    <h2 className="text-2xl font-bold text-blue-400 uppercase tracking-wider mb-4">What is this?</h2>
+                    <h2 className="text-2xl font-bold text-blue-400 uppercase tracking-wider mb-4">{t('modals.parental_title')}</h2>
                     <form onSubmit={handleSubmit} className="w-full">
                         <div className="relative w-full flex justify-center mb-4" onClick={handleSlotClick}>
                             <input
@@ -107,12 +109,12 @@ const ParentalVerificationModal = ({ isOpen, onClose, onVerified }) => {
                                 ))}
                             </div>
                         </div>
-                        {error && <p className="text-red-400 text-sm mb-4">Incorrect answer. Try again!</p>}
+                        {error && <p className="text-red-400 text-sm mb-4">{t('modals.parental_error')}</p>}
                         <button
                             type="submit"
                             className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 px-6 rounded-lg font-bold uppercase tracking-wider transition-all border-2 border-blue-400"
                         >
-                            Submit
+                            {t('modals.parental_submit')}
                         </button>
                     </form>
                 </div>

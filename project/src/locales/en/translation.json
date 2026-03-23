@@ -1,0 +1,299 @@
+{
+  "settings": {
+    "title": "Settings",
+    "select_file": "Select File",
+    "audio_configuration": "Audio Configuration",
+    "music_volume": "Music Volume",
+    "sfx_volume": "SFX Volume",
+    "danger_zone": "Danger Zone",
+    "delete_profile_progress": "DELETE PROFILE PROGRESS",
+    "language": "Language"
+  },
+  "achievements_drawer": {
+    "title": "Achievements",
+    "total_level": "Total Level:",
+    "badges": "Badges:",
+    "achievements": "Achievements:",
+    "lvl": "Lvl",
+    "special_achievements": "Special Achievements",
+    "max_tier_reached": "MAX TIER REACHED!",
+    "unlocked": "✓ Unlocked",
+    "locked": "🔒 Locked",
+    "progress": "Progress:",
+    "next": "Next:",
+    "legendary_badge": "LEGENDARY! (Lvl 180+)"
+  },
+  "cosmetics": {
+    "title": "Themes & Cosmetics",
+    "theme_select": "Theme Select",
+    "border_effects": "Border Effects",
+    "active": "ACTIVE",
+    "color": "Color",
+    "locked_x": "✗ Locked",
+    "badge_required": "{{badge}} Badge Required",
+    "earn_badge_unlock": "Earn the {{badge}} badge to unlock this effect",
+    "unlocked_check": "✓ Unlocked"
+  },
+  "battle": {
+    "you_died": "YOU DIED",
+    "level_minus_1": "Level -1",
+    "take_a_rest": "Take a moment to rest...",
+    "level_restored": "LEVEL RESTORED!",
+    "welcome_back_hero": "Welcome back, hero!",
+    "level_reached": "LEVEL {{level}} REACHED!",
+    "unlocked_item": "Unlocked",
+    "phantom_bonus": "Phantom Bonus!",
+    "new_rank": "New Rank!",
+    "hp": "HP",
+    "xp": "XP",
+    "battle_header": "⚔ BATTLE ⚔",
+    "target": "Target",
+    "skill_label": "Skill",
+    "level_label": "Level",
+    "quest": "Quest",
+    "lvl": "Lvl"
+  },
+  "skill_card": {
+    "tap_to_speak": "Tap to Speak",
+    "complete": "Complete!",
+    "skip_manual_success": "Skip / Manual Success",
+    "round": "Round:",
+    "watch": "Watch!",
+    "your_turn": "Your turn!",
+    "game_over_rounds": "Game Over! Rounds:",
+    "retry": "Retry"
+  },
+  "modals": {
+    "delete_progress_title": "Delete Progress?",
+    "delete_progress_confirm": "Are you sure you want to delete all progress for this profile?",
+    "delete_progress_irreversible": "This action is irreversible!",
+    "type_delete_confirm": "Type DELETE to confirm:",
+    "please_type_delete": "Please type DELETE to confirm.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "bug_title": "Discovered a bug?",
+    "bug_subtitle": "Whoa... That sucks...",
+    "parental_title": "What is this?",
+    "parental_error": "Incorrect answer. Try again!",
+    "parental_submit": "Submit"
+  },
+  "profile": {
+    "parent": "Parent",
+    "parent_question": "Parent?",
+    "skill_proficiency": "Skill Proficiency",
+    "player_name1": "Player 1",
+    "player_name2": "Player 2",
+    "player_name3": "Player 3",
+    "lv": "LV."
+  },
+  "mic": {
+    "off": "Mic Off",
+    "listening": "Listening..."
+  },
+  "achievement_toast": {
+    "unlocked": "ACHIEVEMENT UNLOCKED!",
+    "tier": "Tier"
+  },
+  "phantom": {
+    "plus_level": "+1 Level!"
+  },
+  "fullscreen": {
+    "enter": "Enter fullscreen",
+    "exit": "Exit fullscreen"
+  },
+  "skills": {
+    "reading": {
+      "name": "Reading",
+      "fantasyName": "Enchanting Table",
+      "taskDescription": "Speak the ancient words to channel enchantments and vanquish your foes!",
+      "actionName": "Enchant!"
+    },
+    "math": {
+      "name": "Math",
+      "fantasyName": "Redstone",
+      "taskDescription": "Power up your redstone circuits to activate traps and outsmart hostile mobs!",
+      "actionName": "Calculate!"
+    },
+    "writing": {
+      "name": "Writing",
+      "fantasyName": "Crafting Table",
+      "taskDescription": "Spell out the recipe to forge legendary weapons and armor!",
+      "actionName": "Craft!"
+    },
+    "cleaning": {
+      "name": "Cleaning",
+      "fantasyName": "Chest Management",
+      "taskDescription": "Sort your loot and prepare your inventory for the adventures ahead!",
+      "actionName": "Organize!"
+    },
+    "memory": {
+      "name": "Memory",
+      "fantasyName": "Match n' Hatch",
+      "taskDescription": "Find the matching pairs to hatch rare creatures for your farm!",
+      "actionName": "Match!"
+    },
+    "patterns": {
+      "name": "Patterns",
+      "fantasyName": "Logic Building",
+      "taskDescription": "Decipher the sequence to unlock ancient mechanisms and hidden treasures!",
+      "actionName": "Solve!"
+    }
+  },
+  "achievements": {
+    "phantom_hunter": {
+      "name": "Ghost Buster",
+      "description": "Catch Phantoms"
+    },
+    "combined_levels": {
+      "name": "Power Overwhelming",
+      "description": "Reach high combined levels"
+    },
+    "skill_mastery": {
+      "name": "Jack of All Trades",
+      "description": "Level all skills evenly"
+    },
+    "first_steps": {
+      "name": "First Steps",
+      "description": "Defeat your first enemy"
+    },
+    "level_up": {
+      "name": "Level Up!",
+      "description": "Reach Level 2 in any skill"
+    },
+    "fashion_forward": {
+      "name": "Fashion Forward",
+      "description": "Change your theme for the first time"
+    },
+    "framed": {
+      "name": "Framed!",
+      "description": "Change your border effect for the first time"
+    },
+    "ouch": {
+      "name": "Ouch!",
+      "description": "Die for the first time"
+    },
+    "dragon_slayer": {
+      "name": "Dragon Slayer",
+      "description": "Defeat your first boss"
+    },
+    "mini_menace": {
+      "name": "Mini Menace",
+      "description": "Defeat your first mini-boss"
+    },
+    "mini_master": {
+      "name": "Mini Master",
+      "description": "Defeat all mini-bosses at least once"
+    },
+    "world_ender": {
+      "name": "World Ender",
+      "description": "Defeat all bosses at least once"
+    },
+    "monster_manual": {
+      "name": "Monster Manual",
+      "description": "Defeat all regular mobs at least once"
+    },
+    "perfectionist": {
+      "name": "Perfectionist",
+      "description": "Complete a memory game without any mismatches"
+    },
+    "speed_demon": {
+      "name": "Speed Demon",
+      "description": "Complete 10 battles in a single session"
+    },
+    "dedicated": {
+      "name": "Dedicated",
+      "description": "Play on 3 different days"
+    },
+    "high_roller": {
+      "name": "High Roller",
+      "description": "Reach difficulty 7 on any skill"
+    },
+    "badge_collector": {
+      "name": "Badge Collector",
+      "description": "Earn your first badge (any tier)"
+    },
+    "full_set": {
+      "name": "Full Set",
+      "description": "Earn all 8 badge tiers on a single skill"
+    }
+  },
+  "borders": {
+    "solid": { "name": "Default", "description": "Eternal golden radiance" },
+    "solid-picker": { "name": "Default", "description": "Customizable eternal glow" },
+    "gradient": { "name": "Copper", "description": "Mesmerizing arcane rotation" },
+    "sparkle": { "name": "Cloudy", "description": "Celestial stardust shimmer" },
+    "electric": { "name": "Lightning Rod", "description": "Thunderous plasma surge" },
+    "lifestream": { "name": "Lifestream", "description": "Flowing ethereal energy" },
+    "frost": { "name": "Frost", "description": "Glacial crystal majesty" },
+    "fire": { "name": "Lava", "description": "Infernal blazing fury" },
+    "shadow": { "name": "Nether Portal", "description": "Abyssal void whispers" },
+    "rainbow": { "name": "Legendary!", "description": "Prismatic legendary aura" },
+    "livewire": { "name": "Live Wire", "description": "Volatile electric arcs" },
+    "void": { "name": "Cosmic Void", "description": "Infinite starlit expanse" },
+    "toxic": { "name": "Toxin", "description": "Caustic acid drip" },
+    "holo": { "name": "Hologram", "description": "Digital reality glitch" },
+    "crystal": { "name": "Crystalline", "description": "Prismatic shard array" }
+  },
+  "game": {
+    "spell_it": "Spell it!",
+    "simon_says": "Simon Says!",
+    "find_pairs": "Find Pairs!",
+    "task_complete": "Task Complete?"
+  },
+  "tier_names": {
+    "0": "Bronze",
+    "1": "Silver",
+    "2": "Gold",
+    "3": "Platinum",
+    "4": "Emerald",
+    "5": "Diamond",
+    "6": "Legendary",
+    "7": "Mythic"
+  },
+  "badges": {
+    "wood": "Wood",
+    "stone": "Stone",
+    "gold": "Gold",
+    "iron": "Iron",
+    "emerald": "Emerald",
+    "diamond": "Diamond",
+    "netherite": "Netherite",
+    "obsidian": "Obsidian"
+  },
+  "mobs": {
+    "blaze": "Blaze",
+    "bogged": "Bogged",
+    "breeze": "Breeze",
+    "creeper": "Creeper",
+    "drowned": "Drowned",
+    "enderman": "Enderman",
+    "evoker": "Evoker",
+    "ghast": "Ghast",
+    "guardian": "Guardian",
+    "hoglin": "Hoglin",
+    "magma_cube": "Magma Cube",
+    "parched": "Parched",
+    "phantom": "Phantom",
+    "piglin": "Piglin",
+    "pillager": "Pillager",
+    "skeleton": "Skeleton",
+    "slime": "Slime",
+    "spider": "Spider",
+    "witch": "Witch",
+    "zombie": "Zombie",
+    "ender_dragon": "Ender Dragon",
+    "herobrine": "Herobrine",
+    "warden": "Warden",
+    "wither": "Wither",
+    "creaking": "Creaking",
+    "elder_guardian": "Elder Guardian",
+    "ravager": "Ravager",
+    "wither_skeleton": "Wither Skeleton",
+    "chest": "Chest",
+    "trapped_chest": "Trapped Chest",
+    "barrel": "Barrel",
+    "bundle": "Bundle",
+    "shulker_box": "Shulker Box",
+    "ender_chest": "Ender Chest"
+  }
+}

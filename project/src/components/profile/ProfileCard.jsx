@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Pencil, Check, Heart, Crown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import SafeImage from '../ui/SafeImage';
 import ParentalVerificationModal from '../ui/ParentalVerificationModal';
 import { THEMES_LIST, SKILL_DATA } from '../../constants/gameData';
 
 const ProfileCard = ({ id, name, stats, isCurrent, onSwitch, onRename, isParent, onParentVerified }) => {
+    const { t } = useTranslation();
     const [isEditing, setIsEditing] = useState(false);
     const [tempName, setTempName] = useState(name);
     const [showParentalModal, setShowParentalModal] = useState(false);
-    
+
     // eslint-disable-next-line react-hooks/set-state-in-effect
     useEffect(() => { if (!isCurrent) setIsEditing(false); }, [isCurrent]);
 
     let themeBg = null;
-    
+
     if (stats && stats.theme) {
         const themeObj = THEMES_LIST.find(t => t.id === stats.theme);
         if (themeObj) themeBg = themeObj.img;
@@ -48,9 +50,9 @@ const ProfileCard = ({ id, name, stats, isCurrent, onSwitch, onRename, isParent,
         const baseClasses = 'relative w-full h-[100px] rounded-xl overflow-hidden transition-all cursor-pointer group select-none';
         if (isCurrent) {
             const ringClass = isParent ? 'ring-rainbow' : 'ring-4 ring-yellow-400';
-            return `${baseClasses} ${ringClass} z-10`;  // No scale - this is the "full size"
+            return `${baseClasses} ${ringClass} z-10`;
         }
-        return `${baseClasses} scale-[0.98] hover:scale-[0.99] opacity-70 hover:opacity-100`;  // Shrunk when inactive
+        return `${baseClasses} scale-[0.98] hover:scale-[0.99] opacity-70 hover:opacity-100`;
     };
 
     const getProfileCardStyles = () => {
@@ -73,7 +75,7 @@ const ProfileCard = ({ id, name, stats, isCurrent, onSwitch, onRename, isParent,
                         {isParent ? (
                             <div className="flex flex-col items-center gap-1">
                                 <Crown className="fill-yellow-400 text-yellow-600" size={24} />
-                                <span className="text-[10px] text-yellow-400 font-bold uppercase">Parent</span>
+                                <span className="text-[10px] text-yellow-400 font-bold uppercase">{t('profile.parent')}</span>
                             </div>
                         ) : (
                             <label className="flex flex-col items-center gap-1 cursor-pointer" onClick={e => e.stopPropagation()}>
@@ -83,11 +85,11 @@ const ProfileCard = ({ id, name, stats, isCurrent, onSwitch, onRename, isParent,
                                     onChange={handleParentCheckboxChange}
                                     className="w-4 h-4 accent-yellow-400 cursor-pointer"
                                 />
-                                <span className="text-[10px] text-slate-400 font-bold uppercase">Parent?</span>
+                                <span className="text-[10px] text-slate-400 font-bold uppercase">{t('profile.parent_question')}</span>
                             </label>
                         )}
                     </div>
-                    
+
                     {/* Profile identifiers - horizontal layout */}
                     <div className="w-1/2 flex flex-col justify-center items-center px-4 border-r-2 border-white/20">
                         {isEditing ? (
@@ -101,7 +103,7 @@ const ProfileCard = ({ id, name, stats, isCurrent, onSwitch, onRename, isParent,
                                     <span className="text-slate-300 text-lg font-bold">P{id},</span>
                                     <h3 className={`text-2xl font-bold uppercase truncate leading-none ${isCurrent ? 'text-yellow-100 drop-shadow-md' : 'text-white'}`} style={{ fontFamily: 'sans-serif', textShadow: '2px 2px 0 #000' }}>{name},</h3>
                                     <Heart className={`fill-red-600 text-red-800 ${isCurrent ? 'animate-pulse' : ''}`} size={24} />
-                                    <span className="text-lg text-slate-400 uppercase tracking-wider">LV.</span>
+                                    <span className="text-lg text-slate-400 uppercase tracking-wider">{t('profile.lv')}</span>
                                     <span className="text-2xl font-bold text-white leading-none">{stats ? stats.totalLevel : 0}</span>
                                     {isCurrent && <Pencil size={18} className="text-slate-400 group-hover/name:text-yellow-400 transition-colors ml-1" onClick={(e) => { e.stopPropagation(); setIsEditing(true); }} />}
                                 </div>
@@ -109,7 +111,7 @@ const ProfileCard = ({ id, name, stats, isCurrent, onSwitch, onRename, isParent,
                         )}
                     </div>
                     <div className="flex-1 flex flex-col min-w-0 pr-2">
-                        <div className="flex justify-between items-center mb-1"><span className="text-[10px] text-slate-300 font-bold uppercase tracking-wider drop-shadow-md pl-2">Skill Proficiency</span></div>
+                        <div className="flex justify-between items-center mb-1"><span className="text-[10px] text-slate-300 font-bold uppercase tracking-wider drop-shadow-md pl-2">{t('profile.skill_proficiency')}</span></div>
                         <div className="flex-1 bg-black/50 rounded-lg border-2 border-white/10 inner-shadow p-0 overflow-hidden backdrop-blur-sm relative flex items-center">
                             <div className="flex gap-6 animate-scroll-left px-6 w-max">
                                 {carouselItems.map((skillConfig, index) => {
