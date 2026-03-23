@@ -58,15 +58,32 @@ const BOSS_HEALING_ANIMATION_DURATION = 600;
 // ---------------------------------------------------------------------------
 // Pure challenge generator (no state deps — module scope is correct)
 // ---------------------------------------------------------------------------
-const generateChallenge = (type, diff) => {
-    if (type === 'math')     return generateMathProblem(diff);
-    if (type === 'patterns') return { type: 'patterns', question: 'Simon Says!', answer: 'WIN' };
-    if (type === 'reading')  { const w = getReadingWord(diff); return { type, question: w, answer: w }; }
-    if (type === 'writing') {
-        const wd = getWordForDifficulty(diff);
-        return { type, question: 'Spell it!', answer: wd.displayName.toUpperCase(), images: [wd.image], displayName: wd.displayName };
+const generateChallenge = async (type, diff) => {
+    if (type === 'math')
+        return generateMathProblem(diff);
+
+    if (type === 'patterns') 
+        return { type: 'patterns', question: 'Simon Says!', answer: 'WIN' };
+
+    if (type === 'reading')  { 
+        const w = await getReadingWord(diff);
+        return { type, question: w, answer: w }; 
     }
-    if (type === 'memory') return { type: 'memory', question: 'Find Pairs!', answer: 'WIN' };
+
+    if (type === 'writing') {
+        const wd = await getWordForDifficulty(diff);
+        return { 
+            type, 
+            question: 'Spell it!', 
+            answer: wd.displayName.toUpperCase(), 
+            images: [wd.image], 
+            displayName: wd.displayName 
+        };
+    }
+
+    if (type === 'memory') 
+        return { type: 'memory', question: 'Find Pairs!', answer: 'WIN' };
+
     return { type: 'manual', question: 'Task Complete?', answer: 'yes' };
 };
 
