@@ -1,8 +1,15 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { visualizer } from 'rollup-plugin-visualizer'
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: './', // Use relative paths for Electron compatibility
+  plugins: [
+    react(),
+    visualizer({
+      open: true,        // opens automatically
+      filename: 'stats.html', // output file
+      gzipSize: true,
+      brotliSize: true
+    })
+  ]
 })
