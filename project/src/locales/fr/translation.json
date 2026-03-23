@@ -1,0 +1,299 @@
+{
+  "settings": {
+    "title": "Paramètres",
+    "select_file": "Sélectionner un fichier",
+    "audio_configuration": "Configuration audio",
+    "music_volume": "Volume musique",
+    "sfx_volume": "Volume effets",
+    "danger_zone": "Zone de danger",
+    "delete_profile_progress": "SUPPRIMER LA PROGRESSION",
+    "language": "Langue"
+  },
+  "achievements_drawer": {
+    "title": "Succès",
+    "total_level": "Niveau total :",
+    "badges": "Badges :",
+    "achievements": "Succès :",
+    "lvl": "Niv",
+    "special_achievements": "Succès spéciaux",
+    "max_tier_reached": "RANG MAXIMUM ATTEINT !",
+    "unlocked": "✓ Débloqué",
+    "locked": "🔒 Verrouillé",
+    "progress": "Progression :",
+    "next": "Suivant :",
+    "legendary_badge": "LÉGENDAIRE ! (Niv 180+)"
+  },
+  "cosmetics": {
+    "title": "Thèmes & Cosmétiques",
+    "theme_select": "Choisir un thème",
+    "border_effects": "Effets de bordure",
+    "active": "ACTIF",
+    "color": "Couleur",
+    "locked_x": "✗ Verrouillé",
+    "badge_required": "Badge {{badge}} requis",
+    "earn_badge_unlock": "Obtenez le badge {{badge}} pour débloquer cet effet",
+    "unlocked_check": "✓ Débloqué"
+  },
+  "battle": {
+    "you_died": "VOUS ÊTES MORT",
+    "level_minus_1": "Niveau -1",
+    "take_a_rest": "Prenez un moment pour vous reposer...",
+    "level_restored": "NIVEAU RESTAURÉ !",
+    "welcome_back_hero": "Bienvenue de retour, héros !",
+    "level_reached": "NIVEAU {{level}} ATTEINT !",
+    "unlocked_item": "Débloqué",
+    "phantom_bonus": "Bonus Fantôme !",
+    "new_rank": "Nouveau rang !",
+    "hp": "PV",
+    "xp": "XP",
+    "battle_header": "⚔ COMBAT ⚔",
+    "target": "Cible",
+    "skill_label": "Compétence",
+    "level_label": "Niveau",
+    "quest": "Quête",
+    "lvl": "Niv"
+  },
+  "skill_card": {
+    "tap_to_speak": "Appuyer pour parler",
+    "complete": "Terminé !",
+    "skip_manual_success": "Passer / Succès manuel",
+    "round": "Manche :",
+    "watch": "Regardez !",
+    "your_turn": "À vous !",
+    "game_over_rounds": "Partie terminée ! Manches :",
+    "retry": "Réessayer"
+  },
+  "modals": {
+    "delete_progress_title": "Supprimer la progression ?",
+    "delete_progress_confirm": "Êtes-vous sûr de vouloir supprimer toute la progression de ce profil ?",
+    "delete_progress_irreversible": "Cette action est irréversible !",
+    "type_delete_confirm": "Tapez SUPPRIMER pour confirmer :",
+    "please_type_delete": "Veuillez taper SUPPRIMER pour confirmer.",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "bug_title": "Vous avez trouvé un bug ?",
+    "bug_subtitle": "Oh non... C'est nul...",
+    "parental_title": "C'est quoi ça ?",
+    "parental_error": "Mauvaise réponse. Réessayez !",
+    "parental_submit": "Valider"
+  },
+  "profile": {
+    "parent": "Parent",
+    "player_name1": "Joueur 1",
+    "player_name2": "Joueur 2",
+    "player_name3": "Joueur 3",
+    "parent_question": "Parent ?",
+    "skill_proficiency": "Maîtrise des compétences",
+    "lv": "NIV."
+  },
+  "mic": {
+    "off": "Micro coupé",
+    "listening": "En écoute..."
+  },
+  "achievement_toast": {
+    "unlocked": "SUCCÈS DÉBLOQUÉ !",
+    "tier": "Rang"
+  },
+  "phantom": {
+    "plus_level": "+1 Niveau !"
+  },
+  "fullscreen": {
+    "enter": "Plein écran",
+    "exit": "Quitter le plein écran"
+  },
+  "skills": {
+    "reading": {
+      "name": "Lecture",
+      "fantasyName": "Table d'enchantement",
+      "taskDescription": "Prononcez les mots anciens pour canaliser des enchantements et vaincre vos ennemis !",
+      "actionName": "Enchanter !"
+    },
+    "math": {
+      "name": "Mathématiques",
+      "fantasyName": "Calcul mental",
+      "taskDescription": "Alimentez vos circuits de redstone pour activer des pièges et déjouer les monstres !",
+      "actionName": "Calculer !"
+    },
+    "writing": {
+      "name": "Écriture",
+      "fantasyName": "Table de construction",
+      "taskDescription": "Épélez la recette pour forger des armes et armures légendaires !",
+      "actionName": "Fabriquer !"
+    },
+    "cleaning": {
+      "name": "Rangement",
+      "fantasyName": "Gestion des coffres",
+      "taskDescription": "Triez votre butin et préparez votre inventaire pour les aventures à venir !",
+      "actionName": "Organiser !"
+    },
+    "memory": {
+      "name": "Mémoire",
+      "fantasyName": "Match & Éclosion",
+      "taskDescription": "Trouvez les paires pour faire éclore de rares créatures pour votre ferme !",
+      "actionName": "Associer !"
+    },
+    "patterns": {
+      "name": "Séquences",
+      "fantasyName": "Logique de construction",
+      "taskDescription": "Déchiffrez la séquence pour débloquer d'anciens mécanismes et des trésors cachés !",
+      "actionName": "Résoudre !"
+    }
+  },
+  "achievements": {
+    "phantom_hunter": {
+      "name": "Chasseur de fantômes",
+      "description": "Attraper des Fantômes"
+    },
+    "combined_levels": {
+      "name": "Puissance absolue",
+      "description": "Atteindre un niveau combiné élevé"
+    },
+    "skill_mastery": {
+      "name": "Touche-à-tout",
+      "description": "Faire progresser toutes les compétences équitablement"
+    },
+    "first_steps": {
+      "name": "Premiers pas",
+      "description": "Vaincre votre premier ennemi"
+    },
+    "level_up": {
+      "name": "Niveau supérieur !",
+      "description": "Atteindre le niveau 2 dans n'importe quelle compétence"
+    },
+    "fashion_forward": {
+      "name": "Tendance",
+      "description": "Changer de thème pour la première fois"
+    },
+    "framed": {
+      "name": "Encadré !",
+      "description": "Changer d'effet de bordure pour la première fois"
+    },
+    "ouch": {
+      "name": "Aïe !",
+      "description": "Mourir pour la première fois"
+    },
+    "dragon_slayer": {
+      "name": "Tueur de dragon",
+      "description": "Vaincre votre premier boss"
+    },
+    "mini_menace": {
+      "name": "Mini menace",
+      "description": "Vaincre votre premier mini-boss"
+    },
+    "mini_master": {
+      "name": "Maître des mini-boss",
+      "description": "Vaincre tous les mini-boss au moins une fois"
+    },
+    "world_ender": {
+      "name": "Fin du monde",
+      "description": "Vaincre tous les boss au moins une fois"
+    },
+    "monster_manual": {
+      "name": "Manuel des monstres",
+      "description": "Vaincre tous les monstres classiques au moins une fois"
+    },
+    "perfectionist": {
+      "name": "Perfectionniste",
+      "description": "Terminer un jeu de mémoire sans aucune erreur"
+    },
+    "speed_demon": {
+      "name": "Démon de vitesse",
+      "description": "Terminer 10 combats en une seule session"
+    },
+    "dedicated": {
+      "name": "Assidu",
+      "description": "Jouer pendant 3 jours différents"
+    },
+    "high_roller": {
+      "name": "Grand joueur",
+      "description": "Atteindre la difficulté 7 dans n'importe quelle compétence"
+    },
+    "badge_collector": {
+      "name": "Collectionneur de badges",
+      "description": "Obtenir votre premier badge (n'importe quel rang)"
+    },
+    "full_set": {
+      "name": "Collection complète",
+      "description": "Obtenir les 8 rangs de badges sur une seule compétence"
+    }
+  },
+  "borders": {
+    "solid": { "name": "Défaut", "description": "Radiance dorée éternelle" },
+    "solid-picker": { "name": "Défaut", "description": "Lueur éternelle personnalisable" },
+    "gradient": { "name": "Cuivre", "description": "Rotation arcanique envoûtante" },
+    "sparkle": { "name": "Nuageux", "description": "Scintillement de poussière céleste" },
+    "electric": { "name": "Paratonnerre", "description": "Décharge de plasma foudroyante" },
+    "lifestream": { "name": "Flux vital", "description": "Énergie éthérée fluide" },
+    "frost": { "name": "Givre", "description": "Majesté des cristaux glaciaires" },
+    "fire": { "name": "Lave", "description": "Fureur infernale embrasée" },
+    "shadow": { "name": "Portail du Nether", "description": "Murmures du vide abyssal" },
+    "rainbow": { "name": "Légendaire !", "description": "Aura prismatique légendaire" },
+    "livewire": { "name": "Fil électrique", "description": "Arcs électriques volatils" },
+    "void": { "name": "Vide cosmique", "description": "Expanse stellaire infinie" },
+    "toxic": { "name": "Toxine", "description": "Gouttes d'acide caustique" },
+    "holo": { "name": "Hologramme", "description": "Glitch de réalité numérique" },
+    "crystal": { "name": "Cristallin", "description": "Réseau de fragments prismatiques" }
+  },
+  "game": {
+    "spell_it": "Épelle le mot !",
+    "simon_says": "Simon dit !",
+    "find_pairs": "Trouve les paires !",
+    "task_complete": "Tâche terminée ?"
+  },
+  "tier_names": {
+    "0": "Bronze",
+    "1": "Argent",
+    "2": "Or",
+    "3": "Platine",
+    "4": "Émeraude",
+    "5": "Diamant",
+    "6": "Légendaire",
+    "7": "Mythique"
+  },
+  "badges": {
+    "wood": "Bois",
+    "stone": "Pierre",
+    "gold": "Or",
+    "iron": "Fer",
+    "emerald": "Émeraude",
+    "diamond": "Diamant",
+    "netherite": "Netherite",
+    "obsidian": "Obsidienne"
+  },
+  "mobs": {
+    "blaze": "Blaze",
+    "bogged": "Bogged",
+    "breeze": "Brise",
+    "creeper": "Creeper",
+    "drowned": "Noyé",
+    "enderman": "Enderman",
+    "evoker": "Évocateur",
+    "ghast": "Ghast",
+    "guardian": "Gardien",
+    "hoglin": "Hoglin",
+    "magma_cube": "Cube de magma",
+    "parched": "Desséché",
+    "phantom": "Fantôme",
+    "piglin": "Piglin",
+    "pillager": "Pillard",
+    "skeleton": "Squelette",
+    "slime": "Slime",
+    "spider": "Araignée",
+    "witch": "Sorcière",
+    "zombie": "Zombie",
+    "ender_dragon": "Dragon de l'Ender",
+    "herobrine": "Herobrine",
+    "warden": "Sentinelle",
+    "wither": "Wither",
+    "creaking": "Craquant",
+    "elder_guardian": "Gardien des abysses",
+    "ravager": "Ravageur",
+    "wither_skeleton": "Squelette de Wither",
+    "chest": "Coffre",
+    "trapped_chest": "Coffre piégé",
+    "barrel": "Tonneau",
+    "bundle": "Baluchon",
+    "shulker_box": "Boîte de Shulker",
+    "ender_chest": "Coffre de l'Ender"
+  }
+}

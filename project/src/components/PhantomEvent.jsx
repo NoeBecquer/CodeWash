@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HOSTILE_MOBS } from '../constants/gameData';
 import { playSuccessfulHit } from '../utils/soundManager';
 
@@ -9,6 +10,7 @@ const FLIGHT_DURATION_MS = 8000; // 8 seconds to cross the screen (slow enough f
 const PHANTOM_OFFSCREEN_LEFT = '-120px'; // Start position offscreen on the left
 
 const PhantomEvent = ({ battlingSkillId, onAwardLevel, onPhantomCaught }) => {
+    const { t } = useTranslation();
     const [isActive, setIsActive] = useState(false);
     const [fromLeft, setFromLeft] = useState(true);
     const [clicked, setClicked] = useState(false);
@@ -21,7 +23,7 @@ const PhantomEvent = ({ battlingSkillId, onAwardLevel, onPhantomCaught }) => {
         const lastSpawn = parseInt(localStorage.getItem(PHANTOM_COOLDOWN_KEY) || '0', 10);
         const now = Date.now();
         const timeSinceLastSpawn = now - lastSpawn;
-        
+
         // Calculate how long until we can spawn again
         let delay;
         if (timeSinceLastSpawn >= MIN_COOLDOWN_MS) {
@@ -50,7 +52,7 @@ const PhantomEvent = ({ battlingSkillId, onAwardLevel, onPhantomCaught }) => {
         setFromLeft(startFromLeft);
         setClicked(false);
         setIsActive(true);
-        
+
         // Record spawn time
         localStorage.setItem(PHANTOM_COOLDOWN_KEY, Date.now().toString());
 
@@ -72,22 +74,22 @@ const PhantomEvent = ({ battlingSkillId, onAwardLevel, onPhantomCaught }) => {
     // Handle click on phantom
     const handleClick = useCallback(() => {
         if (clicked) return; // Prevent multiple clicks
-        
+
         setClicked(true);
-        
+
         // Play successful hit sound
         playSuccessfulHit();
-        
+
         // Track phantom caught
         if (onPhantomCaught) {
             onPhantomCaught();
         }
-        
+
         // Award level if skill is active
         if (battlingSkillId) {
             onAwardLevel(battlingSkillId);
         }
-        
+
         // Remove phantom after brief delay for visual feedback
         setTimeout(() => {
             setIsActive(false);
@@ -101,7 +103,7 @@ const PhantomEvent = ({ battlingSkillId, onAwardLevel, onPhantomCaught }) => {
     // Initialize on mount
     useEffect(() => {
         scheduleNextSpawn();
-        
+
         return () => {
             if (timeoutRef.current) {
                 clearTimeout(timeoutRef.current);
@@ -139,7 +141,7 @@ const PhantomEvent = ({ battlingSkillId, onAwardLevel, onPhantomCaught }) => {
             {clicked && (
                 <div className="absolute inset-0 flex items-center justify-center">
                     <span className="text-yellow-400 text-2xl font-bold animate-bounce drop-shadow-[0_0_5px_rgba(255,215,0,0.8)]">
-                        +1 Level!
+                        {t('phantom.plus_level')}
                     </span>
                 </div>
             )}

@@ -1,0 +1,299 @@
+{
+  "settings": {
+    "title": "الإعدادات",
+    "select_file": "اختيار ملف",
+    "audio_configuration": "إعدادات الصوت",
+    "music_volume": "مستوى صوت الموسيقى",
+    "sfx_volume": "مستوى صوت المؤثرات",
+    "danger_zone": "منطقة الخطر",
+    "delete_profile_progress": "حذف التقدم",
+    "language": "اللغة"
+  },
+  "achievements_drawer": {
+    "title": "الإنجازات",
+    "total_level": "المستوى الإجمالي:",
+    "badges": "الشارات:",
+    "achievements": "الإنجازات:",
+    "lvl": "المستوى",
+    "special_achievements": "إنجازات خاصة",
+    "max_tier_reached": "تم الوصول إلى الحد الأقصى!",
+    "unlocked": "✓ مفتوح",
+    "locked": "🔒 مقفل",
+    "progress": "التقدم:",
+    "next": "التالي:",
+    "legendary_badge": "أسطوري! (المستوى 180+)"
+  },
+  "cosmetics": {
+    "title": "الثيمات والتجميل",
+    "theme_select": "اختر ثيم",
+    "border_effects": "تأثيرات الإطار",
+    "active": "نشط",
+    "color": "اللون",
+    "locked_x": "✗ مقفل",
+    "badge_required": "يتطلب الشارة {{badge}}",
+    "earn_badge_unlock": "احصل على الشارة {{badge}} لفتح هذا التأثير",
+    "unlocked_check": "✓ مفتوح"
+  },
+  "battle": {
+    "you_died": "لقد مت",
+    "level_minus_1": "المستوى -1",
+    "take_a_rest": "خذ قسطاً من الراحة...",
+    "level_restored": "تم استعادة المستوى!",
+    "welcome_back_hero": "مرحباً بعودتك أيها البطل!",
+    "level_reached": "تم الوصول إلى المستوى {{level}}!",
+    "unlocked_item": "تم الفتح",
+    "phantom_bonus": "مكافأة الشبح!",
+    "new_rank": "رتبة جديدة!",
+    "hp": "HP",
+    "xp": "XP",
+    "battle_header": "⚔ قتال ⚔",
+    "target": "الهدف",
+    "skill_label": "المهارة",
+    "level_label": "المستوى",
+    "quest": "مهمة",
+    "lvl": "المستوى"
+  },
+  "skill_card": {
+    "tap_to_speak": "اضغط للتحدث",
+    "complete": "تم!",
+    "skip_manual_success": "تخطي / نجاح يدوي",
+    "round": "الجولة:",
+    "watch": "شاهد!",
+    "your_turn": "دورك!",
+    "game_over_rounds": "انتهت اللعبة! الجولات:",
+    "retry": "إعادة المحاولة"
+  },
+  "modals": {
+    "delete_progress_title": "حذف التقدم؟",
+    "delete_progress_confirm": "هل أنت متأكد أنك تريد حذف كل تقدم هذا الملف الشخصي؟",
+    "delete_progress_irreversible": "هذا الإجراء لا يمكن التراجع عنه!",
+    "type_delete_confirm": "اكتب DELETE للتأكيد:",
+    "please_type_delete": "يرجى كتابة DELETE للتأكيد.",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "bug_title": "هل وجدت خطأ؟",
+    "bug_subtitle": "أوه لا... هذا سيء...",
+    "parental_title": "ما هذا؟",
+    "parental_error": "إجابة خاطئة، حاول مرة أخرى!",
+    "parental_submit": "تأكيد"
+  },
+  "profile": {
+    "parent": "ولي الأمر",
+    "parent_question": "هل أنت ولي أمر؟",
+    "player_name1": "اللاعب 1",
+    "player_name2": "اللاعب 2",
+    "player_name3": "اللاعب 3",
+    "skill_proficiency": "إتقان المهارات",
+    "lv": "المستوى"
+  },
+  "mic": {
+    "off": "الميكروفون مغلق",
+    "listening": "جاري الاستماع..."
+  },
+  "achievement_toast": {
+    "unlocked": "تم فتح إنجاز!",
+    "tier": "الرتبة"
+  },
+  "phantom": {
+    "plus_level": "+1 مستوى!"
+  },
+  "fullscreen": {
+    "enter": "ملء الشاشة",
+    "exit": "الخروج من ملء الشاشة"
+  },
+  "skills": {
+    "reading": {
+      "name": "القراءة",
+      "fantasyName": "طاولة السحر",
+      "taskDescription": "انطق الكلمات القديمة لتفعيل السحر وهزيمة أعدائك!",
+      "actionName": "سحر!"
+    },
+    "math": {
+      "name": "الرياضيات",
+      "fantasyName": "الحساب الذهني",
+      "taskDescription": "شغّل دوائرك لتفعيل الفخاخ والتغلب على الأعداء!",
+      "actionName": "احسب!"
+    },
+    "writing": {
+      "name": "الكتابة",
+      "fantasyName": "طاولة التصنيع",
+      "taskDescription": "اكتب الوصفة لصنع أسلحة ودروع أسطورية!",
+      "actionName": "اصنع!"
+    },
+    "cleaning": {
+      "name": "التنظيم",
+      "fantasyName": "إدارة الصناديق",
+      "taskDescription": "رتب أغراضك وجهّز مخزونك للمغامرات القادمة!",
+      "actionName": "نظّم!"
+    },
+    "memory": {
+      "name": "الذاكرة",
+      "fantasyName": "مطابقة وتفقيس",
+      "taskDescription": "اعثر على الأزواج لفتح مخلوقات نادرة!",
+      "actionName": "طابق!"
+    },
+    "patterns": {
+      "name": "الأنماط",
+      "fantasyName": "البناء المنطقي",
+      "taskDescription": "فكّ الشيفرة لفتح الآليات القديمة والكنوز المخفية!",
+      "actionName": "حل!"
+    }
+  },
+  "achievements": {
+    "phantom_hunter": {
+      "name": "صياد الأشباح",
+      "description": "اصطد الأشباح"
+    },
+    "combined_levels": {
+      "name": "قوة مطلقة",
+      "description": "الوصول إلى مستوى إجمالي عالٍ"
+    },
+    "skill_mastery": {
+      "name": "متعدد المهارات",
+      "description": "تطوير جميع المهارات بالتساوي"
+    },
+    "first_steps": {
+      "name": "الخطوات الأولى",
+      "description": "اهزم أول عدو لك"
+    },
+    "level_up": {
+      "name": "مستوى أعلى!",
+      "description": "الوصول إلى المستوى 2 في أي مهارة"
+    },
+    "fashion_forward": {
+      "name": "مواكب للموضة",
+      "description": "غيّر الثيم لأول مرة"
+    },
+    "framed": {
+      "name": "مؤطر!",
+      "description": "غيّر تأثير الإطار لأول مرة"
+    },
+    "ouch": {
+      "name": "آه!",
+      "description": "مت لأول مرة"
+    },
+    "dragon_slayer": {
+      "name": "قاتل التنين",
+      "description": "اهزم أول زعيم"
+    },
+    "mini_menace": {
+      "name": "تهديد صغير",
+      "description": "اهزم أول زعيم صغير"
+    },
+    "mini_master": {
+      "name": "سيد الزعماء الصغار",
+      "description": "اهزم جميع الزعماء الصغار مرة واحدة على الأقل"
+    },
+    "world_ender": {
+      "name": "نهاية العالم",
+      "description": "اهزم جميع الزعماء مرة واحدة على الأقل"
+    },
+    "monster_manual": {
+      "name": "دليل الوحوش",
+      "description": "اهزم جميع الوحوش العادية مرة واحدة على الأقل"
+    },
+    "perfectionist": {
+      "name": "مثالي",
+      "description": "أكمل لعبة الذاكرة دون أي خطأ"
+    },
+    "speed_demon": {
+      "name": "سريع جداً",
+      "description": "أكمل 10 معارك في جلسة واحدة"
+    },
+    "dedicated": {
+      "name": "مخلص",
+      "description": "العب في 3 أيام مختلفة"
+    },
+    "high_roller": {
+      "name": "لاعب كبير",
+      "description": "الوصول إلى صعوبة 7 في أي مهارة"
+    },
+    "badge_collector": {
+      "name": "جامع الشارات",
+      "description": "احصل على أول شارة"
+    },
+    "full_set": {
+      "name": "المجموعة الكاملة",
+      "description": "احصل على جميع رتب الشارات لمهارة واحدة"
+    }
+  },
+  "borders": {
+    "solid": { "name": "افتراضي", "description": "توهج ذهبي دائم" },
+    "solid-picker": { "name": "افتراضي", "description": "توهج قابل للتخصيص" },
+    "gradient": { "name": "نحاسي", "description": "دوران سحري مذهل" },
+    "sparkle": { "name": "غائم", "description": "بريق غبار سماوي" },
+    "electric": { "name": "مانع الصواعق", "description": "تفريغ كهربائي قوي" },
+    "lifestream": { "name": "تيار الحياة", "description": "طاقة سحرية متدفقة" },
+    "frost": { "name": "صقيع", "description": "جمال الجليد البلوري" },
+    "fire": { "name": "حمم", "description": "غضب ناري مشتعل" },
+    "shadow": { "name": "بوابة الجحيم", "description": "همسات الفراغ" },
+    "rainbow": { "name": "أسطوري!", "description": "هالة قوس قزح أسطورية" },
+    "livewire": { "name": "سلك كهربائي", "description": "شرارات كهربائية متطايرة" },
+    "void": { "name": "الفراغ الكوني", "description": "فضاء نجمي لا نهائي" },
+    "toxic": { "name": "سام", "description": "قطرات حمضية خطيرة" },
+    "holo": { "name": "هولوغرام", "description": "تشوه رقمي" },
+    "crystal": { "name": "بلوري", "description": "شبكة بلورات متعددة الألوان" }
+  },
+  "game": {
+    "spell_it": "تهجئة الكلمة!",
+    "simon_says": "سيمون يقول!",
+    "find_pairs": "اعثر على الأزواج!",
+    "task_complete": "هل أنهيت المهمة؟"
+  },
+  "tier_names": {
+    "0": "برونزي",
+    "1": "فضي",
+    "2": "ذهبي",
+    "3": "بلاتيني",
+    "4": "زمردي",
+    "5": "ماسي",
+    "6": "أسطوري",
+    "7": "ميثيكي"
+  },
+  "badges": {
+    "wood": "Wood",
+    "stone": "Stone",
+    "gold": "Gold",
+    "iron": "Iron",
+    "emerald": "Emerald",
+    "diamond": "Diamond",
+    "netherite": "Netherite",
+    "obsidian": "Obsidian"
+  },
+  "mobs": {
+    "blaze": "Blaze",
+    "bogged": "Bogged",
+    "breeze": "Breeze",
+    "creeper": "Creeper",
+    "drowned": "Drowned",
+    "enderman": "Enderman",
+    "evoker": "Evoker",
+    "ghast": "Ghast",
+    "guardian": "Guardian",
+    "hoglin": "Hoglin",
+    "magma_cube": "Magma Cube",
+    "parched": "Parched",
+    "phantom": "Phantom",
+    "piglin": "Piglin",
+    "pillager": "Pillager",
+    "skeleton": "Skeleton",
+    "slime": "Slime",
+    "spider": "Spider",
+    "witch": "Witch",
+    "zombie": "Zombie",
+    "ender_dragon": "Ender Dragon",
+    "herobrine": "Herobrine",
+    "warden": "Warden",
+    "wither": "Wither",
+    "creaking": "Creaking",
+    "elder_guardian": "Elder Guardian",
+    "ravager": "Ravager",
+    "wither_skeleton": "Wither Skeleton",
+    "chest": "Chest",
+    "trapped_chest": "Trapped Chest",
+    "barrel": "Barrel",
+    "bundle": "Bundle",
+    "shulker_box": "Shulker Box",
+    "ender_chest": "Ender Chest"
+  }
+}

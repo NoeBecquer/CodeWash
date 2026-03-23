@@ -1,0 +1,299 @@
+{
+  "settings": {
+    "title": "सेटिंग्स",
+    "select_file": "फ़ाइल चुनें",
+    "audio_configuration": "ऑडियो कॉन्फ़िगरेशन",
+    "music_volume": "संगीत की आवाज़",
+    "sfx_volume": "इफ़ेक्ट्स की आवाज़",
+    "danger_zone": "खतरे का क्षेत्र",
+    "delete_profile_progress": "प्रगति हटाएँ",
+    "language": "भाषा"
+  },
+  "achievements_drawer": {
+    "title": "उपलब्धियाँ",
+    "total_level": "कुल स्तर:",
+    "badges": "बैज:",
+    "achievements": "उपलब्धियाँ:",
+    "lvl": "स्तर",
+    "special_achievements": "विशेष उपलब्धियाँ",
+    "max_tier_reached": "अधिकतम स्तर प्राप्त!",
+    "unlocked": "✓ अनलॉक",
+    "locked": "🔒 लॉक",
+    "progress": "प्रगति:",
+    "next": "अगला:",
+    "legendary_badge": "लेजेंडरी! (स्तर 180+)"
+  },
+  "cosmetics": {
+    "title": "थीम और कॉस्मेटिक्स",
+    "theme_select": "थीम चुनें",
+    "border_effects": "बॉर्डर इफेक्ट्स",
+    "active": "सक्रिय",
+    "color": "रंग",
+    "locked_x": "✗ लॉक",
+    "badge_required": "बैज {{badge}} आवश्यक है",
+    "earn_badge_unlock": "{{badge}} बैज प्राप्त करें और इस इफेक्ट को अनलॉक करें",
+    "unlocked_check": "✓ अनलॉक"
+  },
+  "battle": {
+    "you_died": "आप मर गए",
+    "level_minus_1": "स्तर -1",
+    "take_a_rest": "थोड़ा आराम करें...",
+    "level_restored": "स्तर बहाल हुआ!",
+    "welcome_back_hero": "वापसी पर स्वागत है, हीरो!",
+    "level_reached": "स्तर {{level}} प्राप्त!",
+    "unlocked_item": "अनलॉक हुआ",
+    "phantom_bonus": "फैंटम बोनस!",
+    "new_rank": "नया रैंक!",
+    "hp": "HP",
+    "xp": "XP",
+    "battle_header": "⚔ युद्ध ⚔",
+    "target": "लक्ष्य",
+    "skill_label": "कौशल",
+    "level_label": "स्तर",
+    "quest": "क्वेस्ट",
+    "lvl": "स्तर"
+  },
+  "skill_card": {
+    "tap_to_speak": "बोलने के लिए टैप करें",
+    "complete": "पूरा हुआ!",
+    "skip_manual_success": "स्किप / मैनुअल सफलता",
+    "round": "राउंड:",
+    "watch": "देखें!",
+    "your_turn": "आपकी बारी!",
+    "game_over_rounds": "गेम खत्म! राउंड:",
+    "retry": "फिर से कोशिश करें"
+  },
+  "modals": {
+    "delete_progress_title": "प्रगति हटाएँ?",
+    "delete_progress_confirm": "क्या आप वाकई इस प्रोफ़ाइल की सारी प्रगति हटाना चाहते हैं?",
+    "delete_progress_irreversible": "यह क्रिया वापस नहीं ली जा सकती!",
+    "type_delete_confirm": "पुष्टि के लिए DELETE टाइप करें:",
+    "please_type_delete": "कृपया पुष्टि के लिए DELETE टाइप करें।",
+    "cancel": "रद्द करें",
+    "delete": "हटाएँ",
+    "bug_title": "क्या आपको कोई बग मिला?",
+    "bug_subtitle": "ओह नहीं... यह खराब है...",
+    "parental_title": "यह क्या है?",
+    "parental_error": "गलत उत्तर। फिर से कोशिश करें!",
+    "parental_submit": "पुष्टि करें"
+  },
+  "profile": {
+    "parent": "अभिभावक",
+    "parent_question": "क्या आप अभिभावक हैं?",
+    "skill_proficiency": "कौशल दक्षता",
+    "player_name1": "खेल विकास 1",
+    "player_name2": "खेल विकास 2",
+    "player_name3": "खेल विकास 3",
+    "lv": "स्तर"
+  },
+  "mic": {
+    "off": "माइक्रोफोन बंद",
+    "listening": "सुन रहा है..."
+  },
+  "achievement_toast": {
+    "unlocked": "उपलब्धि अनलॉक हुई!",
+    "tier": "स्तर"
+  },
+  "phantom": {
+    "plus_level": "+1 स्तर!"
+  },
+  "fullscreen": {
+    "enter": "फुल स्क्रीन",
+    "exit": "फुल स्क्रीन से बाहर निकलें"
+  },
+  "skills": {
+    "reading": {
+      "name": "पढ़ना",
+      "fantasyName": "एन्कैंटिंग टेबल",
+      "taskDescription": "प्राचीन शब्द बोलकर जादू को सक्रिय करें और दुश्मनों को हराएँ!",
+      "actionName": "एन्कैंट करें!"
+    },
+    "math": {
+      "name": "गणित",
+      "fantasyName": "मानसिक गणना",
+      "taskDescription": "अपने सर्किट सक्रिय करें और जालों को चालू कर दुश्मनों को मात दें!",
+      "actionName": "गणना करें!"
+    },
+    "writing": {
+      "name": "लेखन",
+      "fantasyName": "क्राफ्टिंग टेबल",
+      "taskDescription": "रेसिपी लिखकर पौराणिक हथियार और कवच बनाएं!",
+      "actionName": "बनाएँ!"
+    },
+    "cleaning": {
+      "name": "सफाई",
+      "fantasyName": "चेस्ट प्रबंधन",
+      "taskDescription": "अपना लूट व्यवस्थित करें और आगे की यात्रा के लिए तैयार रहें!",
+      "actionName": "व्यवस्थित करें!"
+    },
+    "memory": {
+      "name": "स्मृति",
+      "fantasyName": "मैच और हैच",
+      "taskDescription": "जोड़े ढूँढें और दुर्लभ जीवों को जन्म दें!",
+      "actionName": "मिलाएँ!"
+    },
+    "patterns": {
+      "name": "पैटर्न",
+      "fantasyName": "लॉजिक बिल्डिंग",
+      "taskDescription": "क्रम को समझकर प्राचीन तंत्र और छिपे खजाने खोलें!",
+      "actionName": "हल करें!"
+    }
+  },
+  "achievements": {
+    "phantom_hunter": {
+      "name": "फैंटम शिकारी",
+      "description": "फैंटम पकड़ें"
+    },
+    "combined_levels": {
+      "name": "पूर्ण शक्ति",
+      "description": "उच्च संयुक्त स्तर प्राप्त करें"
+    },
+    "skill_mastery": {
+      "name": "हरफनमौला",
+      "description": "सभी कौशलों को समान रूप से बढ़ाएँ"
+    },
+    "first_steps": {
+      "name": "पहले कदम",
+      "description": "अपने पहले दुश्मन को हराएँ"
+    },
+    "level_up": {
+      "name": "लेवल अप!",
+      "description": "किसी भी कौशल में स्तर 2 तक पहुँचें"
+    },
+    "fashion_forward": {
+      "name": "फैशनेबल",
+      "description": "पहली बार थीम बदलें"
+    },
+    "framed": {
+      "name": "फ्रेम्ड!",
+      "description": "पहली बार बॉर्डर इफेक्ट बदलें"
+    },
+    "ouch": {
+      "name": "आह!",
+      "description": "पहली बार मरें"
+    },
+    "dragon_slayer": {
+      "name": "ड्रैगन स्लेयर",
+      "description": "अपने पहले बॉस को हराएँ"
+    },
+    "mini_menace": {
+      "name": "छोटा खतरा",
+      "description": "अपने पहले मिनी-बॉस को हराएँ"
+    },
+    "mini_master": {
+      "name": "मिनी-बॉस मास्टर",
+      "description": "सभी मिनी-बॉस को कम से कम एक बार हराएँ"
+    },
+    "world_ender": {
+      "name": "विश्व विनाशक",
+      "description": "सभी बॉस को कम से कम एक बार हराएँ"
+    },
+    "monster_manual": {
+      "name": "राक्षस मार्गदर्शिका",
+      "description": "सभी सामान्य राक्षसों को कम से कम एक बार हराएँ"
+    },
+    "perfectionist": {
+      "name": "परफेक्शनिस्ट",
+      "description": "मेमोरी गेम बिना किसी गलती के पूरा करें"
+    },
+    "speed_demon": {
+      "name": "स्पीड डेमन",
+      "description": "एक सत्र में 10 लड़ाइयाँ पूरी करें"
+    },
+    "dedicated": {
+      "name": "समर्पित",
+      "description": "3 अलग-अलग दिनों में खेलें"
+    },
+    "high_roller": {
+      "name": "उच्च खिलाड़ी",
+      "description": "किसी भी कौशल में कठिनाई स्तर 7 प्राप्त करें"
+    },
+    "badge_collector": {
+      "name": "बैज संग्राहक",
+      "description": "अपना पहला बैज प्राप्त करें"
+    },
+    "full_set": {
+      "name": "पूर्ण सेट",
+      "description": "एक कौशल में सभी बैज स्तर प्राप्त करें"
+    }
+  },
+  "borders": {
+    "solid": { "name": "डिफ़ॉल्ट", "description": "स्थायी सुनहरी चमक" },
+    "solid-picker": { "name": "डिफ़ॉल्ट", "description": "कस्टमाइज़ेबल चमक" },
+    "gradient": { "name": "तांबा", "description": "जादुई घूर्णन" },
+    "sparkle": { "name": "बादली", "description": "आकाशीय चमक" },
+    "electric": { "name": "लाइटनिंग रॉड", "description": "विद्युत निर्वहन" },
+    "lifestream": { "name": "जीवन प्रवाह", "description": "बहती ऊर्जा" },
+    "frost": { "name": "तुषार", "description": "बर्फीली महिमा" },
+    "fire": { "name": "लावा", "description": "अग्नि का क्रोध" },
+    "shadow": { "name": "नेदर पोर्टल", "description": "अंधकार की फुसफुसाहट" },
+    "rainbow": { "name": "लेजेंडरी!", "description": "इंद्रधनुषी आभा" },
+    "livewire": { "name": "इलेक्ट्रिक वायर", "description": "विद्युत चिंगारियाँ" },
+    "void": { "name": "कॉस्मिक शून्य", "description": "अनंत अंतरिक्ष" },
+    "toxic": { "name": "विषैला", "description": "अम्लीय बूंदें" },
+    "holo": { "name": "होलोग्राम", "description": "डिजिटल गड़बड़ी" },
+    "crystal": { "name": "क्रिस्टल", "description": "प्रिज़मैटिक जाल" }
+  },
+  "game": {
+    "spell_it": "शब्द को स्पेल करें!",
+    "simon_says": "साइमन कहता है!",
+    "find_pairs": "जोड़े खोजें!",
+    "task_complete": "कार्य पूरा हुआ?"
+  },
+  "tier_names": {
+    "0": "कांस्य",
+    "1": "रजत",
+    "2": "स्वर्ण",
+    "3": "प्लैटिनम",
+    "4": "पन्ना",
+    "5": "हीरा",
+    "6": "लेजेंडरी",
+    "7": "मिथिक"
+  },
+  "badges": {
+    "wood": "Wood",
+    "stone": "Stone",
+    "gold": "Gold",
+    "iron": "Iron",
+    "emerald": "Emerald",
+    "diamond": "Diamond",
+    "netherite": "Netherite",
+    "obsidian": "Obsidian"
+  },
+  "mobs": {
+    "blaze": "Blaze",
+    "bogged": "Bogged",
+    "breeze": "Breeze",
+    "creeper": "Creeper",
+    "drowned": "Drowned",
+    "enderman": "Enderman",
+    "evoker": "Evoker",
+    "ghast": "Ghast",
+    "guardian": "Guardian",
+    "hoglin": "Hoglin",
+    "magma_cube": "Magma Cube",
+    "parched": "Parched",
+    "phantom": "Phantom",
+    "piglin": "Piglin",
+    "pillager": "Pillager",
+    "skeleton": "Skeleton",
+    "slime": "Slime",
+    "spider": "Spider",
+    "witch": "Witch",
+    "zombie": "Zombie",
+    "ender_dragon": "Ender Dragon",
+    "herobrine": "Herobrine",
+    "warden": "Warden",
+    "wither": "Wither",
+    "creaking": "Creaking",
+    "elder_guardian": "Elder Guardian",
+    "ravager": "Ravager",
+    "wither_skeleton": "Wither Skeleton",
+    "chest": "Chest",
+    "trapped_chest": "Trapped Chest",
+    "barrel": "Barrel",
+    "bundle": "Bundle",
+    "shulker_box": "Shulker Box",
+    "ender_chest": "Ender Chest"
+  }
+}

@@ -1,0 +1,299 @@
+{
+  "settings": {
+    "title": "ترتیبات",
+    "select_file": "فائل منتخب کریں",
+    "audio_configuration": "آڈیو کی ترتیبات",
+    "music_volume": "میوزک والیوم",
+    "sfx_volume": "ایفیکٹس والیوم",
+    "danger_zone": "خطرناک علاقہ",
+    "delete_profile_progress": "پیشرفت حذف کریں",
+    "language": "زبان"
+  },
+  "achievements_drawer": {
+    "title": "کامیابیاں",
+    "total_level": "کل لیول:",
+    "badges": "بیجز:",
+    "achievements": "کامیابیاں:",
+    "lvl": "لیول",
+    "special_achievements": "خصوصی کامیابیاں",
+    "max_tier_reached": "زیادہ سے زیادہ درجہ حاصل!",
+    "unlocked": "✓ کھلا",
+    "locked": "🔒 مقفل",
+    "progress": "پیشرفت:",
+    "next": "اگلا:",
+    "legendary_badge": "لیجنڈری! (لیول 180+)"
+  },
+  "cosmetics": {
+    "title": "تھیمز اور کاسمیٹکس",
+    "theme_select": "تھیم منتخب کریں",
+    "border_effects": "بارڈر ایفیکٹس",
+    "active": "فعال",
+    "color": "رنگ",
+    "locked_x": "✗ مقفل",
+    "badge_required": "بیج {{badge}} درکار ہے",
+    "earn_badge_unlock": "اس ایفیکٹ کو کھولنے کے لیے {{badge}} بیج حاصل کریں",
+    "unlocked_check": "✓ کھلا"
+  },
+  "battle": {
+    "you_died": "آپ مر گئے",
+    "level_minus_1": "لیول -1",
+    "take_a_rest": "تھوڑی دیر آرام کریں...",
+    "level_restored": "لیول بحال ہو گیا!",
+    "welcome_back_hero": "واپس خوش آمدید، ہیرو!",
+    "level_reached": "لیول {{level}} حاصل!",
+    "unlocked_item": "کھلا",
+    "phantom_bonus": "فینٹم بونس!",
+    "new_rank": "نیا درجہ!",
+    "hp": "HP",
+    "xp": "XP",
+    "battle_header": "⚔ جنگ ⚔",
+    "target": "ہدف",
+    "skill_label": "مہارت",
+    "level_label": "لیول",
+    "quest": "مشن",
+    "lvl": "لیول"
+  },
+  "skill_card": {
+    "tap_to_speak": "بولنے کے لیے دبائیں",
+    "complete": "مکمل!",
+    "skip_manual_success": "اسکپ / دستی کامیابی",
+    "round": "راؤنڈ:",
+    "watch": "دیکھیں!",
+    "your_turn": "آپ کی باری!",
+    "game_over_rounds": "گیم ختم! راؤنڈز:",
+    "retry": "دوبارہ کوشش کریں"
+  },
+  "modals": {
+    "delete_progress_title": "پیشرفت حذف کریں؟",
+    "delete_progress_confirm": "کیا آپ واقعی اس پروفائل کی تمام پیشرفت حذف کرنا چاہتے ہیں؟",
+    "delete_progress_irreversible": "یہ عمل واپس نہیں ہو سکتا!",
+    "type_delete_confirm": "تصدیق کے لیے DELETE لکھیں:",
+    "please_type_delete": "براہ کرم تصدیق کے لیے DELETE لکھیں۔",
+    "cancel": "منسوخ کریں",
+    "delete": "حذف کریں",
+    "bug_title": "کیا آپ نے کوئی بگ پایا؟",
+    "bug_subtitle": "اوہ نہیں... یہ برا ہے...",
+    "parental_title": "یہ کیا ہے؟",
+    "parental_error": "غلط جواب۔ دوبارہ کوشش کریں!",
+    "parental_submit": "تصدیق کریں"
+  },
+  "profile": {
+    "parent": "والدین",
+    "parent_question": "کیا آپ والدین ہیں؟",
+    "skill_proficiency": "مہارت کی مہارت",
+    "player_name1": "کھیل ناول 1",
+    "player_name2": "کھیل ناول 2",
+    "player_name3": "کھیل ناول 3",
+    "lv": "لیول"
+  },
+  "mic": {
+    "off": "مائیک بند",
+    "listening": "سن رہا ہے..."
+  },
+  "achievement_toast": {
+    "unlocked": "کامیابی حاصل ہوئی!",
+    "tier": "درجہ"
+  },
+  "phantom": {
+    "plus_level": "+1 لیول!"
+  },
+  "fullscreen": {
+    "enter": "فل اسکرین",
+    "exit": "فل اسکرین سے باہر نکلیں"
+  },
+  "skills": {
+    "reading": {
+      "name": "پڑھنا",
+      "fantasyName": "جادو کی میز",
+      "taskDescription": "قدیم الفاظ بولیں تاکہ جادو کو فعال کریں اور دشمنوں کو شکست دیں!",
+      "actionName": "جادو کریں!"
+    },
+    "math": {
+      "name": "ریاضی",
+      "fantasyName": "ذہنی حساب",
+      "taskDescription": "اپنے سرکٹس کو فعال کریں تاکہ جال لگائیں اور دشمنوں کو شکست دیں!",
+      "actionName": "حساب کریں!"
+    },
+    "writing": {
+      "name": "لکھائی",
+      "fantasyName": "کرافٹنگ میز",
+      "taskDescription": "نسخہ مکمل کریں تاکہ طاقتور ہتھیار اور زرہ بنائیں!",
+      "actionName": "بنائیں!"
+    },
+    "cleaning": {
+      "name": "صفائی",
+      "fantasyName": "چیسٹ مینجمنٹ",
+      "taskDescription": "اپنا سامان ترتیب دیں اور مہم کے لیے تیار ہوں!",
+      "actionName": "ترتیب دیں!"
+    },
+    "memory": {
+      "name": "یادداشت",
+      "fantasyName": "میچ اینڈ ہیچ",
+      "taskDescription": "جوڑے تلاش کریں تاکہ نایاب مخلوق حاصل کریں!",
+      "actionName": "ملائیں!"
+    },
+    "patterns": {
+      "name": "پیٹرنز",
+      "fantasyName": "منطقی تعمیر",
+      "taskDescription": "ترتیب کو حل کریں تاکہ راز اور خزانے کھولیں!",
+      "actionName": "حل کریں!"
+    }
+  },
+  "achievements": {
+    "phantom_hunter": {
+      "name": "فینٹم شکاری",
+      "description": "فینٹمز کو پکڑیں"
+    },
+    "combined_levels": {
+      "name": "مکمل طاقت",
+      "description": "زیادہ مجموعی لیول حاصل کریں"
+    },
+    "skill_mastery": {
+      "name": "ہر فن مولا",
+      "description": "تمام مہارتوں کو برابر ترقی دیں"
+    },
+    "first_steps": {
+      "name": "پہلا قدم",
+      "description": "پہلا دشمن شکست دیں"
+    },
+    "level_up": {
+      "name": "لیول اپ!",
+      "description": "کسی بھی مہارت میں لیول 2 حاصل کریں"
+    },
+    "fashion_forward": {
+      "name": "فیشن ایبل",
+      "description": "پہلی بار تھیم تبدیل کریں"
+    },
+    "framed": {
+      "name": "فریم شدہ!",
+      "description": "پہلی بار بارڈر ایفیکٹ تبدیل کریں"
+    },
+    "ouch": {
+      "name": "اوچ!",
+      "description": "پہلی بار مر جائیں"
+    },
+    "dragon_slayer": {
+      "name": "ڈریگن قاتل",
+      "description": "پہلا باس شکست دیں"
+    },
+    "mini_menace": {
+      "name": "چھوٹی دھمکی",
+      "description": "پہلا منی باس شکست دیں"
+    },
+    "mini_master": {
+      "name": "منی باس ماسٹر",
+      "description": "تمام منی باس کم از کم ایک بار شکست دیں"
+    },
+    "world_ender": {
+      "name": "دنیا ختم کرنے والا",
+      "description": "تمام باس کم از کم ایک بار شکست دیں"
+    },
+    "monster_manual": {
+      "name": "مونسٹر مینول",
+      "description": "تمام عام دشمنوں کو شکست دیں"
+    },
+    "perfectionist": {
+      "name": "کامل",
+      "description": "میموری گیم بغیر غلطی مکمل کریں"
+    },
+    "speed_demon": {
+      "name": "رفتار کا دیوانہ",
+      "description": "ایک سیشن میں 10 لڑائیاں مکمل کریں"
+    },
+    "dedicated": {
+      "name": "مستقل",
+      "description": "3 مختلف دن کھیلیں"
+    },
+    "high_roller": {
+      "name": "ہائی رولر",
+      "description": "کسی بھی مہارت میں لیول 7 مشکل حاصل کریں"
+    },
+    "badge_collector": {
+      "name": "بیج کلیکٹر",
+      "description": "پہلا بیج حاصل کریں"
+    },
+    "full_set": {
+      "name": "مکمل سیٹ",
+      "description": "ایک مہارت میں تمام بیجز حاصل کریں"
+    }
+  },
+  "borders": {
+    "solid": { "name": "ڈیفالٹ", "description": "سنہری چمک" },
+    "solid-picker": { "name": "ڈیفالٹ", "description": "حسب ضرورت چمک" },
+    "gradient": { "name": "تانبا", "description": "جادوئی گردش" },
+    "sparkle": { "name": "بادل", "description": "ستاروں کی چمک" },
+    "electric": { "name": "بجلی", "description": "برقی جھٹکا" },
+    "lifestream": { "name": "زندگی کا بہاؤ", "description": "توانائی کا بہاؤ" },
+    "frost": { "name": "برف", "description": "برفیلی خوبصورتی" },
+    "fire": { "name": "لاوا", "description": "آگ کی طاقت" },
+    "shadow": { "name": "نیدر پورٹل", "description": "خلا کی سرگوشیاں" },
+    "rainbow": { "name": "لیجنڈری!", "description": "رنگین روشنی" },
+    "livewire": { "name": "برقی تار", "description": "چمکتی بجلی" },
+    "void": { "name": "کائناتی خلا", "description": "لامحدود خلا" },
+    "toxic": { "name": "زہریلا", "description": "تیزاب کے قطرے" },
+    "holo": { "name": "ہولوگرام", "description": "ڈیجیٹل خرابی" },
+    "crystal": { "name": "کرسٹل", "description": "کرسٹل نیٹ ورک" }
+  },
+  "game": {
+    "spell_it": "لفظ ہجے کریں!",
+    "simon_says": "سائمن کہتا ہے!",
+    "find_pairs": "جوڑے تلاش کریں!",
+    "task_complete": "کام مکمل؟"
+  },
+  "tier_names": {
+    "0": "کانسی",
+    "1": "چاندی",
+    "2": "سونا",
+    "3": "پلاٹینم",
+    "4": "زمرد",
+    "5": "ہیرا",
+    "6": "لیجنڈری",
+    "7": "میتھیکل"
+  },
+  "badges": {
+    "wood": "Wood",
+    "stone": "Stone",
+    "gold": "Gold",
+    "iron": "Iron",
+    "emerald": "Emerald",
+    "diamond": "Diamond",
+    "netherite": "Netherite",
+    "obsidian": "Obsidian"
+  },
+  "mobs": {
+    "blaze": "Blaze",
+    "bogged": "Bogged",
+    "breeze": "Breeze",
+    "creeper": "Creeper",
+    "drowned": "Drowned",
+    "enderman": "Enderman",
+    "evoker": "Evoker",
+    "ghast": "Ghast",
+    "guardian": "Guardian",
+    "hoglin": "Hoglin",
+    "magma_cube": "Magma Cube",
+    "parched": "Parched",
+    "phantom": "Phantom",
+    "piglin": "Piglin",
+    "pillager": "Pillager",
+    "skeleton": "Skeleton",
+    "slime": "Slime",
+    "spider": "Spider",
+    "witch": "Witch",
+    "zombie": "Zombie",
+    "ender_dragon": "Ender Dragon",
+    "herobrine": "Herobrine",
+    "warden": "Warden",
+    "wither": "Wither",
+    "creaking": "Creaking",
+    "elder_guardian": "Elder Guardian",
+    "ravager": "Ravager",
+    "wither_skeleton": "Wither Skeleton",
+    "chest": "Chest",
+    "trapped_chest": "Trapped Chest",
+    "barrel": "Barrel",
+    "bundle": "Bundle",
+    "shulker_box": "Shulker Box",
+    "ender_chest": "Ender Chest"
+  }
+}

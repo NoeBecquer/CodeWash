@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Gift } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import {
+    Menu, Sparkles, Gift, Maximize, Minimize, Settings, Bug
+} from 'lucide-react';
+
 // Modules
 import GlobalStyles from './components/ui/GlobalStyles';
 import SafeImage from './components/ui/SafeImage';
@@ -8,7 +12,7 @@ import PhantomEvent from './components/PhantomEvent';
 import AchievementToast from './components/ui/AchievementToast';
 import MainHUD from './components/layout/MainHUD';
 // Utils & Constants
-import { getRandomMob, getRandomFriendlyMob, getRandomMiniboss, getRandomBoss, getMobForSkill, getEncounterType, generateMathProblem, getReadingWord, getWordForDifficulty, calculateDamage, calculateMobHealth, calculateXPReward, calculateXPToLevel } from './utils/gameUtils';
+import { getRandomMob, getRandomFriendlyMob, getRandomMiniboss, getRandomBoss, getMobForSkill, getEncounterType, generateMathProblem, getReadingWord, getWordForDifficulty, normalizeText, calculateDamage, calculateMobHealth, calculateXPReward, calculateXPToLevel } from './utils/gameUtils';
 import { getRandomAura } from './utils/mobDisplayUtils';
 import {
     BASE_ASSETS, THEME_CONFIG, SKILL_DATA,
@@ -88,8 +92,9 @@ const ensureEncounterMobs = (skill, key) => {
 };
 
 const App = () => {
+    const { t, i18n } = useTranslation();
     const [currentProfile, setCurrentProfile] = useState(() => localStorage.getItem('currentProfile_v1') ? Number.parseInt(localStorage.getItem('currentProfile_v1')) : 1);
-    const [profileNames, setProfileNames] = useState(() => localStorage.getItem('heroProfileNames_v1') ? JSON.parse(localStorage.getItem('heroProfileNames_v1')) : { 1: "Player 1", 2: "Player 2", 3: "Player 3" });
+    const [profileNames, setProfileNames] = useState(() => localStorage.getItem('heroProfileNames_v1') ? JSON.parse(localStorage.getItem('heroProfileNames_v1')) : { 1: t('profile.player_name1'), 2: t('profile.player_name2'), 3: t('profile.player_name3') });
     const [parentStatus, setParentStatus] = useState(() => localStorage.getItem('heroParentStatus_v1') ? JSON.parse(localStorage.getItem('heroParentStatus_v1')) : { 1: false, 2: false, 3: false });
     const [playerHealth, setPlayerHealth] = useState(10);
 
@@ -324,36 +329,36 @@ const App = () => {
     }, []);
 
     const generateChallenge = (type, diff) => {
+        const locale = i18n.language;
         // Math: Use difficulty-based problem generation
         if (type === 'math') {
             return generateMathProblem(diff);
         }
         // Patterns: Simon Says - no challenge data needed, handled in SkillCard
         if (type === 'patterns') {
-            return { type: 'patterns', question: "Simon Says!", answer: "WIN" };
+            return { type: 'patterns', question: t('game.simon_says'), answer: "WIN" };
         }
         // Reading: Use difficulty-based word selection
         if (type === 'reading') {
-            const word = getReadingWord(diff);
+            const word = getReadingWord(diff, locale);
             return { type, question: word, answer: word };
         }
         // Writing: Use difficulty-based word selection from comprehensive index
         if (type === 'writing') {
-            const wordData = getWordForDifficulty(diff);
-            // Use displayName in uppercase for the answer (handles multi-word items with spaces)
+            const wordData = getWordForDifficulty(diff, locale);
             const answer = wordData.displayName.toUpperCase();
-            return { 
-                type, 
-                question: "Spell it!", 
-                answer, 
+            return {
+                type,
+                question: t('game.spell_it'),
+                answer,
                 images: [wordData.image],
                 displayName: wordData.displayName
             };
         }
         // Memory: No specific challenge data, handled in SkillCard
-        if (type === 'memory') return { type: 'memory', question: "Find Pairs!", answer: "WIN" };
+        if (type === 'memory') return { type: 'memory', question: t('game.find_pairs'), answer: "WIN" };
         // Cleaning: Manual task
-        return { type: 'manual', question: "Task Complete?", answer: "yes" };
+        return { type: 'manual', question: t('game.task_complete'), answer: "yes" };
     };
 
     // Regenerate challenge when difficulty or level changes during active battle
@@ -675,7 +680,7 @@ const App = () => {
                                 if (!newBadges.includes(newTier) && newTier <= 7) {
                                     newBadges.push(newTier);
                                     // Show badge notification for defeating the boss
-                                    setLootBox({ level: lvl, skillName: skillConfig.fantasyName, item: "New Rank!", img: BASE_ASSETS.badges.Wood });
+                                    setLootBox({ level: lvl, skillName: skillConfig.fantasyName, item: t('battle.new_rank'), img: BASE_ASSETS.badges.Wood });
                                     playNotification();
                                 }
                             }
@@ -827,7 +832,7 @@ const App = () => {
             setLootBox({
                 level: skills[skillId].level + 1,
                 skillName: skillConfig.fantasyName,
-                item: "Phantom Bonus!",
+                item: t('battle.phantom_bonus'),
                 img: HOSTILE_MOBS['Phantom']
             });
             playNotification();
@@ -915,7 +920,7 @@ const App = () => {
         localStorage.setItem('heroParentStatus_v1', JSON.stringify(parentStatusObj));
         // Update profile name in localStorage directly
         const currentProfileNames = localStorage.getItem('heroProfileNames_v1');
-        const profileNamesObj = currentProfileNames ? JSON.parse(currentProfileNames) : { 1: "Player 1", 2: "Player 2", 3: "Player 3" };
+        const profileNamesObj = currentProfileNames ? JSON.parse(currentProfileNames) : { 1: t('profile.player_name1'), 2: t('profile.player_name2'), 3: t('profile.player_name3') };
         profileNamesObj[currentProfile] = `Player ${currentProfile}`;
         localStorage.setItem('heroProfileNames_v1', JSON.stringify(profileNamesObj));
         window.location.reload();
@@ -950,7 +955,7 @@ const App = () => {
 
         console.log('[Speech Recognition] Initializing for skill:', targetId);
         recognitionRef.current = new window.webkitSpeechRecognition();
-        recognitionRef.current.lang = 'en-US';
+        recognitionRef.current.lang = i18n.language === 'fr' ? 'fr-FR' : 'en-US';
         recognitionRef.current.continuous = true;
 
         recognitionRef.current.onstart = () => { 
@@ -994,16 +999,16 @@ const App = () => {
         };
         
         recognitionRef.current.onresult = (e) => { 
-            const t = e.results[e.results.length - 1][0].transcript.toUpperCase().replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, ""); 
-            console.log('[Speech Recognition] Recognized text:', t);
-            setSpokenText(t); 
+            const transcript = e.results[e.results.length - 1][0].transcript.toUpperCase().replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "");
+            console.log('[Speech Recognition] Recognized text:', transcript);
+            setSpokenText(transcript);
             // Use the ref to get the CURRENT challenge data
             const currentChallenge = challengeDataRef.current;
             if (currentChallenge && currentChallenge.type === 'reading') {
-                if (t === currentChallenge.answer || HOMOPHONES[currentChallenge.answer]?.includes(t)) {
+                if (normalizeText(transcript) === normalizeText(currentChallenge.answer) || HOMOPHONES[currentChallenge.answer]?.includes(transcript)) {
                     console.log('[Speech Recognition] Correct answer!');
                     handleSuccessHit(targetId || battlingSkillId);
-                } else if (t && t.length >= MIN_SPOKEN_TEXT_LENGTH) {
+                } else if (transcript && transcript.length >= MIN_SPOKEN_TEXT_LENGTH) {
                     // Wrong answer - trigger error feedback
                     console.log('[Speech Recognition] Wrong answer');
                     handleSuccessHit(targetId || battlingSkillId, 'WRONG');
@@ -1175,7 +1180,7 @@ const App = () => {
                       currentThemeData={currentThemeData}
                     />
             </main>
-            {lootBox && <div className="fixed bottom-8 left-1/2 z-50 animate-toast w-full max-w-2xl pointer-events-none transform -translate-x-1/2"><div className="bg-black/80 border-4 border-yellow-500 rounded-full p-4 px-12 flex items-center justify-between shadow-[0_0_30px_rgba(255,215,0,0.6)] backdrop-blur-md mx-4"><div className="flex items-center gap-4"><div className="bg-yellow-500/20 p-3 rounded-full border-2 border-yellow-400"><Gift size={32} className="text-yellow-300 animate-bounce" /></div><div className="text-left"><h2 className="text-2xl text-yellow-400 font-bold leading-none mb-1">LEVEL {lootBox.level} REACHED!</h2><p className="text-stone-300 text-sm">{lootBox.skillName}</p></div></div><div className="text-right pl-8 border-l-2 border-stone-600 flex items-center gap-4"><SafeImage src={lootBox.img} alt="Badge" className="w-12 h-12 object-contain" /><div><p className="text-stone-400 text-xs uppercase tracking-wider">Unlocked</p><p className="text-2xl text-green-400 font-bold">{lootBox.item}</p></div></div></div></div>}
+            {lootBox && <div className="fixed bottom-8 left-1/2 z-50 animate-toast w-full max-w-2xl pointer-events-none transform -translate-x-1/2"><div className="bg-black/80 border-4 border-yellow-500 rounded-full p-4 px-12 flex items-center justify-between shadow-[0_0_30px_rgba(255,215,0,0.6)] backdrop-blur-md mx-4"><div className="flex items-center gap-4"><div className="bg-yellow-500/20 p-3 rounded-full border-2 border-yellow-400"><Gift size={32} className="text-yellow-300 animate-bounce" /></div><div className="text-left"><h2 className="text-2xl text-yellow-400 font-bold leading-none mb-1">{t('battle.level_reached', { level: lootBox.level })}</h2><p className="text-stone-300 text-sm">{lootBox.skillName}</p></div></div><div className="text-right pl-8 border-l-2 border-stone-600 flex items-center gap-4"><SafeImage src={lootBox.img} alt="Badge" className="w-12 h-12 object-contain" /><div><p className="text-stone-400 text-xs uppercase tracking-wider">{t('battle.unlocked_item')}</p><p className="text-2xl text-green-400 font-bold">{lootBox.item}</p></div></div></div></div>}
             
             {/* Achievement Toast */}
             {achievementToast && (
@@ -1190,10 +1195,10 @@ const App = () => {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center bg-red-900/60 animate-pulse pointer-events-none">
                     <div className="text-center">
                         <h1 className="text-8xl font-bold text-red-500 drop-shadow-[0_0_20px_rgba(255,0,0,0.8)]" style={{ textShadow: '4px 4px 0 #000, -2px -2px 0 #000' }}>
-                            YOU DIED
+                            {t('battle.you_died')}
                         </h1>
-                        <p className="text-2xl text-red-300 mt-4">Level -1</p>
-                        <p className="text-lg text-stone-400 mt-2">Take a moment to rest...</p>
+                        <p className="text-2xl text-red-300 mt-4">{t('battle.level_minus_1')}</p>
+                        <p className="text-lg text-stone-400 mt-2">{t('battle.take_a_rest')}</p>
                     </div>
                 </div>
             )}
@@ -1203,9 +1208,9 @@ const App = () => {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
                     <div className="text-center animate-bounce">
                         <h1 className="text-6xl font-bold text-green-400 drop-shadow-[0_0_20px_rgba(0,255,0,0.8)]" style={{ textShadow: '4px 4px 0 #000' }}>
-                            LEVEL RESTORED!
+                            {t('battle.level_restored')}
                         </h1>
-                        <p className="text-2xl text-yellow-400 mt-4">Welcome back, hero!</p>
+                        <p className="text-2xl text-yellow-400 mt-4">{t('battle.welcome_back_hero')}</p>
                     </div>
                 </div>
             )}
