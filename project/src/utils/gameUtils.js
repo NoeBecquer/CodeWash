@@ -1,26 +1,23 @@
 import { HOSTILE_MOBS, FRIENDLY_MOBS, CHEST_BLOCKS, SPECIAL_CHESTS, MINIBOSS_MOBS, BOSS_MOBS, DIFFICULTY_CONTENT } from '../constants/gameData';
-import gameContentEn from '../locales/en/gameContent.json';
-import gameContentFr from '../locales/fr/gameContent.json';
-import gameContentAr from '../locales/ar/gameContent.json';
-import gameContentBn from '../locales/bn/gameContent.json';
-import gameContentEs from '../locales/es/gameContent.json';
-import gameContentHi from '../locales/hi/gameContent.json';
-import gameContentPt from '../locales/pt/gameContent.json';
-import gameContentRu from '../locales/ru/gameContent.json';
-import gameContentUr from '../locales/ur/gameContent.json';
-import gameContentZh from '../locales/zh/gameContent.json';
 
-const GAME_CONTENT = {
-    en: gameContentEn,
-    fr: gameContentFr,
-    ar: gameContentAr,
-    bn: gameContentBn,
-    es: gameContentEs,
-    hi: gameContentHi,
-    pt: gameContentPt,
-    ru: gameContentRu,
-    ur: gameContentUr,
-    zh: gameContentZh,
+const gameContentCache = new Map();
+
+const loadGameContent = async (locale = 'en') => {
+    if (gameContentCache.has(locale)) {
+        return gameContentCache.get(locale);
+    }
+
+    try {
+        const res = await fetch(`/locales/${locale}/gameContent.json`);
+        const data = await res.json();
+        gameContentCache.set(locale, data);
+        return data;
+    } catch {
+        const res = await fetch(`/locales/en/gameContent.json`);
+        const data = await res.json();
+        gameContentCache.set('en', data);
+        return data;
+    }
 };
 
 const buildWritingDifficultyPools = (wordIndex) => ({
@@ -203,17 +200,19 @@ export const calculateXPToLevel = (difficulty, playerLevel) => {
 // ===== Reading Word Selection =====
 
 // Get a reading word based on difficulty level and locale
-export const getReadingWord = (difficulty, locale = 'en') => {
-    const content = GAME_CONTENT[locale] || GAME_CONTENT['en'];
+export const getReadingWord = async (difficulty, locale = 'en') => {
+    const content = await loadGameContent(locale);
+
     if (difficulty === 7) {
         return content.funnyLongWords[Math.floor(Math.random() * content.funnyLongWords.length)];
     }
+
     const config = DIFFICULTY_CONTENT.reading[difficulty] || DIFFICULTY_CONTENT.reading[1];
     const charLength = String(config.charLength || 3);
     const words = content.readingWords[charLength] || content.readingWords['3'];
+
     return words[Math.floor(Math.random() * words.length)];
 };
-
 // ===== Math Problem Generation =====
 
 // Generate a math problem based on difficulty tier
@@ -325,20 +324,29 @@ export const generateMathProblem = (difficulty) => {
 // ===== Writing/Spelling Item Selection =====
 
 // Get a word from the appropriate difficulty pool, locale-aware
-export const getWordForDifficulty = (difficulty, locale = 'en') => {
-    const content = GAME_CONTENT[locale] || GAME_CONTENT['en'];
+export const getWordForDifficulty = async (difficulty, locale = 'en') => {
+    const content = await loadGameContent(locale);
+
     const pools = buildWritingDifficultyPools(content.writingWordIndex);
-    // Map difficulty (1-7) to pool (1-5), with difficulties 6-7 using pool 5
+
+    // Map difficulty (1-7) to pool (1-5)
     const poolNumber = Math.min(difficulty, 5);
     const pool = pools[poolNumber];
 
     if (!pool || pool.length === 0) {
         const fallbackPool = pools[1];
         const item = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
-        return { word: item.word.toUpperCase(), displayName: item.displayName, image: item.imagePath };
+        return {
+            word: item.word.toUpperCase(),
+            displayName: item.displayName,
+            image: item.imagePath
+        };
     }
 
     const item = pool[Math.floor(Math.random() * pool.length)];
-    return { word: item.word.toUpperCase(), displayName: item.displayName, image: item.imagePath };
+    return {
+        word: item.word.toUpperCase(),
+        displayName: item.displayName,
+        image: item.imagePath
+    };
 };
-
