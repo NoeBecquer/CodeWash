@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 
 import {
   calculateDamage,
@@ -35,6 +35,9 @@ export const useBattleLogic = ({
   setChallengeData,
   setSpokenText,
   checkAchievements,
+  setPlayerHealth,
+  generateChallenge,
+  battleDifficulty,
 }) => {
 
   const [damageNumbers, setDamageNumbers] = useState([]);
@@ -48,6 +51,12 @@ export const useBattleLogic = ({
   // -----------------------------
   // HELPERS
   // -----------------------------
+
+  useEffect(() => {
+      if (!lootBox) return;
+      const t = setTimeout(() => setLootBox(null), 4000);
+      return () => clearTimeout(t);
+    }, [lootBox]);
 
   const applyPartialHit = useCallback((current, actualDamage, isInstantDefeat, damage) => {
     const totalXP = calculateXPReward(current.difficulty, current.level);
@@ -90,12 +99,6 @@ export const useBattleLogic = ({
 
       return nextStats;
     });
-
-    useEffect(() => {
-      if (!lootBox) return;
-      const t = setTimeout(() => setLootBox(null), 4000);
-      return () => clearTimeout(t);
-    }, [lootBox]);
 
     // progression
     const progression = buildLevelProgression(
@@ -183,6 +186,17 @@ export const useBattleLogic = ({
   // MAIN
   // -----------------------------
 
+  const handleFailure = useCallback((skillId) => {
+    setPlayerHealth(prev => Math.max(0, prev - 1));
+  
+    setStats(prev => ({
+      ...prev,
+      totalMistakes: (prev.totalMistakes || 0) + 1
+    }));
+  
+    playFail();
+  }, [setPlayerHealth, setStats]);
+
   const handleSuccessHit = useCallback((skillId, isWrong) => {
 
     if (isWrong === 'WRONG') {
@@ -202,16 +216,10 @@ export const useBattleLogic = ({
         setBossHealing(battlingSkillId);
         setTimeout(() => setBossHealing(null), BOSS_HEALING_ANIMATION_DURATION);
 
-        playFail();
+        handleFailure(skillId);
         return;
       }
-
-      setStats(prev => ({
-        ...prev,
-        totalMistakes: (prev.totalMistakes || 0) + 1
-      }));
-
-      playFail();
+      handleFailure(skillId);
       return;
     }
 
@@ -230,7 +238,7 @@ export const useBattleLogic = ({
     const id = ++damageIdRef.current;
     setDamageNumbers(prev => [
       ...prev,
-      { id, skillId, val: actualDamage }
+      { id, skillId, val: actualDamage, x: Math.random() * 40 - 20, y:Math.random() * 40 - 20}
     ]);
 
     setTimeout(() => {
@@ -256,8 +264,8 @@ export const useBattleLogic = ({
 
     // next challenge
     if (skillConfig.hasChallenge) {
-      setChallengeData(prev => prev ? prev : null);
-      setSpokenText('');
+        setChallengeData(generateChallenge(skillConfig.challengeType, battleDifficulty));
+        setSpokenText('');
     }
 
   }, [
@@ -269,7 +277,10 @@ export const useBattleLogic = ({
     setSpokenText,
     checkAchievements,
     applyKillHit,
-    applyPartialHit
+    applyPartialHit,
+    generateChallenge,
+    battleDifficulty,
+    handleFailure
   ]);
 
   return {

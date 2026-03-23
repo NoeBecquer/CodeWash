@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Menu, Sparkles, Gift, Maximize, Minimize, Settings, Bug } from 'lucide-react';
 
 // UI components
@@ -23,7 +23,7 @@ import { useAppState } from './hooks/useAppState';
 import {
     getMobForSkill, getEncounterType,
     generateMathProblem, getReadingWord, getWordForDifficulty,
-    calculateDamage, calculateMobHealth, calculateXPReward,
+    calculateMobHealth,
 } from './utils/gameUtils';
 import { THEME_CONFIG, SKILL_DATA, HOSTILE_MOBS } from './constants/gameData';
 import {
@@ -168,12 +168,26 @@ const App = () => {
       stats,
       setStats,
       battlingSkillId,
-      setBattlingSkillId,
       setChallengeData,
       battleDifficulty,
       setSpokenText,
       checkAchievements,
+      setPlayerHealth,
+      generateChallenge,
     });
+
+    const handleMathSubmit = useCallback((skillId, val, damage) => {
+      handleSuccessHit(skillId, val, damage);
+    }, [handleSuccessHit]);
+
+    const damageBySkill = useMemo(() => {
+        const map = {};
+        damageNumbers.forEach(d => {
+            if (!map[d.skillId]) map[d.skillId] = [];
+            map[d.skillId].push(d);
+      });
+      return map;
+    }, [damageNumbers]);
 
     useEffect(() => {
         const onFSChange = () => setIsFullscreen(!!document.fullscreenElement);
@@ -245,18 +259,49 @@ const App = () => {
 
     // ------------------------------------------------------- battle lifecycle
     const startBattle = (id) => {
-        const skill        = SKILL_DATA.find(s => s.id === id);
-        const currentDiff  = skills[id].difficulty || 1;
-        const challengeDiff = getEncounterType(skills[id].level) === 'miniboss'
-            ? Math.min(7, currentDiff + 1) : currentDiff;
+        if (typeof id !== 'string') {
+            console.error('❌ Invalid id:', id);
+            return;
+        }
+
+        const skill = SKILL_DATA.find(s => s.id === id);
+        const skillState = skills[id];
+
+        if (!skill || !skillState) {
+            console.error('❌ Invalid battle start:', { id, skillState, skillData: skill });
+            return;
+        }
+
+        const currentDiff = skillState.difficulty || 1;
+
+        const challengeDiff =
+            getEncounterType(skillState.level) === 'miniboss'
+                ? Math.min(7, currentDiff + 1)
+                : currentDiff;
 
         setBattlingSkillId(id);
         setBattleDifficulty(challengeDiff);
         setChallengeData(generateChallenge(skill.challengeType, challengeDiff));
+
         playClick();
         startBGM();
-        if (skill.challengeType === 'reading' && window.webkitSpeechRecognition) startVoiceListener(id);
+
+        if (skill.challengeType === 'reading' && window.webkitSpeechRecognition) {
+            startVoiceListener(id);
+        }
     };
+
+    const handleStartBattle = useCallback((id) => {
+      startBattle(id);
+    }, [startBattle]);
+
+    const handleMicClick = useCallback((id) => {
+      toggleMicListener(id);
+    }, [toggleMicListener]);
+
+    const handleSetDifficulty = useCallback((id, diff) => {
+      setSkillDifficulty(id, diff);
+    }, []);
 
     const endBattle = () => {
         setBattlingSkillId(null);
@@ -305,7 +350,7 @@ const App = () => {
         for (let i = -3; i <= 3; i++) {
             let idx       = selectedIndex + i;
             let dataIndex = ((idx % SKILL_DATA.length) + SKILL_DATA.length) % SKILL_DATA.length;
-            items.push({ ...SKILL_DATA[dataIndex], offset: i, key: idx });
+            items.push({ ...SKILL_DATA[dataIndex], id: SKILL_DATA[dataIndex].id, offset: i, key: idx });
         }
         return items;
     };
@@ -461,12 +506,13 @@ const App = () => {
                                     mobName={getMobForSkill(item, skills[item.id])}
                                     mobAura={getAuraForSkill(item, skills[item.id])}
                                     challenge={challengeData} isListening={isListening} spokenText={spokenText}
-                                    damageNumbers={damageNumbers.filter(d => d.skillId === item.id)}
-                                    onStartBattle={() => startBattle(item.id)} onEndBattle={endBattle}
-                                    onMathSubmit={(val) => handleSuccessHit(item.id, val)}
-                                    onMicClick={() => toggleMicListener(item.id)}
+                                    damageNumbers={damageBySkill[item.id] || []}
+                                    onStartBattle={() => startBattle(item.id)}
+                                    onEndBattle={endBattle}
+                                    onMathSubmit={handleMathSubmit}
+                                    onMicClick={handleMicClick}
                                     difficulty={skills[item.id].difficulty || 1}
-                                    setDifficulty={(newDiff) => setSkillDifficulty(item.id, newDiff)}
+                                    setDifficulty={handleSetDifficulty}
                                     unlockedDifficulty={Math.min(7, Math.floor(skills[item.id].level / 20) + 1)}
                                     selectedBorder={selectedBorder} borderColor={borderColor}
                                     bossHealing={bossHealing === item.id}
