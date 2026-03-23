@@ -13,6 +13,10 @@ import MenuDrawer       from './components/drawers/MenuDrawer';
 import SkillCard        from './components/skills/SkillCard';
 import PhantomEvent     from './components/PhantomEvent';
 import AchievementToast from './components/ui/AchievementToast';
+import TopLeftControls from './components/layout/TopLeftComponent';
+import TopRightControls from './components/layout/TopRightComponent';
+import BottomHUD from './components/layout/BottomHUD';
+import BattleLayer from './components/layout/BattleLayer';
 
 // Utils & constants
 import {
@@ -573,22 +577,14 @@ const App = () => {
             <GlobalStyles />
             <div className="absolute inset-0 bg-black/30 pointer-events-none z-0" />
 
-            {/* ---- Top-left buttons ---- */}
-            <button onClick={() => { setIsMenuOpen(false); setIsCosmeticsOpen(false); setIsSettingsOpen(true); playClick(); }}
-                className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg"
-                style={{ top: '24px', left: '24px' }} data-cy="settings-button">
-                <Settings size={48} className="text-slate-400" />
-            </button>
-            <button onClick={() => { setIsMenuOpen(false); setIsSettingsOpen(false); setIsCosmeticsOpen(true); playClick(); }}
-                className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg"
-                style={{ top: '24px', left: 'calc(24px + 76px + 12px)' }} data-cy="theme-button">
-                <Sparkles size={48} className="text-purple-400" />
-            </button>
+            <TopLeftControls
+                setIsMenuOpen={setIsMenuOpen}
+                setIsSettingsOpen={setIsSettingsOpen}
+                setIsCosmeticsOpen={setIsCosmeticsOpen}
+                playClick={playClick}
+            />
 
-            {/* ---- Player health ---- */}
-            <div className="absolute z-40 flex gap-1.5" style={{ bottom: '20px', left: '50%', transform: 'translateX(-50%)' }}>
-                {Array(10).fill(0).map((_, i) => <PixelHeart key={i} size={48} filled={i < playerHealth} />)}
-            </div>
+            <BottomHUD playerHealth={playerHealth} />
 
             {/* ---- Drawers ---- */}
             {isCosmeticsOpen && <div className="fixed inset-0 bg-black/50 z-40" onClick={() => { setIsCosmeticsOpen(false); playClick(); }} />}
@@ -608,18 +604,14 @@ const App = () => {
             <ResetModal  isOpen={isResetOpen}    onClose={() => setIsResetOpen(false)}    onConfirm={handleReset} />
             <BugReportModal isOpen={isBugReportOpen} onClose={() => setIsBugReportOpen(false)} />
 
-            {/* ---- Top-right buttons ---- */}
-            <button onClick={toggleFullscreen}
-                className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg"
-                style={{ top: '24px', right: 'calc(24px + 76px + 12px)' }}
-                aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'} data-cy="fullscreen-button">
-                {isFullscreen ? <Minimize size={48} /> : <Maximize size={48} />}
-            </button>
-            <button onClick={() => { setIsSettingsOpen(false); setIsCosmeticsOpen(false); setIsMenuOpen(true); playClick(); }}
-                className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg"
-                style={{ top: '24px', right: '24px' }} data-cy="achievement-button">
-                <Menu size={48} />
-            </button>
+            <TopRightControls
+              isFullscreen={isFullscreen}
+              toggleFullscreen={toggleFullscreen}
+              setIsMenuOpen={setIsMenuOpen}
+              setIsSettingsOpen={setIsSettingsOpen}
+              setIsCosmeticsOpen={setIsCosmeticsOpen}
+              playClick={playClick}
+            />
 
             {isMenuOpen && <div className="fixed inset-0 bg-black/50 z-40" onClick={() => { setIsMenuOpen(false); playClick(); }} />}
             <MenuDrawer isOpen={isMenuOpen} skills={skills} stats={stats} />
@@ -629,13 +621,6 @@ const App = () => {
                 style={{ bottom: '24px', right: '24px' }} data-cy="bug-button">
                 <Bug size={48} className="text-red-400" />
             </button>
-
-            {/* ---- Battle backdrop ---- */}
-            {battlingSkillId && (
-                <div className="fixed inset-0 bg-black/50 z-40"
-                    style={{ minWidth: '100vw', minHeight: '100vh' }}
-                    onClick={endBattle} />
-            )}
 
             <main className="flex-1 relative flex flex-col items-center justify-center w-full">
                 <div className="z-10 relative mb-[-30px] md:mb-[-50px] pointer-events-none opacity-90">
@@ -703,6 +688,14 @@ const App = () => {
                     })}
                 </div>
             </main>
+            
+            <BattleLayer
+                battlingSkillId={battlingSkillId}
+                challengeData={challengeData}
+                isListening={isListening}
+                spokenText={spokenText}
+                onEndBattle={endBattle}
+            />
 
             {/* ---- Loot box toast ---- */}
             {lootBox && (
