@@ -1,0 +1,1042 @@
+<div id="top">
+
+<!-- HEADER STYLE: CLASSIC -->
+<div align="center">
+
+<img src="readmeai/assets/logos/purple.svg" width="30%" style="position: relative; top: 0; right: 0;" alt="Project Logo"/>
+
+# README-AI
+
+<em></em>
+
+<!-- BADGES -->
+<img src="https://img.shields.io/github/license/eli64s/readme-ai?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
+<img src="https://img.shields.io/github/last-commit/eli64s/readme-ai?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
+<img src="https://img.shields.io/github/languages/top/eli64s/readme-ai?style=default&color=0080ff" alt="repo-top-language">
+<img src="https://img.shields.io/github/languages/count/eli64s/readme-ai?style=default&color=0080ff" alt="repo-language-count">
+
+<!-- default option, no dependency badges. -->
+
+
+<!-- default option, no dependency badges. -->
+
+</div>
+<br>
+
+---
+
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Overview](#overview)
+- [Features](#features)
+- [Project Structure](#project-structure)
+    - [Project Index](#project-index)
+- [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Usage](#usage)
+    - [Testing](#testing)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+
+---
+
+## Overview
+
+
+
+---
+
+## Features
+
+<code>❯ REPLACE-ME</code>
+
+---
+
+## Project Structure
+
+```sh
+└── readme-ai/
+    ├── .github
+    │   ├── release-drafter.yml
+    │   └── workflows
+    ├── CHANGELOG.md
+    ├── CODE_OF_CONDUCT.md
+    ├── CONTRIBUTING.md
+    ├── Dockerfile
+    ├── LICENSE
+    ├── Makefile
+    ├── README.md
+    ├── docs
+    │   ├── docs
+    │   ├── mkdocs.yml
+    │   ├── overrides
+    │   └── snippets
+    ├── examples
+    │   ├── readme-ai.md
+    │   ├── readme-docker-go.md
+    │   ├── readme-fastapi-redis.md
+    │   ├── readme-javascript.md
+    │   ├── readme-kotlin.md
+    │   ├── readme-litellm.md
+    │   ├── readme-mlops.md
+    │   ├── readme-ollama.md
+    │   ├── readme-postgres.md
+    │   ├── readme-python-v0.5.87.md
+    │   ├── readme-python.md
+    │   ├── readme-readmeai.md
+    │   ├── readme-rust-c.md
+    │   ├── readme-sqlmesh.md
+    │   └── readme-typescript.md
+    ├── noxfile.py
+    ├── poetry.lock
+    ├── pyproject.toml
+    ├── readmeai
+    │   ├── __init__.py
+    │   ├── assets
+    │   ├── cli
+    │   ├── config
+    │   ├── core
+    │   ├── extractors
+    │   ├── generators
+    │   ├── models
+    │   ├── parsers
+    │   ├── postprocessor
+    │   ├── preprocessor
+    │   ├── retrievers
+    │   └── utils
+    ├── scripts
+    │   ├── clean.sh
+    │   ├── docker.sh
+    │   ├── pypi.sh
+    │   └── run_batch.sh
+    ├── setup
+    │   ├── environment.yaml
+    │   ├── requirements.txt
+    │   └── setup.sh
+    └── tests
+        ├── __init__.py
+        ├── cli
+        ├── config
+        ├── conftest.py
+        ├── core
+        ├── extractors
+        ├── generators
+        ├── models
+        ├── parsers
+        ├── postprocessor
+        ├── preprocessor
+        ├── retrievers
+        └── utils
+```
+
+### Project Index
+
+<details open>
+	<summary><b><code>README-AI/</code></b></summary>
+	<!-- __root__ Submodule -->
+	<details>
+		<summary><b>__root__</b></summary>
+		<blockquote>
+			<div class='directory-path' style='padding: 8px 0; color: #666;'>
+				<code><b>⦿ __root__</b></code>
+			<table style='width: 100%; border-collapse: collapse;'>
+			<thead>
+				<tr style='background-color: #f8f9fa;'>
+					<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+					<th style='text-align: left; padding: 8px;'>Summary</th>
+				</tr>
+			</thead>
+				<tr style='border-bottom: 1px solid #eee;'>
+					<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/LICENSE'>LICENSE</a></b></td>
+					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+				</tr>
+				<tr style='border-bottom: 1px solid #eee;'>
+					<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/pyproject.toml'>pyproject.toml</a></b></td>
+					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+				</tr>
+				<tr style='border-bottom: 1px solid #eee;'>
+					<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/noxfile.py'>noxfile.py</a></b></td>
+					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+				</tr>
+				<tr style='border-bottom: 1px solid #eee;'>
+					<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/Makefile'>Makefile</a></b></td>
+					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+				</tr>
+				<tr style='border-bottom: 1px solid #eee;'>
+					<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/Dockerfile'>Dockerfile</a></b></td>
+					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+				</tr>
+			</table>
+		</blockquote>
+	</details>
+	<!-- .github Submodule -->
+	<details>
+		<summary><b>.github</b></summary>
+		<blockquote>
+			<div class='directory-path' style='padding: 8px 0; color: #666;'>
+				<code><b>⦿ .github</b></code>
+			<table style='width: 100%; border-collapse: collapse;'>
+			<thead>
+				<tr style='background-color: #f8f9fa;'>
+					<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+					<th style='text-align: left; padding: 8px;'>Summary</th>
+				</tr>
+			</thead>
+				<tr style='border-bottom: 1px solid #eee;'>
+					<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/.github/release-drafter.yml'>release-drafter.yml</a></b></td>
+					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+				</tr>
+			</table>
+			<!-- workflows Submodule -->
+			<details>
+				<summary><b>workflows</b></summary>
+				<blockquote>
+					<div class='directory-path' style='padding: 8px 0; color: #666;'>
+						<code><b>⦿ .github.workflows</b></code>
+					<table style='width: 100%; border-collapse: collapse;'>
+					<thead>
+						<tr style='background-color: #f8f9fa;'>
+							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+							<th style='text-align: left; padding: 8px;'>Summary</th>
+						</tr>
+					</thead>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/.github/workflows/release-drafter.yml'>release-drafter.yml</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/.github/workflows/mkdocs.yml'>mkdocs.yml</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/.github/workflows/coverage.yml'>coverage.yml</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/.github/workflows/release-pipeline.yml'>release-pipeline.yml</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+					</table>
+				</blockquote>
+			</details>
+		</blockquote>
+	</details>
+	<!-- scripts Submodule -->
+	<details>
+		<summary><b>scripts</b></summary>
+		<blockquote>
+			<div class='directory-path' style='padding: 8px 0; color: #666;'>
+				<code><b>⦿ scripts</b></code>
+			<table style='width: 100%; border-collapse: collapse;'>
+			<thead>
+				<tr style='background-color: #f8f9fa;'>
+					<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+					<th style='text-align: left; padding: 8px;'>Summary</th>
+				</tr>
+			</thead>
+				<tr style='border-bottom: 1px solid #eee;'>
+					<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/scripts/clean.sh'>clean.sh</a></b></td>
+					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+				</tr>
+				<tr style='border-bottom: 1px solid #eee;'>
+					<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/scripts/pypi.sh'>pypi.sh</a></b></td>
+					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+				</tr>
+				<tr style='border-bottom: 1px solid #eee;'>
+					<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/scripts/docker.sh'>docker.sh</a></b></td>
+					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+				</tr>
+				<tr style='border-bottom: 1px solid #eee;'>
+					<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/scripts/run_batch.sh'>run_batch.sh</a></b></td>
+					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+				</tr>
+			</table>
+		</blockquote>
+	</details>
+	<!-- setup Submodule -->
+	<details>
+		<summary><b>setup</b></summary>
+		<blockquote>
+			<div class='directory-path' style='padding: 8px 0; color: #666;'>
+				<code><b>⦿ setup</b></code>
+			<table style='width: 100%; border-collapse: collapse;'>
+			<thead>
+				<tr style='background-color: #f8f9fa;'>
+					<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+					<th style='text-align: left; padding: 8px;'>Summary</th>
+				</tr>
+			</thead>
+				<tr style='border-bottom: 1px solid #eee;'>
+					<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/setup/requirements.txt'>requirements.txt</a></b></td>
+					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+				</tr>
+				<tr style='border-bottom: 1px solid #eee;'>
+					<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/setup/environment.yaml'>environment.yaml</a></b></td>
+					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+				</tr>
+				<tr style='border-bottom: 1px solid #eee;'>
+					<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/setup/setup.sh'>setup.sh</a></b></td>
+					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+				</tr>
+			</table>
+		</blockquote>
+	</details>
+	<!-- readmeai Submodule -->
+	<details>
+		<summary><b>readmeai</b></summary>
+		<blockquote>
+			<div class='directory-path' style='padding: 8px 0; color: #666;'>
+				<code><b>⦿ readmeai</b></code>
+			<!-- models Submodule -->
+			<details>
+				<summary><b>models</b></summary>
+				<blockquote>
+					<div class='directory-path' style='padding: 8px 0; color: #666;'>
+						<code><b>⦿ readmeai.models</b></code>
+					<table style='width: 100%; border-collapse: collapse;'>
+					<thead>
+						<tr style='background-color: #f8f9fa;'>
+							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+							<th style='text-align: left; padding: 8px;'>Summary</th>
+						</tr>
+					</thead>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/models/anthropic.py'>anthropic.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/models/factory.py'>factory.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/models/openai.py'>openai.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/models/prompts.py'>prompts.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/models/offline.py'>offline.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/models/tokens.py'>tokens.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/models/dalle.py'>dalle.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/models/gemini.py'>gemini.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/models/enums.py'>enums.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/models/base.py'>base.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+					</table>
+				</blockquote>
+			</details>
+			<!-- cli Submodule -->
+			<details>
+				<summary><b>cli</b></summary>
+				<blockquote>
+					<div class='directory-path' style='padding: 8px 0; color: #666;'>
+						<code><b>⦿ readmeai.cli</b></code>
+					<table style='width: 100%; border-collapse: collapse;'>
+					<thead>
+						<tr style='background-color: #f8f9fa;'>
+							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+							<th style='text-align: left; padding: 8px;'>Summary</th>
+						</tr>
+					</thead>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/cli/options.py'>options.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/cli/main.py'>main.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+					</table>
+				</blockquote>
+			</details>
+			<!-- config Submodule -->
+			<details>
+				<summary><b>config</b></summary>
+				<blockquote>
+					<div class='directory-path' style='padding: 8px 0; color: #666;'>
+						<code><b>⦿ readmeai.config</b></code>
+					<table style='width: 100%; border-collapse: collapse;'>
+					<thead>
+						<tr style='background-color: #f8f9fa;'>
+							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+							<th style='text-align: left; padding: 8px;'>Summary</th>
+						</tr>
+					</thead>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings.py'>settings.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+					</table>
+					<!-- settings Submodule -->
+					<details>
+						<summary><b>settings</b></summary>
+						<blockquote>
+							<div class='directory-path' style='padding: 8px 0; color: #666;'>
+								<code><b>⦿ readmeai.config.settings</b></code>
+							<table style='width: 100%; border-collapse: collapse;'>
+							<thead>
+								<tr style='background-color: #f8f9fa;'>
+									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+									<th style='text-align: left; padding: 8px;'>Summary</th>
+								</tr>
+							</thead>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings/ignore-list.toml'>ignore-list.toml</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings/project-manifest.toml'>project-manifest.toml</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings/config.toml'>config.toml</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings/dev-setup.toml'>dev-setup.toml</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings/commands.toml'>commands.toml</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings/templates.toml'>templates.toml</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings/dev-tools.toml'>dev-tools.toml</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings/prompts.toml'>prompts.toml</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings/language-map.toml'>language-map.toml</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings/badge-list.toml'>badge-list.toml</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+							</table>
+							<!-- themes Submodule -->
+							<details>
+								<summary><b>themes</b></summary>
+								<blockquote>
+									<div class='directory-path' style='padding: 8px 0; color: #666;'>
+										<code><b>⦿ readmeai.config.settings.themes</b></code>
+									<table style='width: 100%; border-collapse: collapse;'>
+									<thead>
+										<tr style='background-color: #f8f9fa;'>
+											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+											<th style='text-align: left; padding: 8px;'>Summary</th>
+										</tr>
+									</thead>
+										<tr style='border-bottom: 1px solid #eee;'>
+											<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings/themes/emojis.yaml'>emojis.yaml</a></b></td>
+											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+										</tr>
+									</table>
+								</blockquote>
+							</details>
+							<!-- templates Submodule -->
+							<details>
+								<summary><b>templates</b></summary>
+								<blockquote>
+									<div class='directory-path' style='padding: 8px 0; color: #666;'>
+										<code><b>⦿ readmeai.config.settings.templates</b></code>
+									<table style='width: 100%; border-collapse: collapse;'>
+									<thead>
+										<tr style='background-color: #f8f9fa;'>
+											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+											<th style='text-align: left; padding: 8px;'>Summary</th>
+										</tr>
+									</thead>
+										<tr style='border-bottom: 1px solid #eee;'>
+											<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings/templates/quickstart.toml'>quickstart.toml</a></b></td>
+											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+										</tr>
+										<tr style='border-bottom: 1px solid #eee;'>
+											<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings/templates/banners.toml'>banners.toml</a></b></td>
+											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+										</tr>
+										<tr style='border-bottom: 1px solid #eee;'>
+											<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/config/settings/templates/headers.toml'>headers.toml</a></b></td>
+											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+										</tr>
+									</table>
+								</blockquote>
+							</details>
+						</blockquote>
+					</details>
+				</blockquote>
+			</details>
+			<!-- parsers Submodule -->
+			<details>
+				<summary><b>parsers</b></summary>
+				<blockquote>
+					<div class='directory-path' style='padding: 8px 0; color: #666;'>
+						<code><b>⦿ readmeai.parsers</b></code>
+					<table style='width: 100%; border-collapse: collapse;'>
+					<thead>
+						<tr style='background-color: #f8f9fa;'>
+							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+							<th style='text-align: left; padding: 8px;'>Summary</th>
+						</tr>
+					</thead>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/parsers/python.py'>python.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/parsers/factory.py'>factory.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/parsers/properties.py'>properties.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/parsers/gradle.py'>gradle.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/parsers/npm.py'>npm.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/parsers/cpp.py'>cpp.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/parsers/go.py'>go.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/parsers/maven.py'>maven.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/parsers/rust.py'>rust.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/parsers/docker.py'>docker.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/parsers/swift.py'>swift.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/parsers/base.py'>base.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+					</table>
+				</blockquote>
+			</details>
+			<!-- core Submodule -->
+			<details>
+				<summary><b>core</b></summary>
+				<blockquote>
+					<div class='directory-path' style='padding: 8px 0; color: #666;'>
+						<code><b>⦿ readmeai.core</b></code>
+					<table style='width: 100%; border-collapse: collapse;'>
+					<thead>
+						<tr style='background-color: #f8f9fa;'>
+							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+							<th style='text-align: left; padding: 8px;'>Summary</th>
+						</tr>
+					</thead>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/core/errors.py'>errors.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/core/pipeline.py'>pipeline.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/core/logger.py'>logger.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+					</table>
+				</blockquote>
+			</details>
+			<!-- postprocessor Submodule -->
+			<details>
+				<summary><b>postprocessor</b></summary>
+				<blockquote>
+					<div class='directory-path' style='padding: 8px 0; color: #666;'>
+						<code><b>⦿ readmeai.postprocessor</b></code>
+					<table style='width: 100%; border-collapse: collapse;'>
+					<thead>
+						<tr style='background-color: #f8f9fa;'>
+							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+							<th style='text-align: left; padding: 8px;'>Summary</th>
+						</tr>
+					</thead>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/postprocessor/markdown_to_html.py'>markdown_to_html.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/postprocessor/response_cleaner.py'>response_cleaner.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+					</table>
+				</blockquote>
+			</details>
+			<!-- utils Submodule -->
+			<details>
+				<summary><b>utils</b></summary>
+				<blockquote>
+					<div class='directory-path' style='padding: 8px 0; color: #666;'>
+						<code><b>⦿ readmeai.utils</b></code>
+					<table style='width: 100%; border-collapse: collapse;'>
+					<thead>
+						<tr style='background-color: #f8f9fa;'>
+							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+							<th style='text-align: left; padding: 8px;'>Summary</th>
+						</tr>
+					</thead>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/utils/resource_manager.py'>resource_manager.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/utils/importer.py'>importer.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/utils/file_handler.py'>file_handler.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/utils/fetch_badges.py'>fetch_badges.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+					</table>
+				</blockquote>
+			</details>
+			<!-- generators Submodule -->
+			<details>
+				<summary><b>generators</b></summary>
+				<blockquote>
+					<div class='directory-path' style='padding: 8px 0; color: #666;'>
+						<code><b>⦿ readmeai.generators</b></code>
+					<table style='width: 100%; border-collapse: collapse;'>
+					<thead>
+						<tr style='background-color: #f8f9fa;'>
+							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+							<th style='text-align: left; padding: 8px;'>Summary</th>
+						</tr>
+					</thead>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/generators/headers.py'>headers.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/generators/builder.py'>builder.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/generators/navigation.py'>navigation.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/generators/emojis.py'>emojis.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/generators/badges.py'>badges.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/generators/tables.py'>tables.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/generators/tree.py'>tree.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/generators/quickstart.py'>quickstart.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/generators/enums.py'>enums.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+					</table>
+					<!-- colors Submodule -->
+					<details>
+						<summary><b>colors</b></summary>
+						<blockquote>
+							<div class='directory-path' style='padding: 8px 0; color: #666;'>
+								<code><b>⦿ readmeai.generators.colors</b></code>
+							<table style='width: 100%; border-collapse: collapse;'>
+							<thead>
+								<tr style='background-color: #f8f9fa;'>
+									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+									<th style='text-align: left; padding: 8px;'>Summary</th>
+								</tr>
+							</thead>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/generators/colors/converters.py'>converters.py</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/generators/colors/gradients.py'>gradients.py</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+							</table>
+						</blockquote>
+					</details>
+					<!-- banners Submodule -->
+					<details>
+						<summary><b>banners</b></summary>
+						<blockquote>
+							<div class='directory-path' style='padding: 8px 0; color: #666;'>
+								<code><b>⦿ readmeai.generators.banners</b></code>
+							<table style='width: 100%; border-collapse: collapse;'>
+							<thead>
+								<tr style='background-color: #f8f9fa;'>
+									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+									<th style='text-align: left; padding: 8px;'>Summary</th>
+								</tr>
+							</thead>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/generators/banners/ascii.py'>ascii.py</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/generators/banners/svg.py'>svg.py</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+							</table>
+						</blockquote>
+					</details>
+				</blockquote>
+			</details>
+			<!-- preprocessor Submodule -->
+			<details>
+				<summary><b>preprocessor</b></summary>
+				<blockquote>
+					<div class='directory-path' style='padding: 8px 0; color: #666;'>
+						<code><b>⦿ readmeai.preprocessor</b></code>
+					<table style='width: 100%; border-collapse: collapse;'>
+					<thead>
+						<tr style='background-color: #f8f9fa;'>
+							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+							<th style='text-align: left; padding: 8px;'>Summary</th>
+						</tr>
+					</thead>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/preprocessor/file_filter.py'>file_filter.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/preprocessor/ignore_handler.py'>ignore_handler.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/preprocessor/document_cleaner.py'>document_cleaner.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/preprocessor/directory_cleaner.py'>directory_cleaner.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+					</table>
+				</blockquote>
+			</details>
+			<!-- extractors Submodule -->
+			<details>
+				<summary><b>extractors</b></summary>
+				<blockquote>
+					<div class='directory-path' style='padding: 8px 0; color: #666;'>
+						<code><b>⦿ readmeai.extractors</b></code>
+					<table style='width: 100%; border-collapse: collapse;'>
+					<thead>
+						<tr style='background-color: #f8f9fa;'>
+							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+							<th style='text-align: left; padding: 8px;'>Summary</th>
+						</tr>
+					</thead>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/extractors/metadata.py'>metadata.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/extractors/analyzer.py'>analyzer.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/extractors/tools.py'>tools.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/extractors/models.py'>models.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+						<tr style='border-bottom: 1px solid #eee;'>
+							<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/extractors/dependencies.py'>dependencies.py</a></b></td>
+							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+						</tr>
+					</table>
+				</blockquote>
+			</details>
+			<!-- retrievers Submodule -->
+			<details>
+				<summary><b>retrievers</b></summary>
+				<blockquote>
+					<div class='directory-path' style='padding: 8px 0; color: #666;'>
+						<code><b>⦿ readmeai.retrievers</b></code>
+					<!-- git Submodule -->
+					<details>
+						<summary><b>git</b></summary>
+						<blockquote>
+							<div class='directory-path' style='padding: 8px 0; color: #666;'>
+								<code><b>⦿ readmeai.retrievers.git</b></code>
+							<table style='width: 100%; border-collapse: collapse;'>
+							<thead>
+								<tr style='background-color: #f8f9fa;'>
+									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+									<th style='text-align: left; padding: 8px;'>Summary</th>
+								</tr>
+							</thead>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/retrievers/git/metadata.py'>metadata.py</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/retrievers/git/repository.py'>repository.py</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+								<tr style='border-bottom: 1px solid #eee;'>
+									<td style='padding: 8px;'><b><a href='https://github.com/eli64s/readme-ai/blob/master/readmeai/retrievers/git/providers.py'>providers.py</a></b></td>
+									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+								</tr>
+							</table>
+						</blockquote>
+					</details>
+				</blockquote>
+			</details>
+		</blockquote>
+	</details>
+</details>
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+This project requires the following dependencies:
+
+- **Programming Language:** Python
+- **Package Manager:** Poetry, Pip, Conda
+- **Container Runtime:** Docker
+
+### Installation
+
+Build readme-ai from the source and intsall dependencies:
+
+1. **Clone the repository:**
+
+    ```sh
+    ❯ git clone https://github.com/eli64s/readme-ai
+    ```
+
+2. **Navigate to the project directory:**
+
+    ```sh
+    ❯ cd readme-ai
+    ```
+
+3. **Install the dependencies:**
+
+<!-- SHIELDS BADGE CURRENTLY DISABLED -->
+	<!-- [![docker][docker-shield]][docker-link] -->
+	<!-- REFERENCE LINKS -->
+	<!-- [docker-shield]: https://img.shields.io/badge/Docker-2CA5E0.svg?style={badge_style}&logo=docker&logoColor=white -->
+	<!-- [docker-link]: https://www.docker.com/ -->
+
+	**Using [docker](https://www.docker.com/):**
+
+	```sh
+	❯ docker build -t eli64s/readme-ai .
+	```
+<!-- SHIELDS BADGE CURRENTLY DISABLED -->
+	<!-- [![poetry][poetry-shield]][poetry-link] -->
+	<!-- REFERENCE LINKS -->
+	<!-- [poetry-shield]: https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json -->
+	<!-- [poetry-link]: https://python-poetry.org/ -->
+
+	**Using [poetry](https://python-poetry.org/):**
+
+	```sh
+	❯ poetry install
+	```
+<!-- SHIELDS BADGE CURRENTLY DISABLED -->
+	<!-- [![pip][pip-shield]][pip-link] -->
+	<!-- REFERENCE LINKS -->
+	<!-- [pip-shield]: https://img.shields.io/badge/Pip-3776AB.svg?style={badge_style}&logo=pypi&logoColor=white -->
+	<!-- [pip-link]: https://pypi.org/project/pip/ -->
+
+	**Using [pip](https://pypi.org/project/pip/):**
+
+	```sh
+	❯ pip install -r setup/requirements.txt
+	```
+<!-- SHIELDS BADGE CURRENTLY DISABLED -->
+	<!-- [![conda][conda-shield]][conda-link] -->
+	<!-- REFERENCE LINKS -->
+	<!-- [conda-shield]: https://img.shields.io/badge/conda-342B029.svg?style={badge_style}&logo=anaconda&logoColor=white -->
+	<!-- [conda-link]: https://docs.conda.io/ -->
+
+	**Using [conda](https://docs.conda.io/):**
+
+	```sh
+	❯ conda env create -f setup/environment.yaml
+	```
+
+### Usage
+
+Run the project with:
+
+**Using [docker](https://www.docker.com/):**
+```sh
+docker run -it {image_name}
+```
+**Using [poetry](https://python-poetry.org/):**
+```sh
+poetry run python {entrypoint}
+```
+**Using [pip](https://pypi.org/project/pip/):**
+```sh
+python {entrypoint}
+```
+**Using [conda](https://docs.conda.io/):**
+```sh
+conda activate {venv}
+python {entrypoint}
+```
+
+### Testing
+
+Readme-ai uses the {__test_framework__} test framework. Run the test suite with:
+
+**Using [poetry](https://python-poetry.org/):**
+```sh
+poetry run pytest
+```
+**Using [pip](https://pypi.org/project/pip/):**
+```sh
+pytest
+```
+**Using [conda](https://docs.conda.io/):**
+```sh
+conda activate {venv}
+pytest
+```
+
+---
+
+## Roadmap
+
+- [X] **`Task 1`**: <strike>Implement feature one.</strike>
+- [ ] **`Task 2`**: Implement feature two.
+- [ ] **`Task 3`**: Implement feature three.
+
+---
+
+## Contributing
+
+- **💬 [Join the Discussions](https://github.com/eli64s/readme-ai/discussions)**: Share your insights, provide feedback, or ask questions.
+- **🐛 [Report Issues](https://github.com/eli64s/readme-ai/issues)**: Submit bugs found or log feature requests for the `readme-ai` project.
+- **💡 [Submit Pull Requests](https://github.com/eli64s/readme-ai/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
+
+<details closed>
+<summary>Contributing Guidelines</summary>
+
+1. **Fork the Repository**: Start by forking the project repository to your github account.
+2. **Clone Locally**: Clone the forked repository to your local machine using a git client.
+   ```sh
+   git clone https://github.com/eli64s/readme-ai
+   ```
+3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
+   ```sh
+   git checkout -b new-feature-x
+   ```
+4. **Make Your Changes**: Develop and test your changes locally.
+5. **Commit Your Changes**: Commit with a clear message describing your updates.
+   ```sh
+   git commit -m 'Implemented new feature x.'
+   ```
+6. **Push to github**: Push the changes to your forked repository.
+   ```sh
+   git push origin new-feature-x
+   ```
+7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
+8. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Congratulations on your contribution!
+</details>
+
+<details closed>
+<summary>Contributor Graph</summary>
+<br>
+<p align="left">
+   <a href="https://github.com{/eli64s/readme-ai/}graphs/contributors">
+      <img src="https://contrib.rocks/image?repo=eli64s/readme-ai">
+   </a>
+</p>
+</details>
+
+---
+
+## License
+
+Readme-ai is protected under the [LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
+
+---
+
+## Acknowledgments
+
+- Credit `contributors`, `inspiration`, `references`, etc.
+
+<div align="right">
+
+[![][back-to-top]](#top)
+
+</div>
+
+
+[back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
+
+
+---
