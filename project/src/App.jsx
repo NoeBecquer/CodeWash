@@ -10,7 +10,7 @@ import BugReportModal   from './components/modals/BugReportModal';
 import SettingsDrawer   from './components/drawers/SettingsDrawer';
 import CosmeticsDrawer  from './components/drawers/CosmeticsDrawer';
 import MenuDrawer       from './components/drawers/MenuDrawer';
-import SkillCard        from './components/skills/SkillCard';
+import SkillCard        from './components/skillcard/SkillCard';
 import PhantomEvent     from './components/PhantomEvent';
 import AchievementToast from './components/ui/AchievementToast';
 import TopLeftControls from './components/layout/TopLeftComponent';

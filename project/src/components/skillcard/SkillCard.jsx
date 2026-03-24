@@ -9,6 +9,8 @@ import { BASE_ASSETS, FRIENDLY_MOBS, HOSTILE_MOBS, CHEST_BLOCKS, BOSS_MOBS, MINI
 import { playClick, getSfxVolume } from '../../utils/soundManager';
 import { calculateXPToLevel, normalizeText } from '../../utils/gameUtils';
 import { AURA_ADJECTIVES } from '../../utils/mobDisplayUtils';
+import MemoryGame from './game/MemoryGame';
+import SimonGame from './game/SimonGame';
 
 const PRESTIGE_LEVEL_THRESHOLD = 20;
 
@@ -443,67 +445,28 @@ const SkillCard = ({ config, data, themeData, isCenter, isBattling, mobName, mob
                 {isBattling ? (
                     <div className="flex flex-col h-full animate-in slide-in-from-bottom-10 duration-300">
                         {config.id === 'memory' ? (
-                            <div className={`flex-1 grid gap-2 bg-black/20 p-2 rounded items-center`} style={{ gridTemplateColumns: `repeat(${memoryGridCols}, 1fr)` }}>
-                                {memoryCards.map((card, index) => {
-                                    const isFlipped = flippedIndices.includes(index);
-                                    const isMatched = matchedPairs.includes(card.color);
-                                    if (isMatched) return <div key={card.id} className="w-full aspect-[2/3]"></div>;
-                                    return (
-                                        <div key={card.id} onClick={() => handleCardClick(index)} className={`w-full aspect-[2/3] cursor-pointer transition-all duration-300 perspective-1000 relative transform-style-3d ${isFlipped ? 'rotate-y-180' : ''} ${mismatchShake && isFlipped ? 'animate-shake-flipped border-red-500' : ''}`}>
-                                            <div className="absolute inset-0 backface-hidden w-full h-full" style={{ backfaceVisibility: 'hidden' }}><SafeImage src={themeData.assets.cardBack} className="w-full h-full object-cover rounded border border-stone-600" /></div>
-                                            <div className="absolute inset-0 backface-hidden w-full h-full rotate-y-180 bg-slate-800 rounded border border-white/20 flex items-center justify-center" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}><SafeImage src={card.img} className="w-full h-full object-contain p-1" /></div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
+                            <MemoryGame
+                                memoryCards={memoryCards}
+                                flippedIndices={flippedIndices}
+                                matchedPairs={matchedPairs}
+                                mismatchShake={mismatchShake}
+                                memoryGridCols={memoryGridCols}
+                                handleCardClick={handleCardClick}
+                                themeData={themeData}
+                            />
                         ) : (
                             <div className="flex-1 flex flex-col items-center justify-center">
                                 {config.id === 'patterns' ? (
-                                    <div className="w-full flex flex-col items-center gap-1">
-                                        {/* Round counter */}
-                                        <div className="text-white text-lg font-bold py-1">
-                                            {t('skill_card.round')} {completedRounds} {isShowingSequence && <span className="text-yellow-400 animate-pulse">{t('skill_card.watch')}</span>}
-                                            {!isShowingSequence && simonGameActive && <span className="text-green-400">{t('skill_card.your_turn')}</span>}
-                                        </div>
-                                        {/* Dynamic axolotl formation based on difficulty */}
-                                        <div className="relative w-[240px] h-[240px]">
-                                            {axolotlColors.map((color, index) => {
-                                                const anglePerAxolotl = 360 / axolotlColors.length;
-                                                const angle = (index * anglePerAxolotl - 90) * (Math.PI / 180);
-                                                const radius = 85;
-                                                const x = 120 + radius * Math.cos(angle) - 40;
-                                                const y = 120 + radius * Math.sin(angle) - 40;
-                                                const isLit = litAxolotl === color;
-                                                return (
-                                                    <div
-                                                        key={color}
-                                                        onClick={() => handleAxolotlClick(color)}
-                                                        className={`absolute w-[80px] h-[80px] cursor-pointer transition-all duration-200 rounded-full p-1 ${isLit ? 'scale-125 ring-4 ring-yellow-400 brightness-150 z-10' : 'hover:scale-110'} ${isShowingSequence ? 'pointer-events-none' : ''}`}
-                                                        style={{ left: x, top: y }}
-                                                    >
-                                                        <SafeImage
-                                                            src={BASE_ASSETS.axolotls[color]}
-                                                            alt={color}
-                                                            className="w-full h-full object-contain drop-shadow-lg"
-                                                        />
-                                                        <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[10px] text-white bg-black/60 px-1 rounded">{color}</span>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                        {!simonGameActive && completedRounds > 0 && (
-                                            <div className="flex flex-col items-center gap-3">
-                                                <div className="text-red-400 text-lg font-bold animate-pulse">{t('skill_card.game_over_rounds')} {completedRounds}</div>
-                                                <button
-                                                    onClick={startSimonGame}
-                                                    className="bg-blue-600 hover:bg-blue-500 text-white text-xl font-bold py-3 px-6 rounded shadow-[0_4px_0_#1e40af] active:shadow-none active:translate-y-[4px] transition-all"
-                                                >
-                                                    {t('skill_card.retry')}
-                                                </button>
-                                            </div>
-                                        )}
-                                    </div>
-                                ) : (
+                                        <SimonGame
+                                            axolotlColors={axolotlColors}
+                                            litAxolotl={litAxolotl}
+                                            handleAxolotlClick={handleAxolotlClick}
+                                            isShowingSequence={isShowingSequence}
+                                            completedRounds={completedRounds}
+                                            startSimonGame={startSimonGame}
+                                            t={t}
+                                        />
+                                    ) : (
                                     <>
                                         <div className={`flex-1 bg-black/40 rounded border-2 flex items-center justify-center mb-3 p-2 relative overflow-hidden w-full ${isReadingWrong ? 'border-red-500 bg-red-900/30 animate-shake' : 'border-[#555]'}`}>
                                             {config.challengeType === 'writing' ? (
@@ -701,23 +664,6 @@ const SkillCard = ({ config, data, themeData, isCenter, isBattling, mobName, mob
 
     return (
         <div className="relative">
-            {/* Difficulty adjuster positioned above the card */}
-            {(!isBattling || config.id !== 'memory') && config.id !== 'cleaning' && unlockedDifficulty > 1 && (
-                <div className="absolute -top-10 left-0 flex items-center gap-2 z-20">
-                    <button onClick={() => setDifficulty(config.id, Math.max(1, difficulty - 1))} className="bg-stone-700 text-white rounded p-1 border border-stone-500 hover:bg-stone-600"><Minus size={16} /></button>
-                    <div className="relative">
-                        <SafeImage
-                            src={DIFFICULTY_IMAGES[difficulty] || DIFFICULTY_IMAGES[1]}
-                            alt={`Difficulty ${difficulty}`}
-                            className="w-8 h-8 object-contain"
-                        />
-                        <span className="absolute -bottom-1 -right-1 bg-black/90 text-yellow-400 text-xs font-bold px-1 rounded border border-yellow-500/50 min-w-[16px] text-center">
-                            {difficulty}
-                        </span>
-                    </div>
-                    <button onClick={() => setDifficulty(config.id, Math.min(unlockedDifficulty, difficulty + 1))} className="bg-stone-700 text-white rounded p-1 border border-stone-500 hover:bg-stone-600"><Plus size={16} /></button>
-                </div>
-            )}
             {cardContent}
             <ParentalVerificationModal
                 isOpen={showParentalModal}
