@@ -9,6 +9,7 @@ import BugReportModal   from './components/modals/BugReportModal';
 import SettingsDrawer   from './components/drawers/SettingsDrawer';
 import CosmeticsDrawer  from './components/drawers/CosmeticsDrawer';
 import MenuDrawer       from './components/drawers/MenuDrawer';
+import SkillCard        from './components/skillcard/SkillCard';
 import PhantomEvent     from './components/PhantomEvent';
 import AchievementToast from './components/ui/AchievementToast';
 import TopLeftControls from './components/layout/TopLeftComponent';
@@ -74,7 +75,12 @@ const generateChallenge = async (type, diff) => {
     }
 
     if (type === 'memory') 
-        return { type: 'memory', question: 'Find Pairs!', answer: 'WIN' };
+        return { 
+            id: Date.now(), // ✅ unique identity
+            type: 'memory', 
+            question: 'Find Pairs!', 
+            answer: 'WIN' 
+        };
 
     return { type: 'manual', question: 'Task Complete?', answer: 'yes' };
 };
@@ -168,6 +174,7 @@ const App = () => {
       bossHealing,
       handlePhantomLevelAward,
       handlePhantomCaught,
+      transition,
     } = useBattleLogic({
       skills,
       setSkills,
@@ -251,38 +258,42 @@ const App = () => {
     };
 
     // ------------------------------------------------------- battle lifecycle
-    const startBattle = (id) => {
-        if (typeof id !== 'string') {
-            console.error('❌ Invalid id:', id);
-            return;
-        }
+const startBattle = async (id) => {
+    if (typeof id !== 'string') {
+        console.error('❌ Invalid id:', id);
+        return;
+    }
 
-        const skill = SKILL_DATA.find(s => s.id === id);
-        const skillState = skills[id];
+    const skill = SKILL_DATA.find(s => s.id === id);
+    const skillState = skills[id];
 
-        if (!skill || !skillState) {
-            console.error('❌ Invalid battle start:', { id, skillState, skillData: skill });
-            return;
-        }
+    if (!skill || !skillState) {
+        console.error('❌ Invalid battle start:', { id, skillState, skillData: skill });
+        return;
+    }
 
-        const currentDiff = skillState.difficulty || 1;
+    const currentDiff = skillState.difficulty || 1;
 
-        const challengeDiff =
-            getEncounterType(skillState.level) === 'miniboss'
-                ? Math.min(7, currentDiff + 1)
-                : currentDiff;
+    const challengeDiff =
+        getEncounterType(skillState.level) === 'miniboss'
+            ? Math.min(7, currentDiff + 1)
+            : currentDiff;
 
-        setBattlingSkillId(id);
-        setBattleDifficulty(challengeDiff);
-        setChallengeData(generateChallenge(skill.challengeType, challengeDiff));
+    const challenge = await generateChallenge(skill.challengeType, challengeDiff);
 
-        playClick();
-        startBGM();
+    setBattlingSkillId(id);
+    setBattleDifficulty(challengeDiff);
+    setChallengeData(challenge);
 
-        if (skill.challengeType === 'reading' && window.webkitSpeechRecognition) {
-            startVoiceListener(id);
-        }
-    };
+    transition('IN_PROGRESS'); // ✅ THIS IS THE MISSING PIECE
+
+    playClick();
+    startBGM();
+
+    if (skill.challengeType === 'reading' && window.webkitSpeechRecognition) {
+        startVoiceListener(id);
+    }
+};
 
     const handleStartBattle = useCallback((id) => {
       startBattle(id);
