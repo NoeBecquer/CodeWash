@@ -3,7 +3,7 @@
 <!-- HEADER STYLE: CLASSIC -->
 <div align="center">
 
-<img src="readmeai/assets/logos/purple.svg" width="30%" style="position: relative; top: 0; right: 0;" alt="Project Logo"/>
+<img src="assets/React.png" width="20%" style="position: relative; top: 0; right: 0;" alt="Project Logo"/>
 
 # CODEWASH
 
@@ -57,13 +57,22 @@
 
 ## Overview
 
-
+"Codewash" is a projet where our team should refactor a "reactjs" game entirely vibecode (made with AI).<br>
+ The game works, but have many issues: bugs, low performances...<br>
+We should use the [Scout Rule](https://zuk-thomas.medium.com/la-scout-rule-une-bonne-pratique-de-d%C3%A9veloppement-6fa63115c118), a child of the "clean code" of Robert C.Martin.<br>
+This means every single modification we make on the project<br>
+must be well-organized, supported, documented and clean.<br>For
+this task, for exemple, it means that launching the project won't<br>
+grant us any point if we haven't simplified the task for the ones<br>
+who come after us.
 
 ---
 
 ## Features
 
-<code>❯ REPLACE-ME</code>
+<code>❯ Bug Reporting</code>
+<code>❯ Improve Performances</code>
+<code>❯ Translation</code>
 
 ---
 
@@ -1090,9 +1099,12 @@ npm test
 
 ## Roadmap
 
-- [X] **`Task 1`**: <strike>Implement feature one.</strike>
-- [ ] **`Task 2`**: Implement feature two.
-- [ ] **`Task 3`**: Implement feature three.
+- [X] **`Task 1`**: <strike>Fix SonarQube issues.</strike>
+- [X] **`Task 2`**: <strike>Establish Cypress test.</strike>
+- [X] **`Task 3`**: <strike>Implement translation.</strike>
+- [X] **`Task 4`**: <strike>Cut appjsx.</strike>
+- [X] **`Task 5`**: <strike>Optimize and Refacto skillcardjsx.</strike>
+- [ ] **`Task 6`**: Set games theme.
 
 ---
 
@@ -1147,7 +1159,7 @@ Project is protected under the [LICENSE](https://choosealicense.com/licenses) Li
 
 ## Acknowledgments
 
-- Credit `contributors`, `inspiration`, `references`, etc.
+- Credit `contributors: NoeBecquer, William Wagner, RvbyY `, `inspiration`, `references: Clean Code, Scout Rules`, etc.
 
 <div align="right">
 
