@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { Menu, Sparkles, Gift, Maximize, Minimize, Settings, Bug } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Bug } from 'lucide-react';
 
 // UI components
 import GlobalStyles     from './components/ui/GlobalStyles';
 import SafeImage        from './components/ui/SafeImage';
-import PixelHeart       from './components/ui/PixelHeart';
 import ResetModal       from './components/modals/ResetModal';
 import BugReportModal   from './components/modals/BugReportModal';
 import SettingsDrawer   from './components/drawers/SettingsDrawer';
@@ -21,30 +20,24 @@ import { useAppState } from './hooks/useAppState';
 
 // Utils & constants
 import {
-    getMobForSkill, getEncounterType,
+    getEncounterType,
     generateMathProblem, getReadingWord, getWordForDifficulty,
     calculateMobHealth,
 } from './utils/gameUtils';
-import { THEME_CONFIG, SKILL_DATA, HOSTILE_MOBS } from './constants/gameData';
+import { THEME_CONFIG, SKILL_DATA } from './constants/gameData';
 import {
-    getBGMManager, setSfxVolume,
-    playActionCardLeft, playActionCardRight, playClick,
-    playDeath, playFail, playLevelUp, playNotification, playSuccessfulHit,
-    playMobHurt, playMobDeath, playAchievement,
+    getBGMManager, playClick, playAchievement,
 } from './utils/soundManager';
 import {
-    getDefaultStats, getNewlyUnlockedAchievements, getNewTierAchievements,
+    getNewlyUnlockedAchievements, getNewTierAchievements,
     isAchievementUnlocked,
 } from './utils/achievementUtils';
 import GameCarousel from './components/layout/GameCarousel';
 import { useBattleLogic } from './hooks/useBattleLogic';
 
 // Extracted modules
-import { getStorageKey, loadSkills, loadTheme, loadStats, readStoredProfileStats } from './utils/profileStorage';
-import {
-    getCardStyle,
-    buildMobDefeatStats, buildLevelProgression, buildMobRotation,
-} from './utils/skillStateUtils';
+import { readStoredProfileStats } from './utils/profileStorage';
+
 import { useVoiceRecognition } from './hooks/useVoiceRecognition';
 
 // ---------------------------------------------------------------------------

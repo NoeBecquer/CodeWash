@@ -1,0 +1,93 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+skinparam linetype ortho
+skinparam shadowing false
+
+title Architecture de Dépendances - Game Project
+
+' --- Styles ---
+skinparam package {
+    BackgroundColor<<View>> #E3F2FD
+    BackgroundColor<<Logic>> #F1F8E9
+    BackgroundColor<<Data>> #FFF3E0
+}
+
+' --- Definitions ---
+
+package "Entry Point" <<View>> {
+    component [App.jsx] as App #64B5F6
+}
+
+package "Core Layout & HUD" <<View>> {
+    component [MainHUD] as MainHUD
+    component [GameCarousel] as Carousel
+    component [BattleLayer] as Battle
+    component [BottomHUD] as HUD
+    component [TopLeftControls] as TLC
+    component [TopRightControls] as TRC
+}
+
+package "Modals & Drawers" <<View>> {
+    component [SettingsDrawer] as SD
+    component [CosmeticsDrawer] as CD
+    component [MenuDrawer] as MD
+    component [ResetModal] as RM
+    component [BugReportModal] as BRM
+}
+
+package "Business Logic" <<Logic>> {
+    component [useAppState] as AppState
+    component [useBattleLogic] as BattleLogic #AED581
+    component [useVoiceRecognition] as Voice
+}
+
+package "Data & Utilities" <<Data>> {
+    component [gameData.jsx] as GData #FFB74D
+    component [achievements.js] as Achiev
+    component [assets.js] as Assets
+    component [soundManager.js] as Sounds
+    component [gameUtils.js] as Utils
+}
+
+' --- Orchestration & Dependencies ---
+
+' App is the orchestrator
+App --> AppState : manages state
+App *-- MainHUD
+App *-- Carousel
+App *-- Battle
+
+' MainHUD manages UI overlays
+MainHUD *-- TLC
+MainHUD *-- TRC
+MainHUD *-- SD
+MainHUD *-- CD
+MainHUD *-- MD
+MainHUD *-- RM
+MainHUD *-- BRM
+
+' Feature Specifics
+Carousel *-- HUD
+Battle ..> BattleLogic : uses logic
+
+' Logic Dependencies
+BattleLogic ..> Utils : "calculate damage/XP"
+BattleLogic ..> Sounds : "trigger SFX"
+BattleLogic ..> GData : "fetch mob info"
+
+' Data & Config
+CD ..> GData : "get themes"
+MD ..> Achiev : "check progress"
+GData ..> Assets : "maps paths"
+
+legend right
+  |= Couleur |= Type |
+  |<#64B5F6>| Application Root |
+  |<#E3F2FD>| Composants UI |
+  |<#F1F8E9>| Hooks / Logique |
+  |<#FFF3E0>| Config / Assets |
+endlegend
+
+@enduml
