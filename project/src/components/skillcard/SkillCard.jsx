@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import ParentalVerificationModal from '../ui/ParentalVerificationModal';
-import { BASE_ASSETS, HOSTILE_MOBS, CHEST_BLOCKS, BOSS_MOBS, MINIBOSS_MOBS, DIFFICULTY_CONTENT, HOMOPHONES } from '../../constants/gameData';
+import { BASE_ASSETS, HOSTILE_MOBS, CHEST_BLOCKS, BOSS_MOBS, MINIBOSS_MOBS } from '../../constants/gameData';
 import { getSfxVolume } from '../../utils/soundManager';
-import { calculateXPToLevel, normalizeText } from '../../utils/gameUtils';
+import { calculateXPToLevel } from '../../utils/gameUtils';
 import { AURA_ADJECTIVES } from '../../utils/mobDisplayUtils';
 import { useSkillGame } from './useSkillGame';
 import BattleInfoPanel from './BattleInfoPanel';
@@ -13,6 +12,7 @@ import HPBar from './HPBar';
 import XPBar from './XPBar';
 import GameSection from './GameSection';
 import BattlePortal from './BattlePortal';
+import { useHitAnimation } from '../../hooks/useHitAnimation';
 
 const PRESTIGE_LEVEL_THRESHOLD = 20;
 const MIN_SPOKEN_TEXT_LENGTH = 2;
@@ -23,17 +23,15 @@ const SkillCard = ({ config, data, themeData, isCenter, isBattling, mobName, mob
       challenge,
       difficulty,
       isBattling,
-      onMathSubmit
+      onMathSubmit,
+      spokenText
     });  
     const { t } = useTranslation();
-    const [isHit, setIsHit] = useState(false);
-    const [isReadingWrong, setIsReadingWrong] = useState(false);
-    const prevDamageCount = useRef(0);
     const inputRef = useRef(null);
     const readingWordRef = useRef(null);
-    const prevSpokenTextRef = useRef('');
 
     const [showParentalModal, setShowParentalModal] = useState(false);
+    const isReadingWrong = game.isReadingWrong ?? false;
 
     const handleStartBattle = useCallback(() => {
       onStartBattle(config.id);
@@ -173,29 +171,7 @@ const SkillCard = ({ config, data, themeData, isCenter, isBattling, mobName, mob
       audio.volume = getSfxVolume();
       audio.play().catch(() => {});
     }, []);
-
-    useEffect(() => {
-        if (damageNumbers.length > prevDamageCount.current) { setIsHit(true); setTimeout(() => setIsHit(false), 400); }
-        prevDamageCount.current = damageNumbers.length;
-    }, [damageNumbers]);
-
-    // Detect wrong reading answer based on spoken text changes
-    useEffect(() => {
-        if (config.challengeType === 'reading' && isBattling && spokenText && spokenText !== 'Listening...' && spokenText !== 'Mic Off') {
-            if (spokenText !== prevSpokenTextRef.current) {
-                if (challenge?.answer) {
-                    const homophones = HOMOPHONES[challenge.answer];
-                    const isCorrect = normalizeText(spokenText) === normalizeText(challenge.answer) || (homophones && homophones.includes(spokenText));
-                    if (!isCorrect && spokenText.length >= MIN_SPOKEN_TEXT_LENGTH) {
-                        setIsReadingWrong(true);
-                        setTimeout(() => setIsReadingWrong(false), 500);
-                    }
-                }
-                prevSpokenTextRef.current = spokenText;
-            }
-        }
-    }, [spokenText, config.challengeType, isBattling, challenge?.answer]);
-
+    const isHit = useHitAnimation(damageNumbers);
     // Resolve displayed spoken text (keep internal English values for comparisons)
     const displaySpokenText = spokenText === 'Listening...'
         ? t('mic.listening')

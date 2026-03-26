@@ -1,11 +1,11 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { FRIENDLY_MOBS, DIFFICULTY_CONTENT, BASE_ASSETS } from '../../constants/gameData';
 import { normalizeText } from '../../utils/gameUtils';
 import { playClick, getSfxVolume } from '../../utils/soundManager';
 
-// -----------------------------
+// =====================================================
 // UTILS
-// -----------------------------
+// =====================================================
 const shuffle = (arr) => {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -27,9 +27,57 @@ const AXOLOTL_NOTE_MAP = {
 };
 
 // =====================================================
+// READING FEEDBACK (isolated + reusable)
+// =====================================================
+const useReadingFeedback = ({
+  spokenText,
+  challenge,
+  config,
+  isBattling,
+}) => {
+  const [isReadingWrong, setIsReadingWrong] = useState(false);
+  const prevSpokenTextRef = useRef('');
+
+  useEffect(() => {
+    if (
+      config.challengeType !== 'reading' ||
+      !isBattling ||
+      !spokenText ||
+      spokenText === 'Listening...' ||
+      spokenText === 'Mic Off'
+    ) return;
+
+    if (spokenText === prevSpokenTextRef.current) return;
+
+    if (challenge?.answer) {
+      const isCorrect =
+        normalizeText(spokenText) === normalizeText(challenge.answer);
+
+      if (!isCorrect && spokenText.length >= 2) {
+        setIsReadingWrong(true);
+
+        const timeout = setTimeout(() => {
+          setIsReadingWrong(false);
+        }, 500);
+
+        return () => clearTimeout(timeout);
+      }
+    }
+
+    prevSpokenTextRef.current = spokenText;
+  }, [spokenText, config.challengeType, isBattling, challenge?.answer]);
+
+  return isReadingWrong;
+};
+
+// =====================================================
 // INPUT GAME
 // =====================================================
-const useInputGame = ({ challenge }) => {
+const useInputGame = (props) => {
+  const { challenge } = props;
+
+  const isReadingWrong = useReadingFeedback(props);
+
   const [userAnswer, setUserAnswer] = useState('');
   const [isWrong, setIsWrong] = useState(false);
 
@@ -43,24 +91,22 @@ const useInputGame = ({ challenge }) => {
   }, [userAnswer, challenge]);
 
   return {
+    type: 'input',
     userAnswer,
     setUserAnswer,
     validateAnswer,
     isWrong,
     setIsWrong,
+    isReadingWrong,
   };
 };
 
 // =====================================================
 // MEMORY GAME
 // =====================================================
-const useMemoryGame = ({
-  config,
-  challenge,
-  difficulty,
-  isBattling,
-  onMathSubmit
-}) => {
+const useMemoryGame = (props) => {
+  const { config, challenge, difficulty, isBattling, onMathSubmit } = props;
+
   const [memoryCards, setMemoryCards] = useState([]);
   const [flippedIndices, setFlippedIndices] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState([]);
@@ -134,6 +180,7 @@ const useMemoryGame = ({
   }, [memoryCards, flippedIndices, matchedPairs, isProcessingMatch, memoryPairs, config.id, onMathSubmit]);
 
   return {
+    type: 'memory',
     memoryCards,
     flippedIndices,
     matchedPairs,
@@ -146,11 +193,9 @@ const useMemoryGame = ({
 // =====================================================
 // SIMON GAME
 // =====================================================
-const useSimonGame = ({
-  config,
-  isBattling,
-  onMathSubmit
-}) => {
+const useSimonGame = (props) => {
+  const { config, isBattling, onMathSubmit } = props;
+
   const [simonSequence, setSimonSequence] = useState([]);
   const [playerIndex, setPlayerIndex] = useState(0);
   const [isShowingSequence, setIsShowingSequence] = useState(false);
@@ -245,7 +290,6 @@ const useSimonGame = ({
     playAxolotlNote
   ]);
 
-  // reset on exit
   useEffect(() => {
     if (!isBattling && config.id === 'patterns') {
       setSimonSequence([]);
@@ -258,6 +302,7 @@ const useSimonGame = ({
   }, [isBattling, config.id]);
 
   return {
+    type: 'patterns',
     axolotlColors,
     litAxolotl,
     isShowingSequence,
@@ -268,15 +313,19 @@ const useSimonGame = ({
 };
 
 // =====================================================
-// MAIN DISPATCHER
+// MAIN DISPATCHER (SAFE)
 // =====================================================
 export const useSkillGame = (props) => {
+  const input = useInputGame(props);
+  const memory = useMemoryGame(props);
+  const simon = useSimonGame(props);
+
   switch (props.config.id) {
     case 'memory':
-      return useMemoryGame(props);
+      return memory;
     case 'patterns':
-      return useSimonGame(props);
+      return simon;
     default:
-      return useInputGame(props);
+      return input;
   }
 };
