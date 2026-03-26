@@ -76,10 +76,18 @@ const generateChallenge = async (type, diff) => {
 
     if (type === 'memory') 
         return { 
-            id: Date.now(), // ✅ unique identity
+            id: Date.now(),
             type: 'memory', 
             question: 'Find Pairs!', 
             answer: 'WIN' 
+        };
+
+    if (type === 'cleaning')
+        return {
+            id: Date.now() + Math.random(),
+            type: 'cleaning',
+            question: 'Organize',
+            answer: 'WIN'
         };
 
     return { type: 'manual', question: 'Task Complete?', answer: 'yes' };

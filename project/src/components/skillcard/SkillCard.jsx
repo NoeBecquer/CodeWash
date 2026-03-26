@@ -13,6 +13,7 @@ import HPBar from './HPBar';
 import XPBar from './XPBar';
 import GameSection from './GameSection';
 import BattlePortal from './BattlePortal';
+import CleaningGame from './game/CleaningGame';
 
 const PRESTIGE_LEVEL_THRESHOLD = 20;
 const MIN_SPOKEN_TEXT_LENGTH = 2;
@@ -35,6 +36,12 @@ const SkillCard = ({ config, data, themeData, isCenter, isBattling, mobName, mob
 
     const [showParentalModal, setShowParentalModal] = useState(false);
 
+    const safeData = data ?? {
+      level: 1,
+      xp: 0,
+      mobHealth: 100,
+      mobMaxHealth: 100
+    };
     const handleStartBattle = useCallback(() => {
       onStartBattle(config.id);
     }, [onStartBattle, config.id]);
@@ -46,29 +53,29 @@ const SkillCard = ({ config, data, themeData, isCenter, isBattling, mobName, mob
     }, [onMathSubmit, challenge, config.id]);
 
     // Calculate HP percentage based on mobHealth/mobMaxHealth for HP bar display
-    const mobHealth = data.mobHealth || 100;
-    const mobMaxHealth = data.mobMaxHealth || 100;
+    const mobHealth = safeData.mobHealth || 100;
+    const mobMaxHealth = safeData.mobMaxHealth || 100;
     const hpPercent = useMemo(
       () => Math.round((mobHealth / mobMaxHealth) * 100),
       [mobHealth, mobMaxHealth]
     ); 
     const xpToLevel = useMemo(
-      () => calculateXPToLevel(difficulty, data.level),
-      [difficulty, data.level]
+      () => calculateXPToLevel(difficulty, safeData.level),
+      [difficulty, safeData?.level]
     );
 
     const { borderClass, levelTextColor } = useMemo(() => {
-      if (data.level >= 160) return { levelTextColor: 'text-rainbow', borderClass: 'border-netherite' };
-      if (data.level >= 140) return { levelTextColor: 'text-gray-500', borderClass: 'border-netherite' };
-      if (data.level >= 120) return { levelTextColor: 'text-cyan-300', borderClass: 'border-diamond' };
-      if (data.level >= 100) return { levelTextColor: 'text-emerald-400', borderClass: 'border-emerald' };
-      if (data.level >= 80) return { levelTextColor: 'text-gray-200', borderClass: 'border-iron' };
-      if (data.level >= 60) return { levelTextColor: 'text-yellow-400', borderClass: 'border-gold' };
-      if (data.level >= 40) return { levelTextColor: 'text-stone-400', borderClass: 'border-stone' };
-      if (data.level >= 20) return { levelTextColor: 'text-amber-700', borderClass: 'border-wood' };
+      if (safeData.level >= 160) return { levelTextColor: 'text-rainbow', borderClass: 'border-netherite' };
+      if (safeData.level >= 140) return { levelTextColor: 'text-gray-500', borderClass: 'border-netherite' };
+      if (safeData.level >= 120) return { levelTextColor: 'text-cyan-300', borderClass: 'border-diamond' };
+      if (safeData.level >= 100) return { levelTextColor: 'text-emerald-400', borderClass: 'border-emerald' };
+      if (safeData.level >= 80) return { levelTextColor: 'text-gray-200', borderClass: 'border-iron' };
+      if (safeData.level >= 60) return { levelTextColor: 'text-yellow-400', borderClass: 'border-gold' };
+      if (safeData.level >= 40) return { levelTextColor: 'text-stone-400', borderClass: 'border-stone' };
+      if (safeData.level >= 20) return { levelTextColor: 'text-amber-700', borderClass: 'border-wood' };
 
       return { levelTextColor: 'text-white', borderClass: 'border-stone-500' };
-    }, [data.level]);
+    }, [safeData.level]);
 
     // Apply selected border effect if this is the center card
     const { appliedBorderEffect, borderStyle } = useMemo(() => {
@@ -218,7 +225,7 @@ const cardContent = (
     style={isCenter ? borderStyle : {}}
   >
     {/* Prestige gem */}
-    {isCenter && data.level >= PRESTIGE_LEVEL_THRESHOLD && (
+    {isCenter && safeData.level >= PRESTIGE_LEVEL_THRESHOLD && (
       <div className="gem-socket">
         <div className="gem-stone" style={gemStyle}></div>
       </div>
@@ -231,7 +238,7 @@ const cardContent = (
       colorStyle={config.colorStyle}
       skillName={skillName}
       fantasyName={fantasyName}
-      level={data.level}
+      level={safeData.level}
       levelTextColor={levelTextColor}
       showMob={showMob}
       mobAura={mobAura}
@@ -273,7 +280,7 @@ const cardContent = (
           />
           {/* XP BAR */}
           <XPBar
-            xp={data.xp}
+            xp={safeData.xp}
             xpToLevel={xpToLevel}
             label={t('battle.xp')}
           />
@@ -304,7 +311,7 @@ const cardContent = (
                   t={t}
                   displayMobNameWithAura={displayMobNameWithAura}
                   skillName={skillName}
-                  level={data.level}
+                  level={safeData.level}
                   levelTextColor={levelTextColor}
                   taskDescription={taskDescription}
                   fantasyName={fantasyName}
