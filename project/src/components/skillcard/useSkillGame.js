@@ -267,6 +267,148 @@ const useSimonGame = ({
   };
 };
 
+
+// =====================================================
+// CLEANING GAME
+// =====================================================
+
+const ITEM_CATEGORIES = {
+  AXE: 'tools',
+  HOE: 'tools',
+  BOW: 'tools',
+
+  CAKE: 'food',
+  MILK: 'food',
+
+  DIRT: 'blocks',
+  SAND: 'blocks',
+  WOOL: 'blocks',
+
+  TNT: 'special',
+  MAP: 'special',
+};
+
+const CATEGORY_LIST = ['tools', 'food', 'blocks', 'special'];
+
+const useCleaningGame = ({
+  config,
+  isBattling,
+  onMathSubmit,
+  challenge
+}) => {
+  // -----------------------------
+  // STATE
+  // -----------------------------
+  const [items, setItems] = useState([]);
+  const [sortedMap, setSortedMap] = useState({});
+  const [wrongItem, setWrongItem] = useState(null);
+  const [flyingItem, setFlyingItem] = useState(null);
+
+  // -----------------------------
+  // INIT
+  // -----------------------------
+  useEffect(() => {
+    if (!isBattling || config.id !== 'cleaning') return;
+
+    const allItems = Object.keys(BASE_ASSETS.items);
+    const validItems = allItems.filter(item => ITEM_CATEGORIES[item]);
+    const selected = shuffle(validItems).slice(0, 4);
+
+    setItems(selected);
+    setSortedMap({});
+
+
+    setWrongItem(null);
+    setFlyingItem(null);
+
+  }, [challenge?.id, isBattling, config.id]);
+
+  // -----------------------------
+  // WRONG FEEDBACK
+  // -----------------------------
+  const triggerMistake = useCallback((item) => {
+    setWrongItem(item);
+
+    setTimeout(() => {
+      setWrongItem(null);
+    }, 300);
+  }, []);
+
+  // -----------------------------
+  // SUCCESS HANDLER
+  // -----------------------------
+const handleSuccess = useCallback((item, category) => {
+  setFlyingItem({ item, category });
+
+  setTimeout(() => {
+    setSortedMap(prev => {
+      const updated = { ...prev, [item]: true };
+      const isComplete = Object.keys(updated).length === items.length;
+
+      if (isComplete) {
+        setTimeout(() => {
+          onMathSubmit(config.id, "WIN");
+        }, 200);
+      }
+
+      return updated;
+    });
+
+    setFlyingItem(null);
+  }, 300);
+
+}, [items, config.id, onMathSubmit]);
+
+  // -----------------------------
+  // DROP HANDLER
+  // -----------------------------
+  const handleDrop = useCallback((item, category) => {
+    if (!item) return;
+
+    // prevent duplicate handling
+    if (sortedMap[item]) return;
+
+    const correctCategory = ITEM_CATEGORIES[item];
+
+    if (!correctCategory) {
+      console.warn(`⚠️ Missing category for item: ${item}`);
+      return;
+    }
+
+    // -----------------------------
+    // ✅ CORRECT
+    // -----------------------------
+    if (correctCategory === category) {
+      handleSuccess(item, category);
+      return;
+    }
+
+    // -----------------------------
+    // ❌ WRONG
+    // -----------------------------
+    triggerMistake(item);
+
+  }, [sortedMap, handleSuccess, triggerMistake]);
+
+  // -----------------------------
+  // DERIVED STATE
+  // -----------------------------
+  const isComplete = items.length > 0 && Object.keys(sortedMap).length === items.length;
+
+  // -----------------------------
+  return {
+    items,
+    sortedMap,
+    categories: CATEGORY_LIST,
+
+    handleDrop,
+
+    wrongItem,
+    flyingItem,
+    isComplete
+  };
+}
+
 // =====================================================
 // MAIN DISPATCHER
 // =====================================================
@@ -276,6 +418,8 @@ export const useSkillGame = (props) => {
       return useMemoryGame(props);
     case 'patterns':
       return useSimonGame(props);
+    case 'cleaning':
+      return useCleaningGame(props);
     default:
       return useInputGame(props);
   }

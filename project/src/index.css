@@ -52,3 +52,37 @@
     left: -120px;
   }
 }
+
+/* ================= CLEANING GAME FEEDBACK ================= */
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+}
+
+@layer utilities {
+  .animate-shake {
+    animation: shake 0.3s ease-in-out;
+  }
+}
+
+@layer utilities {
+  .drop-highlight {
+    border-color: #facc15; /* yellow-400 */
+    box-shadow: 0 0 10px #facc15;
+  }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+.animate-shake {
+  animation: shake 0.3s ease;
+}

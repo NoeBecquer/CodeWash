@@ -2,6 +2,7 @@ import React from 'react';
 import MemoryGame from './game/MemoryGame';
 import SimonGame from './game/SimonGame';
 import InputGame from './game/InputGame';
+import CleaningGame from './game/CleaningGame';
 
 const GameSection = ({
   config,
@@ -51,6 +52,21 @@ const GameSection = ({
       />
     );
   }
+
+if (config.id === 'cleaning') {
+  return (
+    <CleaningGame
+      key={challenge.id}
+      items={game.items}
+      sortedMap={game.sortedMap}
+      selectedCategory={game.selectedCategory}
+      categories={game.categories}
+      selectCategory={game.selectCategory}
+      handleDrop={game.handleDrop}
+      mistake={game.mistake}
+    />
+  );
+}
 
   // INPUT (default)
   return (

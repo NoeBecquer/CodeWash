@@ -250,96 +250,152 @@ export const useBattleLogic = ({
 
   const isBossBattle = useCallback(() => {
     if (!battlingSkillId) return false;
-    return getEncounterType(skills[battlingSkillId].level) === 'boss';
+    return getEncounterType(skills[battlingSkillId]?.level ?? 1) === 'boss';
   }, [battlingSkillId, skills]);
 
   // -----------------------------
   // MAIN
   // -----------------------------
-  const handleSuccessHit = useCallback((skillId, isWrong) => {
+ const handleSuccessHit = useCallback((skillId, isWrong) => {
+  if (battleState !== BATTLE_STATES.IN_PROGRESS) return;
 
-    if (battleState !== BATTLE_STATES.IN_PROGRESS) return;
+  // ❌ WRONG ANSWER
+  if (isWrong === 'WRONG') {
+    if (isBossBattle()) handleBossFailure(skillId);
+    else handleFailure(skillId);
+    return;
+  }
 
-    // ❌ WRONG
-    if (isWrong === 'WRONG') {
-      if (isBossBattle()) handleBossFailure(skillId);
-      else handleFailure(skillId);
-      return;
+  let shouldTriggerVictory = false;
+  let shouldLoadNextChallenge = false;
+  let nextSkillConfig = null;
+
+  setSkills(prev => {
+    const current = prev[skillId];
+
+    if (!current) {
+      console.warn(`⚠️ Missing skill state for ${skillId}`);
+      return prev;
     }
 
-    setSkills(prev => {
-      const current = prev[skillId];
-      const skillConfig = SKILL_DATA.find(s => s.id === skillId);
+    const skillConfig = SKILL_DATA.find(s => s.id === skillId);
+    nextSkillConfig = skillConfig;
 
-      const damage = calculateDamage(current.level, current.difficulty);
+    const damage = calculateDamage(current.level, current.difficulty);
 
-      const isInstantDefeat =
-        skillConfig.id === 'cleaning' ||
-        skillConfig.id === 'memory';
+    const isInstantDefeat =
+      skillConfig.id === 'cleaning' ||
+      skillConfig.id === 'memory';
 
-      const actualDamage = isInstantDefeat ? current.mobHealth : damage;
-      const willKill = (current.mobHealth - actualDamage) <= 0;
+    const actualDamage = isInstantDefeat ? current.mobHealth : damage;
+    const willKill = (current.mobHealth - actualDamage) <= 0;
 
-      // damage numbers
-      const id = ++damageIdRef.current;
-      setDamageNumbers(prevDmg => [
-        ...prevDmg,
-        { id, skillId, val: actualDamage, x: Math.random() * 40 - 20, y: Math.random() * 40 - 20 }
-      ]);
+    const isInstantGame =
+      skillConfig.id === 'memory' ||
+      skillConfig.id === 'cleaning' ||
+      skillConfig.id === 'patterns';
 
-      setTimeout(() => {
-        setDamageNumbers(prevDmg => prevDmg.filter(d => d.id !== id));
-      }, 800);
+    // -----------------------------
+    // DECISION FLAGS (NO SIDE EFFECTS)
+    // -----------------------------
+    if (willKill || isInstantGame) {
+      shouldTriggerVictory = true;
+    } else if (skillConfig.hasChallenge) {
+      shouldLoadNextChallenge = true;
+    }
 
-      // sounds
-      if (willKill) playMobDeath(current.currentMob);
-      else playMobHurt(current.currentMob);
-
-      playSuccessfulHit();
-
-      const updated = willKill
-        ? applyKillHit(prev, skillId, current, skillConfig, actualDamage, isInstantDefeat, damage)
-        : applyPartialHit(current, actualDamage, isInstantDefeat, damage);
-
-      // ONLY responsibility: state transition
-      const isInstantGame =
-        skillConfig.id === 'memory' ||
-        skillConfig.id === 'cleaning' ||
-        skillConfig.id === 'patterns';
-
-      // 🔥 KEY FIX: trigger victory for instant games OR kills
-      if (willKill || isInstantGame) {
-        transition(BATTLE_STATES.VICTORY);
-      } 
-      else if (skillConfig.hasChallenge) {
-        // classic loop (non-instant games)
-        if (nextChallengeRef.current) {
-          setChallengeData(nextChallengeRef.current);
-        }
-      
-        (async () => {
-          nextChallengeRef.current = await generateChallenge(
-            skillConfig.challengeType,
-            battleDifficulty
-          );
-        })();
-      
-        setSpokenText('');
+    // -----------------------------
+    // DAMAGE NUMBERS
+    // -----------------------------
+    const id = ++damageIdRef.current;
+    setDamageNumbers(prevDmg => [
+      ...prevDmg,
+      {
+        id,
+        skillId,
+        val: actualDamage,
+        x: Math.random() * 40 - 20,
+        y: Math.random() * 40 - 20
       }
+    ]);
 
-      return { ...prev, [skillId]: updated };
-    });
+    setTimeout(() => {
+      setDamageNumbers(prevDmg =>
+        prevDmg.filter(d => d.id !== id)
+      );
+    }, 800);
 
-  }, [
-    battleState,
-    setSkills,
-    applyKillHit,
-    applyPartialHit,
-    handleFailure,
-    handleBossFailure,
-    isBossBattle,
-    transition
-  ]);
+    // -----------------------------
+    // SOUNDS
+    // -----------------------------
+    if (willKill) playMobDeath(current.currentMob);
+    else playMobHurt(current.currentMob);
+
+    playSuccessfulHit();
+
+    // -----------------------------
+    // STATE UPDATE
+    // -----------------------------
+    const updated = willKill
+      ? applyKillHit(
+          prev,
+          skillId,
+          current,
+          skillConfig,
+          actualDamage,
+          isInstantDefeat,
+          damage
+        )
+      : applyPartialHit(
+          current,
+          actualDamage,
+          isInstantDefeat,
+          damage
+        );
+
+    return { ...prev, [skillId]: updated };
+  });
+
+  // =====================================================
+  // 🔥 SIDE EFFECTS (OUTSIDE setState)
+  // =====================================================
+
+  // 🎯 VICTORY FLOW
+  if (shouldTriggerVictory) {
+    transition(BATTLE_STATES.VICTORY);
+    return;
+  }
+
+  // 🔁 CONTINUOUS CHALLENGE FLOW
+  if (shouldLoadNextChallenge && nextSkillConfig) {
+    if (nextChallengeRef.current) {
+      setChallengeData(nextChallengeRef.current);
+    }
+
+    (async () => {
+      nextChallengeRef.current = await generateChallenge(
+        nextSkillConfig.challengeType,
+        battleDifficulty
+      );
+    })();
+
+    setSpokenText('');
+  }
+
+}, [
+  battleState,
+  setSkills,
+  applyKillHit,
+  applyPartialHit,
+  handleFailure,
+  handleBossFailure,
+  isBossBattle,
+  transition,
+  generateChallenge,
+  battleDifficulty,
+  setChallengeData,
+  setSpokenText
+]);
 
   // -----------------------------
   return {
