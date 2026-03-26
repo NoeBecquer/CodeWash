@@ -217,6 +217,7 @@ const SkillCard = ({ config, data, themeData, isCenter, isBattling, mobName, mob
 
 const cardContent = (
   <div
+    data-testid={`skill-card-${config.id}`}
     className={`bg-[#2b2b2b] border-4 rounded-lg overflow-visible flex flex-col transition-all duration-500 ${
       isCenter
         ? `${appliedBorderEffect} ${!appliedBorderEffect ? borderClass : ''}`
@@ -291,6 +292,7 @@ const cardContent = (
             {taskDescription}
           </p>
           <button
+            data-testid={`start-battle-${config.id}`}
             onClick={handleStartBattle}
             style={buttonStyle}
             className="w-full text-white text-3xl font-bold py-6 rounded-lg"
