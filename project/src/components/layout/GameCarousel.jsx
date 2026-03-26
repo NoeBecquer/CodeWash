@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react'
-import SkillCard from '../skills/SkillCard'
+import SkillCard from '../skillcard/SkillCard'
 import { playActionCardLeft, playActionCardRight } from '../../utils/soundManager'
 import { SKILL_DATA } from '../../constants/gameData';
 
