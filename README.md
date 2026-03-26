@@ -3,7 +3,7 @@
 <!-- HEADER STYLE: CLASSIC -->
 <div align="center">
 
-<img src="project/src/assets/React.png" width="30%" style="position: relative; top: 0; right: 0;" alt="Project Logo"/>
+<img src="project/src/assets/React.png" width="20%" style="position: relative; top: 0; right: 0;" alt="Project Logo"/>
 
 # CODEWASH
 
