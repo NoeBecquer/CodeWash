@@ -3,14 +3,16 @@ import { describe, test, expect, vi } from 'vitest';
 
 import SkillCard from '@/components/skillcard/SkillCard';
 
-// 🔧 Mock i18n
+// ================= MOCKS =================
+
+// i18n
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key) => key,
   }),
 }));
 
-// 🔧 Mock heavy dependencies
+// utils
 vi.mock('@/utils/soundManager', () => ({
   playClick: vi.fn(),
   getSfxVolume: () => 1,
@@ -21,7 +23,7 @@ vi.mock('@/utils/gameUtils', () => ({
   normalizeText: (t) => t,
 }));
 
-// 🔥 Mock game logic
+// game logic
 vi.mock('@/components/skillcard/useSkillGame', () => ({
   useSkillGame: () => ({
     handleCardClick: vi.fn(),
@@ -29,39 +31,73 @@ vi.mock('@/components/skillcard/useSkillGame', () => ({
   }),
 }));
 
+// 🔥 prevent MemoryGame / other games from crashing
+vi.mock('@/components/skillcard/GameSection', () => ({
+  default: () => <div>GAME_SECTION</div>,
+}));
+
+// ================= HELPERS =================
+
+const defaultProps = {
+  config: { id: 'memory', name: 'Memory' },
+  data: {
+    level: 1,
+    xp: 0,
+    mobHealth: 100,
+    mobMaxHealth: 100,
+  },
+  themeData: {
+    skills: {
+      memory: { name: 'Memory' },
+    },
+    assets: { mobs: {} },
+  },
+  damageNumbers: [],
+  onStartBattle: vi.fn(),
+  onEndBattle: vi.fn(),
+  isBattling: false,
+  difficulty: 1,
+};
+
+const renderSkillCard = (props = {}) => {
+  return render(<SkillCard {...defaultProps} {...props} />);
+};
+
+// ================= TESTS =================
+
 describe('SkillCard', () => {
-  test('renders and responds to click', () => {
+  test('clicking start battle triggers callback', () => {
     const mockStartBattle = vi.fn();
 
-    render(
-      <SkillCard
-        config={{ id: 'memory' }}
-        data={{
-          level: 1,
-          xp: 0,
-          mobHealth: 100,
-          mobMaxHealth: 100,
-        }}
-        themeData={{
-          skills: {
-            memory: { name: 'Memory' },
-          },
-          assets: {
-            mobs: {},
-          },
-        }}
-        damageNumbers={[]} // ✅ FIX
-        onStartBattle={mockStartBattle}
-        onEndBattle={() => {}}
-        isBattling={false}
-        difficulty={1}
-      />
-    );
+    renderSkillCard({
+      onStartBattle: mockStartBattle,
+    });
 
-    const button = screen.getByTestId('start-battle-memory');
-
-    fireEvent.click(button);
+    fireEvent.click(screen.getByTestId('start-battle-memory'));
 
     expect(mockStartBattle).toHaveBeenCalledWith('memory');
+  });
+
+  test('renders skill level and name', () => {
+    renderSkillCard({
+      data: {
+        ...defaultProps.data,
+        level: 5,
+      },
+    });
+
+    // avoid ambiguity
+    expect(screen.getAllByText(/memory/i).length).toBeGreaterThan(0);
+
+    expect(screen.getByText(/5/)).toBeTruthy();
+  });
+
+  test('renders battle UI when battling', () => {
+    renderSkillCard({
+      isBattling: true,
+      challenge: { question: 'test', answer: 'test' },
+    });
+
+    expect(screen.getByText(/battle.xp/i)).toBeTruthy();
   });
 });
