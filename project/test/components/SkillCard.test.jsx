@@ -1,20 +1,18 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, test, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import React from 'react';
 
 import SkillCard from '@/components/skillcard/SkillCard';
 
 // ================= MOCKS =================
 
-// i18n
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key) => key,
   }),
 }));
 
-// utils
 vi.mock('@/utils/soundManager', () => ({
-  playClick: vi.fn(),
   getSfxVolume: () => 1,
 }));
 
@@ -23,7 +21,10 @@ vi.mock('@/utils/gameUtils', () => ({
   normalizeText: (t) => t,
 }));
 
-// game logic
+vi.mock('@/utils/mobDisplayUtils', () => ({
+  AURA_ADJECTIVES: {},
+}));
+
 vi.mock('@/components/skillcard/useSkillGame', () => ({
   useSkillGame: () => ({
     handleCardClick: vi.fn(),
@@ -31,15 +32,40 @@ vi.mock('@/components/skillcard/useSkillGame', () => ({
   }),
 }));
 
-// 🔥 prevent MemoryGame / other games from crashing
+// ================= CHILD COMPONENTS =================
+
+vi.mock('@/components/skillcard/TopSection', () => ({
+  default: ({ level }) => <div>LEVEL:{level}</div>,
+}));
+
+vi.mock('@/components/skillcard/HPBar', () => ({
+  default: () => <div>HP_BAR</div>,
+}));
+
+vi.mock('@/components/skillcard/XPBar', () => ({
+  default: ({ label }) => <div>{label}</div>,
+}));
+
 vi.mock('@/components/skillcard/GameSection', () => ({
   default: () => <div>GAME_SECTION</div>,
 }));
 
-// ================= HELPERS =================
+vi.mock('@/components/skillcard/BattlePortal', () => ({
+  default: ({ children }) => <div>{children}</div>,
+}));
 
-const defaultProps = {
-  config: { id: 'memory', name: 'Memory' },
+vi.mock('@/components/ui/ParentalVerificationModal', () => ({
+  default: () => <div>MODAL</div>,
+}));
+
+// ================= FACTORY =================
+
+const createProps = () => ({
+  config: {
+    id: 'memory',
+    name: 'Memory',
+    colorStyle: {},
+  },
   data: {
     level: 1,
     xp: 0,
@@ -55,49 +81,63 @@ const defaultProps = {
   damageNumbers: [],
   onStartBattle: vi.fn(),
   onEndBattle: vi.fn(),
+  onMathSubmit: vi.fn(),
+  onMicClick: vi.fn(),
   isBattling: false,
   difficulty: 1,
-};
-
-const renderSkillCard = (props = {}) => {
-  return render(<SkillCard {...defaultProps} {...props} />);
-};
+  unlockedDifficulty: 1,
+});
 
 // ================= TESTS =================
 
 describe('SkillCard', () => {
-  test('clicking start battle triggers callback', () => {
-    const mockStartBattle = vi.fn();
+  let props;
 
-    renderSkillCard({
-      onStartBattle: mockStartBattle,
-    });
+  beforeEach(() => {
+    props = createProps();
+    vi.clearAllMocks();
+  });
+
+  it('renders idle state with start button', () => {
+    render(<SkillCard {...props} />);
+
+    expect(screen.getByTestId('start-battle-memory')).toBeInTheDocument();
+  });
+
+  it('calls onStartBattle when clicked', () => {
+    render(<SkillCard {...props} />);
 
     fireEvent.click(screen.getByTestId('start-battle-memory'));
 
-    expect(mockStartBattle).toHaveBeenCalledWith('memory');
+    expect(props.onStartBattle).toHaveBeenCalledWith('memory');
   });
 
-  test('renders skill level and name', () => {
-    renderSkillCard({
-      data: {
-        ...defaultProps.data,
-        level: 5,
-      },
-    });
+  it('renders level correctly', () => {
+    props.data.level = 5;
 
-    // avoid ambiguity
-    expect(screen.getAllByText(/memory/i).length).toBeGreaterThan(0);
+    render(<SkillCard {...props} />);
 
-    expect(screen.getByText(/5/)).toBeTruthy();
+    expect(screen.getByText('LEVEL:5')).toBeInTheDocument();
   });
 
-  test('renders battle UI when battling', () => {
-    renderSkillCard({
-      isBattling: true,
-      challenge: { question: 'test', answer: 'test' },
-    });
+  it('renders battle UI', () => {
+    props.isBattling = true;
+    props.isCenter = true;
+    props.challenge = { question: 'Q', answer: 'A' };
 
-    expect(screen.getByText(/battle.xp/i)).toBeTruthy();
+    render(<SkillCard {...props} />);
+
+    expect(screen.getByText('GAME_SECTION')).toBeInTheDocument();
+    expect(screen.getByText('battle.xp')).toBeInTheDocument();
+  });
+
+  it('hides start button when battling', () => {
+    props.isBattling = true;
+    props.isCenter = true;
+    props.challenge = { question: 'Q', answer: 'A' };
+
+    render(<SkillCard {...props} />);
+
+    expect(screen.queryByTestId('start-battle-memory')).toBeNull();
   });
 });

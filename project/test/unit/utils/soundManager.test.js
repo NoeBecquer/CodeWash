@@ -39,7 +39,7 @@ afterEach(() => {
 
 // Helper: fresh import after vi.resetModules()
 async function importSM() {
-    return await import('../src/utils/soundManager.js');
+    return await import('@/utils/soundManager.js');
 }
 
 // ──────────────────────────────────────────────

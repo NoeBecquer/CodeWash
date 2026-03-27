@@ -59,6 +59,7 @@ const ResetModal = ({ isOpen, onClose, onConfirm }) => {
                     <form onSubmit={handleSubmit} className="w-full">
                         <div className="relative w-full flex justify-center mb-4" onClick={handleSlotClick}>
                             <input
+                                data-testid="delete-input"
                                 ref={inputRef}
                                 type="text"
                                 value={confirmText}

@@ -1,38 +1,51 @@
 import React from 'react';
 import { Trophy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { ACHIEVEMENTS, TIER_COLORS } from '../../constants/achievements';
+import { ACHIEVEMENTS, TIER_COLORS, TIER_NAMES } from '../../constants/achievements';
 
-/**
- * AchievementToast Component
- * Displays a celebratory toast when an achievement is unlocked
- */
 const AchievementToast = ({ achievementId, tierIndex = null }) => {
     const { t } = useTranslation();
     const achievement = ACHIEVEMENTS[achievementId];
 
     if (!achievement) return null;
 
-    // Determine display values
-    let displayName = t(`achievements.${achievementId}.name`, { defaultValue: achievement.name });
+    // -------------------------------------
+    // Safe translation
+    // -------------------------------------
+    const safeT = (key, fallback) => {
+        const value = t(key);
+        return value === key ? fallback : value;
+    };
+
+    // -------------------------------------
+    // Display values
+    // -------------------------------------
+    let displayName = achievement.name;
+    let tierLabel = null;
     let tierColor = null;
-    let tierName = null;
 
     if (achievement.isTiered && tierIndex !== null && tierIndex >= 0) {
         const tier = achievement.tiers[tierIndex];
+
+        // ✅ IMPORTANT: use tier.tierName (not base name)
         displayName = tier.tierName;
-        tierColor = TIER_COLORS[tierIndex + 1];
-        tierName = t(`tier_names.${tierIndex}`, { defaultValue: tier.tierName });
+
+        // ✅ "Bronze Tier"
+        tierLabel = `${TIER_NAMES[tierIndex]} Tier`;
+
+        // ✅ color mapping
+        tierColor = TIER_COLORS[tierIndex];
     }
 
-    const Icon = achievement.icon;
     const borderColor = tierColor ? tierColor.border : '#FFD700';
     const bgColor = tierColor ? tierColor.bg : 'rgba(255, 215, 0, 0.1)';
+    const Icon = achievement.icon;
 
+    // -------------------------------------
+    // Render
+    // -------------------------------------
     return (
-        <div
-            className="fixed bottom-8 left-1/2 z-50 animate-achievement-toast w-full max-w-2xl pointer-events-none transform -translate-x-1/2"
-        >
+        <div className="fixed bottom-8 left-1/2 z-50 animate-achievement-toast w-full max-w-2xl pointer-events-none transform -translate-x-1/2">
             <div
                 className="bg-black/90 rounded-xl p-4 px-8 flex items-center justify-between backdrop-blur-md mx-4"
                 style={{
@@ -41,6 +54,7 @@ const AchievementToast = ({ achievementId, tierIndex = null }) => {
                 }}
             >
                 <div className="flex items-center gap-4">
+
                     {/* Icon */}
                     <div
                         className="p-3 rounded-full border-2 animate-bounce"
@@ -55,20 +69,24 @@ const AchievementToast = ({ achievementId, tierIndex = null }) => {
                     {/* Text */}
                     <div className="text-left">
                         <h2 className="text-2xl text-yellow-400 font-bold leading-none mb-1 uppercase tracking-wide">
-                            {t('achievement_toast.unlocked')}
+                            {safeT('achievement_toast.unlocked', 'ACHIEVEMENT UNLOCKED!')}
                         </h2>
+
+                        {/* ✅ displayName matches test */}
                         <p className="text-white text-lg font-bold">
                             {displayName}
                         </p>
-                        {tierName && (
+
+                        {/* ✅ tier label */}
+                        {tierLabel && (
                             <p className="text-stone-400 text-sm mt-1">
-                                {tierName} {t('achievement_toast.tier')}
+                                {tierLabel}
                             </p>
                         )}
                     </div>
                 </div>
 
-                {/* Trophy Icon */}
+                {/* Trophy */}
                 <div className="pl-6 border-l-2 border-stone-600">
                     <Trophy
                         size={48}

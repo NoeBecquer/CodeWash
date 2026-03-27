@@ -17,13 +17,10 @@ import TopRightControls from './components/layout/TopRightComponent';
 import BottomHUD from './components/layout/BottomHUD';
 import BattleLayer from './components/layout/BattleLayer';
 import { useAppState } from './hooks/useAppState';
+import { generateChallenge } from './utils/challengeUtils';
 
 // Utils & constants
-import {
-    getEncounterType,
-    generateMathProblem, getReadingWord, getWordForDifficulty,
-    calculateMobHealth,
-} from './utils/gameUtils';
+import { getEncounterType, calculateMobHealth } from './utils/gameUtils';
 import { THEME_CONFIG, SKILL_DATA } from './constants/gameData';
 import {
     getBGMManager, playClick, playAchievement,
@@ -47,51 +44,6 @@ const PARENT_PRIVILEGE_LEVEL      = 200;
 const PARENT_PRIVILEGE_DIFFICULTY = 7;
 const PARENT_PRIVILEGE_BADGES     = [1, 2, 3, 4, 5, 6, 7, 8];
 const BOSS_HEALING_ANIMATION_DURATION = 600;
-
-// ---------------------------------------------------------------------------
-// Pure challenge generator (no state deps — module scope is correct)
-// ---------------------------------------------------------------------------
-const generateChallenge = async (type, diff) => {
-    if (type === 'math')
-        return generateMathProblem(diff);
-
-    if (type === 'patterns') 
-        return { type: 'patterns', question: 'Simon Says!', answer: 'WIN' };
-
-    if (type === 'reading')  { 
-        const w = await getReadingWord(diff);
-        return { type, question: w, answer: w }; 
-    }
-
-    if (type === 'writing') {
-        const wd = await getWordForDifficulty(diff);
-        return { 
-            type, 
-            question: 'Spell it!', 
-            answer: wd.displayName.toUpperCase(), 
-            images: [wd.image], 
-            displayName: wd.displayName 
-        };
-    }
-
-    if (type === 'memory') 
-        return { 
-            id: Date.now(),
-            type: 'memory', 
-            question: 'Find Pairs!', 
-            answer: 'WIN' 
-        };
-
-    if (type === 'cleaning')
-        return {
-            id: Date.now() + Math.random(),
-            type: 'cleaning',
-            question: 'Organize',
-            answer: 'WIN'
-        };
-
-    return { type: 'manual', question: 'Task Complete?', answer: 'yes' };
-};
 
 // ---------------------------------------------------------------------------
 // App
@@ -216,6 +168,12 @@ const App = () => {
     }, []);
 
     useEffect(() => { if (achievementToast) setTimeout(() => setAchievementToast(null), 6000); }, [achievementToast]);
+
+    useEffect(() => {
+        if (bgmManager.current) {
+            bgmManager.current.setVolume(bgmVol);
+        }
+    }, [bgmVol]);
 
     // ------------------------------------------------------------ memos
     const unlockedBorders = React.useMemo(() => {

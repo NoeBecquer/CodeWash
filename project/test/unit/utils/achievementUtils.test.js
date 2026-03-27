@@ -10,7 +10,7 @@ import {
     addUniqueToArray,
     recordLoginDate,
     getAchievementDisplayName,
-} from '../src/utils/achievementUtils.js';
+} from '@/utils/achievementUtils.js';
 
 // ──────────────────────────────────────────────
 // Helpers

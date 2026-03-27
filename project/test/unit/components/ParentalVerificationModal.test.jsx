@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import ParentalVerificationModal from '../src/components/ui/ParentalVerificationModal.jsx';
+import ParentalVerificationModal from '@/components/ui/ParentalVerificationModal.jsx';
 
 // Uses ReactDOM.createPortal — @testing-library/react handles portals correctly
 
