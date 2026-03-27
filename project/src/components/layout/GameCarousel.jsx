@@ -28,7 +28,7 @@ const GameCarousel = ({
   const [isDragging, setIsDragging] = useState(false)
   const [dragStartX, setDragStartX] = useState(0)
 
-  const DragStart = (clientX) => {
+  const handleDragStart = (clientX) => {
     if (battlingSkillId) return
     setIsDragging(true)
     setDragStartX(clientX)
