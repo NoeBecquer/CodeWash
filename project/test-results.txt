@@ -1,0 +1,78 @@
+
+[1m[46m RUN [49m[22m [36mv4.1.1 [39m[90m/home/noe/delivery/Tek2/codewash/public/main/G-ING-400-STG-4-1-codewash-1/project[39m
+
+ [31m❯[39m test/unit/utils/achievementUtils.test.js [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m test/unit/components/App.test.jsx [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m test/unit/components/ResetModal.test.jsx [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m test/unit/components/SkillCard.test.jsx [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m test/unit/utils/bugSpec_utils.test.js [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m test/unit/utils/gameUtils.test.js [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m test/unit/utils/generateChallenge.test.js [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m test/unit/components/BugReportModal.test.jsx [2m([22m[2m5 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 108[2mms[22m[39m
+     [32m✓[39m returns null when isOpen=false[32m 22[2mms[22m[39m
+[31m     [31m×[31m renders the modal content when isOpen=true[39m[32m 51[2mms[22m[39m
+[31m     [31m×[31m shows the "Whoa... That sucks..." message[39m[32m 11[2mms[22m[39m
+     [32m✓[39m calls onClose when backdrop is clicked[32m 13[2mms[22m[39m
+     [32m✓[39m does not call onClose when modal content is clicked[32m 7[2mms[22m[39m
+ [31m❯[39m test/unit/components/bugSpec_app.test.jsx [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m test/unit/components/AchievementToast.test.jsx [2m([22m[2m12 tests[22m[2m | [22m[31m6 failed[39m[2m)[22m[33m 380[2mms[22m[39m
+       [32m✓[39m returns null for unknown achievementId[32m 31[2mms[22m[39m
+       [32m✓[39m returns null when achievementId is undefined[32m 3[2mms[22m[39m
+[31m       [31m×[31m renders achievement name[39m[32m 184[2mms[22m[39m
+[31m       [31m×[31m shows ACHIEVEMENT UNLOCKED! heading[39m[32m 16[2mms[22m[39m
+       [32m✓[39m uses gold border (#FFD700) for non-tiered achievement[32m 27[2mms[22m[39m
+       [32m✓[39m does not render tier name for non-tiered achievement[32m 12[2mms[22m[39m
+       [32m✓[39m renders tier name when tierIndex is provided[32m 25[2mms[22m[39m
+[31m       [31m×[31m renders tier label (e.g. "Bronze Tier") when tierIndex is provided[39m[32m 12[2mms[22m[39m
+       [32m✓[39m uses TIER_COLORS border for tiered achievement[32m 13[2mms[22m[39m
+[31m       [31m×[31m renders base achievement name when tierIndex=null[39m[32m 13[2mms[22m[39m
+[31m       [31m×[31m renders Silver tier at tierIndex=1[39m[32m 27[2mms[22m[39m
+[31m       [31m×[31m renders tier name for combined_levels at tierIndex=2 (Gold)[39m[32m 12[2mms[22m[39m
+ [31m❯[39m test/unit/utils/mobDisplayUtils.test.js [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m test/unit/components/ParentalVerificationModal.test.jsx [2m([22m[2m13 tests[22m[2m | [22m[31m5 failed[39m[2m)[22m[33m 870[2mms[22m[39m
+       [32m✓[39m renders nothing[32m 56[2mms[22m[39m
+[31m       [31m×[31m renders the heading[39m[32m 81[2mms[22m[39m
+       [33m[2m✓[22m[39m renders the Submit button [33m 310[2mms[22m[39m
+       [32m✓[39m calls onVerified with correct answer FLOPPYDISK (no spaces)[32m 63[2mms[22m[39m
+       [32m✓[39m calls onVerified with correct answer in mixed case (lowercased)[32m 77[2mms[22m[39m
+       [32m✓[39m calls onVerified with answer including spaces (spaces are stripped)[32m 71[2mms[22m[39m
+[31m       [31m×[31m shows error message on wrong answer[39m[32m 39[2mms[22m[39m
+       [32m✓[39m does not call onVerified on wrong answer[32m 29[2mms[22m[39m
+[31m       [31m×[31m error message clears when user changes input[39m[32m 31[2mms[22m[39m
+[31m       [31m×[31m empty submit shows error (empty string !== FLOPPYDISK)[39m[32m 26[2mms[22m[39m
+       [32m✓[39m calls onClose when X button is clicked[32m 44[2mms[22m[39m
+       [32m✓[39m calls onClose when backdrop is clicked[32m 14[2mms[22m[39m
+[31m       [31m×[31m input longer than 10 chars is rejected (FLOPPYDISK is 10 chars)[39m[32m 22[2mms[22m[39m
+ [31m❯[39m test/unit/utils/soundManager.test.js [2m([22m[2m0 test[22m[2m)[22m
+ [32m✓[39m test/unit/components/SafeImage.test.jsx [2m([22m[2m9 tests[22m[2m)[22m[32m 89[2mms[22m[39m
+ [32m✓[39m test/unit/components/PixelHeart.test.jsx [2m([22m[2m12 tests[22m[2m)[22m[32m 200[2mms[22m[39m
+ [32m✓[39m test/unit/components/MobWithAura.test.jsx [2m([22m[2m11 tests[22m[2m)[22m[32m 77[2mms[22m[39m
+ [32m✓[39m test/components/SkillCard.test.jsx [2m([22m[2m3 tests[22m[2m)[22m[32m 134[2mms[22m[39m
+[90mstdout[2m | test/unit/hooks/useBattleLogic.test.js[2m > [22m[2museBattleLogic[2m > [22m[2mhandleSuccessHit triggers skill update
+[22m[39m⚔️ IDLE → IN_PROGRESS
+⚔️ IN_PROGRESS → IN_PROGRESS
+
+[90mstdout[2m | test/unit/hooks/useBattleLogic.test.js[2m > [22m[2museBattleLogic[2m > [22m[2mwrong answer does not update skills
+[22m[39m⚔️ IDLE → IN_PROGRESS
+⚔️ IN_PROGRESS → IN_PROGRESS
+
+[90mstdout[2m | test/unit/hooks/useBattleLogic.test.js[2m > [22m[2museBattleLogic[2m > [22m[2mtransition function exists
+[22m[39m⚔️ IDLE → IN_PROGRESS
+⚔️ IN_PROGRESS → IN_PROGRESS
+
+[90mstdout[2m | test/unit/hooks/useBattleLogic.test.js[2m > [22m[2museBattleLogic[2m > [22m[2mlevel increases when enough XP is gained
+[22m[39m⚔️ IDLE → IN_PROGRESS
+⚔️ IN_PROGRESS → IN_PROGRESS
+
+[90mstdout[2m | test/unit/hooks/useBattleLogic.test.js[2m > [22m[2museBattleLogic[2m > [22m[2mmob death triggers state update
+[22m[39m⚔️ IDLE → IN_PROGRESS
+⚔️ IN_PROGRESS → IN_PROGRESS
+
+ [32m✓[39m test/unit/hooks/useBattleLogic.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32m✓[39m test/unit/components/ProfileCard.test.jsx [2m([22m[2m15 tests[22m[2m)[22m[33m 805[2mms[22m[39m
+
+[2m Test Files [22m [1m[31m13 failed[39m[22m[2m | [22m[1m[32m6 passed[39m[22m[90m (19)[39m
+[2m      Tests [22m [1m[31m13 failed[39m[22m[2m | [22m[1m[32m72 passed[39m[22m[90m (85)[39m
+[2m   Start at [22m 14:55:35
+[2m   Duration [22m 5.13s[2m (transform 1.98s, setup 2.26s, import 3.52s, tests 2.70s, environment 29.18s)[22m
+

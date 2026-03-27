@@ -215,7 +215,7 @@ export const THEMES_LIST = [ { id: 'minecraft', name: 'Minecraft', img: 'assets/
 export const BADGE_TIERS = [ { level: 20, title: "Wood" }, { level: 40, title: "Stone" }, { level: 60, title: "Gold" }, { level: 80, title: "Iron" }, { level: 100, title: "Emerald" }, { level: 120, title: "Diamond" }, { level: 140, title: "Netherite" }, { level: 160, title: "Obsidian" } ];
 
 
-export const WRITING_WORD_INDEX = [
+export const RAW_WRITING_WORD_INDEX = [
     // Mobs from friendly
     { word: 'allay', displayName: 'Allay', length: 5, imagePath: 'assets/mobs/friendly/allay.gif' },
     { word: 'armadillo', displayName: 'Armadillo', length: 9, imagePath: 'assets/mobs/friendly/armadillo.png' },
@@ -227,18 +227,18 @@ export const WRITING_WORD_INDEX = [
     { word: 'cow', displayName: 'Cow', length: 3, imagePath: 'assets/mobs/friendly/cow.png' },
     { word: 'fish', displayName: 'Fish', length: 4, imagePath: 'assets/mobs/friendly/fish.png' },
     { word: 'frog', displayName: 'Frog', length: 4, imagePath: 'assets/mobs/friendly/frog.gif' },
-    { word: 'glowsquid', displayName: 'Glow Squid', length: 10, imagePath: 'assets/mobs/friendly/glowsquid.gif' },
+    { word: 'glowsquid', displayName: 'Glow Squid', length: 9, imagePath: 'assets/mobs/friendly/glowsquid.gif' },
     { word: 'goat', displayName: 'Goat', length: 4, imagePath: 'assets/mobs/friendly/goat.png' },
     { word: 'horse', displayName: 'Horse', length: 5, imagePath: 'assets/mobs/friendly/horse.png' },
-    { word: 'irongolem', displayName: 'Iron Golem', length: 10, imagePath: 'assets/mobs/friendly/irongolem.png' },
+    { word: 'irongolem', displayName: 'Iron Golem', length: 9, imagePath: 'assets/mobs/friendly/irongolem.png' },
     { word: 'mooshroom', displayName: 'Mooshroom', length: 9, imagePath: 'assets/mobs/friendly/mooshroom.png' },
     { word: 'nautilus', displayName: 'Nautilus', length: 8, imagePath: 'assets/mobs/friendly/nautilus.gif' },
     { word: 'panda', displayName: 'Panda', length: 5, imagePath: 'assets/mobs/friendly/panda.png' },
     { word: 'pig', displayName: 'Pig', length: 3, imagePath: 'assets/mobs/friendly/pig.png' },
-    { word: 'polarbear', displayName: 'Polar Bear', length: 10, imagePath: 'assets/mobs/friendly/polarbear.png' },
+    { word: 'polarbear', displayName: 'Polar Bear', length: 9, imagePath: 'assets/mobs/friendly/polarbear.png' },
     { word: 'sheep', displayName: 'Sheep', length: 5, imagePath: 'assets/mobs/friendly/sheep.png' },
     { word: 'sniffer', displayName: 'Sniffer', length: 7, imagePath: 'assets/mobs/friendly/sniffer.gif' },
-    { word: 'snowgolem', displayName: 'Snow Golem', length: 10, imagePath: 'assets/mobs/friendly/snowgolem.png' },
+    { word: 'snowgolem', displayName: 'Snow Golem', length: 9, imagePath: 'assets/mobs/friendly/snowgolem.png' },
     { word: 'squid', displayName: 'Squid', length: 5, imagePath: 'assets/mobs/friendly/squid.gif' },
     { word: 'strider', displayName: 'Strider', length: 7, imagePath: 'assets/mobs/friendly/strider.gif' },
     { word: 'turtle', displayName: 'Turtle', length: 6, imagePath: 'assets/mobs/friendly/turtle.png' },
@@ -302,6 +302,11 @@ export const WRITING_WORD_INDEX = [
     { word: 'sand', displayName: 'Sand', length: 4, imagePath: 'assets/items/sand.png' },
     { word: 'wool', displayName: 'Wool', length: 4, imagePath: 'assets/items/wool.png' }
 ];
+
+export const WRITING_WORD_INDEX = RAW_WRITING_WORD_INDEX.map(item => ({
+  ...item,
+  length: item.displayName.replace(/\s/g, '').length
+}));
 
 export const HOMOPHONES = { "SEE": ["SEA", "C"], "TO": ["TWO", "TOO", "2"], "FOR": ["FOUR", "4"], "SUN": ["SON"], "RED": ["READ"], "NO": ["KNOW"], "ARE": ["R", "OUR"], "YOU": ["U", "EWE"], "EYE": ["I"], "BEE": ["BE"], "ONE": ["WON", "1"] };
 export const MOB_KEYS = Object.keys(HOSTILE_MOBS);

@@ -3,7 +3,7 @@ import {
     AURA_ADJECTIVES,
     getRandomAura,
     generateMobWithAura,
-} from '../src/utils/mobDisplayUtils.js';
+} from '@/utils/mobDisplayUtils.js';
 
 // Known aura types (mirrors the private AURA_TYPES constant)
 const VALID_AURA_TYPES = ['rainbow', 'frost', 'shadow', 'lava', 'gradient', 'sparkle', 'plasma', 'nature'];

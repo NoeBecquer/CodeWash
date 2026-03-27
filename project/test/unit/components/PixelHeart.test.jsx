@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
-import PixelHeart from '../src/components/ui/PixelHeart.jsx';
+import PixelHeart from '@/components/ui/PixelHeart.jsx';
 
 describe('PixelHeart', () => {
     it('renders an SVG element', () => {

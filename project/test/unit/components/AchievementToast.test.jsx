@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import AchievementToast from '../src/components/ui/AchievementToast.jsx';
-import { TIER_NAMES } from '../src/constants/achievements.js';
+import AchievementToast from '@/components/ui/AchievementToast.jsx';
+import { TIER_NAMES } from '@/constants/achievements.js';
 
 describe('AchievementToast', () => {
     describe('invalid achievementId', () => {

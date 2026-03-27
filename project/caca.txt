@@ -1,0 +1,51 @@
+
+[1m[46m RUN [49m[22m [36mv4.1.1 [39m[90m/home/noe/delivery/Tek2/codewash/public/main/G-ING-400-STG-4-1-codewash-1/project[39m
+
+ [32m✓[39m test/unit/utils/soundManager.test.js [2m([22m[2m49 tests[22m[2m)[22m[32m 269[2mms[22m[39m
+ [31m❯[39m test/unit/components/App.test.jsx [2m([22m[2m0 test[22m[2m)[22m
+ [32m✓[39m test/unit/components/SafeImage.test.jsx [2m([22m[2m9 tests[22m[2m)[22m[32m 259[2mms[22m[39m
+ [32m✓[39m test/unit/components/MobWithAura.test.jsx [2m([22m[2m11 tests[22m[2m)[22m[32m 154[2mms[22m[39m
+ [32m✓[39m test/unit/components/AchievementToast.test.jsx [2m([22m[2m12 tests[22m[2m)[22m[33m 416[2mms[22m[39m
+ [32m✓[39m test/unit/components/PixelHeart.test.jsx [2m([22m[2m12 tests[22m[2m)[22m[33m 510[2mms[22m[39m
+ [32m✓[39m test/unit/components/BugReportModal.test.jsx [2m([22m[2m4 tests[22m[2m)[22m[32m 167[2mms[22m[39m
+ [32m✓[39m test/components/SkillCard.test.jsx [2m([22m[2m5 tests[22m[2m)[22m[33m 356[2mms[22m[39m
+ [32m✓[39m test/unit/components/ResetModal.test.jsx [2m([22m[2m12 tests[22m[2m)[22m[33m 1040[2mms[22m[39m
+       [33m[2m✓[22m[39m calls onConfirm when DELETE is typed [33m 372[2mms[22m[39m
+ [32m✓[39m test/unit/components/ParentalVerificationModal.test.jsx [2m([22m[2m13 tests[22m[2m)[22m[33m 1230[2mms[22m[39m
+       [33m[2m✓[22m[39m renders the Submit button [33m 444[2mms[22m[39m
+[90mstdout[2m | test/unit/hooks/useBattleLogic.test.js[2m > [22m[2museBattleLogic[2m > [22m[2mhandleSuccessHit triggers skill update
+[22m[39m⚔️ IDLE → IN_PROGRESS
+⚔️ IN_PROGRESS → IN_PROGRESS
+
+[90mstdout[2m | test/unit/hooks/useBattleLogic.test.js[2m > [22m[2museBattleLogic[2m > [22m[2mwrong answer does not update skills
+[22m[39m⚔️ IDLE → IN_PROGRESS
+⚔️ IN_PROGRESS → IN_PROGRESS
+
+[90mstdout[2m | test/unit/hooks/useBattleLogic.test.js[2m > [22m[2museBattleLogic[2m > [22m[2mtransition function exists
+[22m[39m⚔️ IDLE → IN_PROGRESS
+⚔️ IN_PROGRESS → IN_PROGRESS
+
+[90mstdout[2m | test/unit/hooks/useBattleLogic.test.js[2m > [22m[2museBattleLogic[2m > [22m[2mlevel increases when enough XP is gained
+[22m[39m⚔️ IDLE → IN_PROGRESS
+⚔️ IN_PROGRESS → IN_PROGRESS
+
+[90mstdout[2m | test/unit/hooks/useBattleLogic.test.js[2m > [22m[2museBattleLogic[2m > [22m[2mmob death triggers state update
+[22m[39m⚔️ IDLE → IN_PROGRESS
+⚔️ IN_PROGRESS → IN_PROGRESS
+
+ [32m✓[39m test/unit/hooks/useBattleLogic.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 175[2mms[22m[39m
+ [32m✓[39m test/unit/utils/mobDisplayUtils.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 40[2mms[22m[39m
+ [32m✓[39m test/unit/utils/bugSpec_utils.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 140[2mms[22m[39m
+ [32m✓[39m test/unit/utils/achievementUtils.test.js [2m([22m[2m53 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32m✓[39m test/unit/utils/generateChallenge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m test/unit/utils/gameUtils.test.js [2m([22m[2m23 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m test/unit/components/ProfileCard.test.jsx [2m([22m[2m15 tests[22m[2m)[22m[33m 2918[2mms[22m[39m
+       [33m[2m✓[22m[39m shows checkbox when not parent [33m 333[2mms[22m[39m
+       [33m[2m✓[22m[39m opens parental modal when checkbox clicked [33m 392[2mms[22m[39m
+       [33m[2m✓[22m[39m calls onRename after editing [33m 512[2mms[22m[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m16 passed[39m[22m[90m (17)[39m
+[2m      Tests [22m [1m[32m252 passed[39m[22m[90m (252)[39m
+[2m   Start at [22m 15:12:55
+[2m   Duration [22m 7.99s[2m (transform 2.32s, setup 4.04s, import 7.22s, tests 7.74s, environment 45.66s)[22m
+

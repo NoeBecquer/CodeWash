@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import MobWithAura from '../src/components/ui/MobWithAura.jsx';
+import MobWithAura from '@/components/ui/MobWithAura.jsx';
 
 describe('MobWithAura', () => {
     it('renders the mob container', () => {

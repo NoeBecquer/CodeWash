@@ -1,352 +1,301 @@
-import { HOSTILE_MOBS, FRIENDLY_MOBS, CHEST_BLOCKS, SPECIAL_CHESTS, MINIBOSS_MOBS, BOSS_MOBS, DIFFICULTY_CONTENT } from '../constants/gameData';
+import {
+  HOSTILE_MOBS,
+  FRIENDLY_MOBS,
+  CHEST_BLOCKS,
+  SPECIAL_CHESTS,
+  MINIBOSS_MOBS,
+  BOSS_MOBS,
+  DIFFICULTY_CONTENT
+} from '../constants/gameData';
+
+// ============================================================
+// 🔧 INTERNAL HELPERS
+// ============================================================
 
 const gameContentCache = new Map();
 
+const pickRandom = (arr, fallback) => {
+  if (!arr || arr.length === 0) return fallback;
+  return arr[Math.floor(Math.random() * arr.length)];
+};
+
+const safeArray = (arr) => (Array.isArray(arr) ? arr : []);
+
+// ============================================================
+// 🌍 CONTENT LOADER (CACHED)
+// ============================================================
+
 const loadGameContent = async (locale = 'en') => {
-    if (gameContentCache.has(locale)) {
-        return gameContentCache.get(locale);
-    }
+  if (gameContentCache.has(locale)) {
+    return gameContentCache.get(locale);
+  }
 
-    try {
-        const res = await fetch(`/locales/${locale}/gameContent.json`);
-        const data = await res.json();
-        gameContentCache.set(locale, data);
-        return data;
-    } catch {
-        const res = await fetch(`/locales/en/gameContent.json`);
-        const data = await res.json();
-        gameContentCache.set('en', data);
-        return data;
-    }
+  try {
+    const res = await fetch(`/locales/${locale}/gameContent.json`);
+    const data = await res.json();
+    gameContentCache.set(locale, data);
+    return data;
+  } catch {
+    const res = await fetch(`/locales/en/gameContent.json`);
+    const data = await res.json();
+    gameContentCache.set('en', data);
+    return data;
+  }
 };
 
-const buildWritingDifficultyPools = (wordIndex) => ({
-    1: wordIndex.filter(w => w.length >= 3 && w.length <= 5),
-    2: wordIndex.filter(w => w.length >= 5 && w.length <= 7),
-    3: wordIndex.filter(w => w.length >= 6 && w.length <= 8),
-    4: wordIndex.filter(w => w.length >= 7 && w.length <= 10),
-    5: wordIndex.filter(w => w.length >= 9 && w.length <= 15),
-});
+// ============================================================
+// 🧠 TEXT UTILS
+// ============================================================
 
-// Normalize text for comparison: strip diacritics, uppercase
-// Allows matching "CHÂTEAU" === "CHATEAU", "CAFÉ" === "CAFE"
-export const normalizeText = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
+export const normalizeText = (s = '') =>
+  s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
 
-export const getRandomMob = (exclude) => { 
-    const pool = Object.keys(HOSTILE_MOBS).filter(m => m !== exclude); 
-    return pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)] : 'Zombie';
+// ============================================================
+// 🎲 RANDOM MOBS
+// ============================================================
+
+export const getRandomMob = (exclude) => {
+  const pool = Object.keys(HOSTILE_MOBS).filter(m => m !== exclude);
+  return pickRandom(pool, 'Zombie');
 };
 
-// Get a random friendly mob key for the Memory skill
-export const getRandomFriendlyMob = () => {
-    const friendlyMobKeys = Object.keys(FRIENDLY_MOBS);
-    return friendlyMobKeys.length > 0 ? friendlyMobKeys[Math.floor(Math.random() * friendlyMobKeys.length)] : 'Allay';
-};
+export const getRandomFriendlyMob = () =>
+  pickRandom(Object.keys(FRIENDLY_MOBS), 'Allay');
 
-export const getRandomMiniboss = () => {
-    const minibossKeys = Object.keys(MINIBOSS_MOBS);
-    return minibossKeys.length > 0 ? minibossKeys[Math.floor(Math.random() * minibossKeys.length)] : 'Wither Skeleton';
-};
+export const getRandomMiniboss = () =>
+  pickRandom(Object.keys(MINIBOSS_MOBS), 'Wither Skeleton');
 
-export const getRandomBoss = () => {
-    const bossKeys = Object.keys(BOSS_MOBS);
-    return bossKeys.length > 0 ? bossKeys[Math.floor(Math.random() * bossKeys.length)] : 'Wither';
-};
+export const getRandomBoss = () =>
+  pickRandom(Object.keys(BOSS_MOBS), 'Wither');
 
-// Determines encounter type based on level cycle pattern
-// Level cycle: 1-9 = hostile, 10 = miniboss, 11-19 = hostile, 20 = boss (repeats)
+// ============================================================
+// ⚔️ ENCOUNTER SYSTEM
+// ============================================================
+
 export const getEncounterType = (level) => {
-    const levelInCycle = ((level - 1) % 20) + 1; // 1-20
-    if (levelInCycle === 20) return 'boss';
-    if (levelInCycle === 10) return 'miniboss';
-    return 'hostile';
+  const safeLevel = Math.max(1, level);
+  const cycle = ((safeLevel - 1) % 20) + 1;
+
+  if (cycle === 20) return 'boss';
+  if (cycle === 10) return 'miniboss';
+  return 'hostile';
 };
 
-export const getMobForSkill = (skillConfig, userSkill) => {
-    // Cleaning skill is exempt from miniboss cycles - uses original logic
-    if (skillConfig.id === 'cleaning') {
-            if (userSkill.level % 20 === 0) return 'Ender Chest';
-            if (userSkill.level % 5 === 0) return 'Shulker Box';
-            const standardChests = Object.keys(CHEST_BLOCKS).filter(k => !SPECIAL_CHESTS.includes(k));
-            return standardChests[(userSkill.level - 1) % standardChests.length];
-    }
-    // Memory skill: Return stored memoryMob to prevent random changes on re-render
-    if (skillConfig.id === 'memory') {
-        return userSkill.memoryMob || getRandomFriendlyMob();
-    }
-    
-    // Determine encounter type based on level cycle
-    const encounterType = getEncounterType(userSkill.level);
-    
-    if (encounterType === 'boss') {
-        // Return stored boss to prevent random changes on re-render
-        return userSkill.currentBoss || getRandomBoss();
-    }
-    
-    if (encounterType === 'miniboss') {
-        // Return stored miniboss to prevent random changes on re-render
-        return userSkill.currentMiniboss || getRandomMiniboss();
-    }
-    
-    // Combat skills (reading, math, writing, patterns) at hostile mob levels:
-    // Return stored mob to prevent random changes on re-render
-    const combatSkillMobs = {
-        'reading': userSkill.readingMob,
-        'math': userSkill.mathMob,
-        'writing': userSkill.writingMob,
-        'patterns': userSkill.patternMob
-    };
-    
-    if (skillConfig.id in combatSkillMobs) {
-        return combatSkillMobs[skillConfig.id] || getRandomMob(null);
-    }
-    
-    // Fallback for any other skills
-    // Normal hostile mob
-    const hostileMobKeys = Object.keys(HOSTILE_MOBS);
-    const currentMobIsValid = userSkill.currentMob && hostileMobKeys.includes(userSkill.currentMob);
-    return currentMobIsValid ? userSkill.currentMob : (hostileMobKeys.length > 0 ? hostileMobKeys[Math.floor(Math.random() * hostileMobKeys.length)] : 'Zombie');
+// ============================================================
+// 🎯 MOB SELECTION
+// ============================================================
+
+export const getMobForSkill = (skillConfig, userSkill = {}) => {
+  const level = userSkill.level || 1;
+
+  // ---------------- CLEANING ----------------
+  if (skillConfig.id === 'cleaning') {
+    if (level % 20 === 0) return 'Ender Chest';
+    if (level % 5 === 0) return 'Shulker Box';
+
+    const standard = Object.keys(CHEST_BLOCKS).filter(
+      k => !SPECIAL_CHESTS.includes(k)
+    );
+
+    return standard[(level - 1) % standard.length];
+  }
+
+  // ---------------- MEMORY ----------------
+  if (skillConfig.id === 'memory') {
+    return userSkill.memoryMob || getRandomFriendlyMob();
+  }
+
+  // ---------------- ENCOUNTER ----------------
+  const type = getEncounterType(level);
+
+  if (type === 'boss') {
+    return userSkill.currentBoss || getRandomBoss();
+  }
+
+  if (type === 'miniboss') {
+    return userSkill.currentMiniboss || getRandomMiniboss();
+  }
+
+  // ---------------- COMBAT SKILLS ----------------
+  const map = {
+    reading: userSkill.readingMob,
+    math: userSkill.mathMob,
+    writing: userSkill.writingMob,
+    patterns: userSkill.patternMob
+  };
+
+  if (skillConfig.id in map) {
+    return map[skillConfig.id] || getRandomMob();
+  }
+
+  // ---------------- FALLBACK ----------------
+  const hostileKeys = Object.keys(HOSTILE_MOBS);
+  return hostileKeys.includes(userSkill.currentMob)
+    ? userSkill.currentMob
+    : pickRandom(hostileKeys, 'Zombie');
 };
 
-// ===== RPG Progression Utility Functions =====
+// ============================================================
+// 📈 PROGRESSION SYSTEM
+// ============================================================
 
-// Progression scaling constants
-const LEVEL_SCALING_FACTOR = 1.035; // Exponential growth per level (3.5% per level)
-const DIFFICULTY_PENALTY_FACTOR = 0.3; // Penalty per difficulty level below expected (70% reduction)
+const LEVEL_SCALING_FACTOR = 1.035;
+const DIFFICULTY_PENALTY_FACTOR = 0.3;
 
-// Base values for difficulty 1 (designed for 5 hits to kill, 1 kill = 1 level)
-const BASE_DAMAGE = 12;      // 5 hits to kill at any level
-const BASE_MOB_HEALTH = 60;  // 5 * BASE_DAMAGE
-const BASE_XP_REWARD = 100;  // 1 kill = 1 level
+const BASE_DAMAGE = 12;
+const BASE_MOB_HEALTH = 60;
+const BASE_XP_REWARD = 100;
 const BASE_XP_TO_LEVEL = 100;
 
-// Get difficulty multiplier (3^(difficulty-1))
-// Difficulty 1 = 1×, Difficulty 2 = 3×, Difficulty 3 = 9×, etc.
-export const getDifficultyMultiplier = (difficulty) => {
-    return Math.pow(3, difficulty - 1);
+export const getDifficultyMultiplier = (difficulty) =>
+  Math.pow(3, difficulty - 1);
+
+export const calculateDamage = (_, difficulty) =>
+  BASE_DAMAGE * getDifficultyMultiplier(difficulty);
+
+export const calculateMobHealth = (difficulty) =>
+  BASE_MOB_HEALTH * getDifficultyMultiplier(difficulty);
+
+export const getExpectedDifficulty = (level) =>
+  Math.min(7, Math.floor((level - 1) / 20) + 1);
+
+export const calculateXPReward = (difficulty, level) => {
+  const multiplier = getDifficultyMultiplier(difficulty);
+
+  if (level === undefined) {
+    return BASE_XP_REWARD * multiplier;
+  }
+
+  const expected = getExpectedDifficulty(level);
+  const base = BASE_XP_REWARD * Math.pow(LEVEL_SCALING_FACTOR, level - 1);
+  const full = Math.floor(base * multiplier);
+
+  if (difficulty >= expected) return full;
+
+  const gap = expected - difficulty;
+  const penalty = Math.pow(DIFFICULTY_PENALTY_FACTOR, gap);
+
+  return Math.floor(full * penalty);
 };
 
-// Calculate damage per correct answer based on difficulty
-// Player level no longer affects damage to ensure consistent 5-hit battles
-export const calculateDamage = (playerLevel, difficulty) => {
-    const multiplier = getDifficultyMultiplier(difficulty);
-    return BASE_DAMAGE * multiplier;
+export const calculateXPToLevel = (difficulty, level) => {
+  const multiplier = getDifficultyMultiplier(difficulty);
+
+  if (level === undefined) {
+    return BASE_XP_TO_LEVEL * multiplier;
+  }
+
+  const base = BASE_XP_TO_LEVEL * Math.pow(LEVEL_SCALING_FACTOR, level - 1);
+
+  return Math.floor(base * multiplier);
 };
 
-// Calculate mob max HP - always 5x player damage for consistent 5-hit battles
-export const calculateMobHealth = (difficulty) => {
-    const multiplier = getDifficultyMultiplier(difficulty);
-    return BASE_MOB_HEALTH * multiplier;
-};
+// ============================================================
+// 📖 READING
+// ============================================================
 
-// Calculate expected difficulty based on player level
-// Difficulty unlocks every 20 levels: 1-20 → Diff 1, 21-40 → Diff 2, etc.
-export const getExpectedDifficulty = (playerLevel) => {
-    return Math.min(7, Math.floor((playerLevel - 1) / 20) + 1);
-};
-
-// Calculate XP reward for defeating a mob
-// Scales with difficulty played, but with diminishing returns when playing below expected difficulty
-export const calculateXPReward = (difficulty, playerLevel) => {
-    // If playerLevel is not provided, return base reward (backward compatibility)
-    if (playerLevel === undefined) {
-        const baseDifficultyReward = getDifficultyMultiplier(difficulty) * BASE_XP_REWARD;
-        return baseDifficultyReward;
-    }
-    
-    const expectedDifficulty = getExpectedDifficulty(playerLevel);
-    
-    // Base XP scales with player level (same as XP to level)
-    const baseXPScaled = BASE_XP_REWARD * Math.pow(LEVEL_SCALING_FACTOR, playerLevel - 1);
-    
-    // Apply difficulty multiplier
-    const difficultyMultiplier = getDifficultyMultiplier(difficulty);
-    const fullReward = Math.floor(baseXPScaled * difficultyMultiplier);
-    
-    // If playing at or above expected difficulty, full reward
-    if (difficulty >= expectedDifficulty) {
-        return fullReward;
-    }
-    
-    // If playing below expected difficulty, apply exponential penalty
-    // The penalty increases dramatically as the gap widens
-    const difficultyGap = expectedDifficulty - difficulty;
-    const penaltyFactor = Math.pow(DIFFICULTY_PENALTY_FACTOR, difficultyGap);
-    
-    return Math.floor(fullReward * penaltyFactor);
-};
-
-// Calculate XP required to level up
-// Scales exponentially with player level to ensure high-level players need many kills at low difficulties
-export const calculateXPToLevel = (difficulty, playerLevel) => {
-    // If playerLevel is not provided, use old formula (backward compatibility)
-    if (playerLevel === undefined) {
-        const multiplier = getDifficultyMultiplier(difficulty);
-        return BASE_XP_TO_LEVEL * multiplier;
-    }
-    
-    const expectedDifficulty = getExpectedDifficulty(playerLevel);
-    
-    // Base XP requirement grows exponentially with player level
-    const baseXPForLevel = BASE_XP_TO_LEVEL * Math.pow(LEVEL_SCALING_FACTOR, playerLevel - 1);
-    
-    // At expected difficulty, the XP to level should equal the XP from one mob kill
-    // This maintains the "1 kill = 1 level" progression on the optimal path
-    const expectedDifficultyMultiplier = getDifficultyMultiplier(expectedDifficulty);
-    
-    return Math.floor(baseXPForLevel * expectedDifficultyMultiplier);
-};
-
-// ===== Reading Word Selection =====
-
-// Get a reading word based on difficulty level and locale
 export const getReadingWord = async (difficulty, locale = 'en') => {
-    const content = await loadGameContent(locale);
+  const content = await loadGameContent(locale);
 
-    if (difficulty === 7) {
-        return content.funnyLongWords[Math.floor(Math.random() * content.funnyLongWords.length)];
-    }
+  if (difficulty === 7 && content.funnyLongWords?.length) {
+    return pickRandom(content.funnyLongWords, 'HELLO');
+  }
 
-    const config = DIFFICULTY_CONTENT.reading[difficulty] || DIFFICULTY_CONTENT.reading[1];
-    const charLength = String(config.charLength || 3);
-    const words = content.readingWords[charLength] || content.readingWords['3'];
+  const config =
+    DIFFICULTY_CONTENT.reading[difficulty] ||
+    DIFFICULTY_CONTENT.reading[1];
 
-    return words[Math.floor(Math.random() * words.length)];
+  const length = String(config?.charLength || 3);
+
+  const words =
+    content.readingWords?.[length] ||
+    content.readingWords?.['3'] ||
+    ['cat'];
+
+  return pickRandom(words, 'cat');
 };
-// ===== Math Problem Generation =====
 
-// Generate a math problem based on difficulty tier
+// ============================================================
+// ➕ MATH
+// ============================================================
+
 export const generateMathProblem = (difficulty) => {
-    const config = DIFFICULTY_CONTENT.math[difficulty] || DIFFICULTY_CONTENT.math[1];
-    
-    // Difficulty 7: Nightmare - Extremely complex multi-step PEMDAS expressions
-    if (config.nightmare) {
-        const nightmareProblems = [
-            { question: '((25 - 10) × 4 + 18) ÷ 2 - 7', answer: '32' },
-            { question: '(50 ÷ 5 + 3) × 6 - 28', answer: '50' },
-            { question: '100 - (8 × 7 - 12) ÷ 2', answer: '78' },
-            { question: '((15 + 9) × 3 - 20) ÷ 4', answer: '13' },
-            { question: '(80 - 32) ÷ 6 + 15 × 2', answer: '38' },
-            { question: '((40 ÷ 8 + 7) × 6 - 18) ÷ 3', answer: '18' },
-            { question: '120 ÷ (12 - 2) + 8 × 5', answer: '52' },
-            { question: '(18 + 22) × 2 - 35 ÷ 7', answer: '75' },
-            { question: '((64 - 16) ÷ 4 + 9) × 3', answer: '63' },
-            { question: '(100 - 45) ÷ 5 + 17 × 2', answer: '45' },
-            { question: '((36 ÷ 6 + 8) × 4 - 20) ÷ 2', answer: '18' },
-            { question: '(72 ÷ 9 - 3) × 7 + 15', answer: '50' },
-            { question: '150 - ((20 + 10) × 3 - 15)', answer: '75' },
-            { question: '((48 - 12) ÷ 9 + 11) × 5', answer: '75' },
-            { question: '(90 ÷ 6 + 25) × 2 - 18', answer: '62' },
-            { question: '((56 + 24) ÷ 8 - 3) × 6', answer: '42' },
-            { question: '200 - (15 × 6 + 20) ÷ 2', answer: '145' },
-            { question: '((32 + 8) × 3 - 40) ÷ 10', answer: '8' },
-            { question: '(144 ÷ 12 + 16) × 2 - 25', answer: '31' },
-            { question: '((75 - 30) ÷ 5 + 8) × 4', answer: '68' },
-            { question: '(180 ÷ 9 - 10) × 6 + 24', answer: '84' },
-            { question: '((100 + 50) ÷ 6 - 5) × 3', answer: '60' },
-            { question: '(96 - 36) ÷ 12 + 9 × 7', answer: '68' },
-            { question: '((84 ÷ 7 + 18) × 2 - 16) ÷ 4', answer: '11' },
-            { question: '250 - ((18 + 12) × 4 - 25)', answer: '155' }
-        ];
-        const problem = nightmareProblems[Math.floor(Math.random() * nightmareProblems.length)];
-        return { type: 'math', question: `${problem.question} = ?`, answer: problem.answer, isNightmare: true };
+  const config =
+    DIFFICULTY_CONTENT.math[difficulty] ||
+    DIFFICULTY_CONTENT.math[1];
+
+  const operations = config.operations || ['+'];
+  const [min, max] = config.range || [1, 9];
+
+  const op = pickRandom(operations, '+');
+
+  let a, b;
+
+  switch (op) {
+    case '+':
+      a = rand(min, max);
+      b = rand(min, max);
+      return { type: 'math', question: `${a} + ${b} = ?`, answer: `${a + b}` };
+
+    case '-': {
+      const x = rand(min, max);
+      const y = rand(min, max);
+      const big = Math.max(x, y);
+      const small = Math.min(x, y);
+      return { type: 'math', question: `${big} - ${small} = ?`, answer: `${big - small}` };
     }
-    
-    // Difficulty 6: PEMDAS/Order of Operations
-    if (config.pemdas) {
-        const pemdasProblems = [
-            { question: '3 + 4 × 2', answer: '11' },
-            { question: '(2 + 3) × 4', answer: '20' },
-            { question: '10 - 2 × 3', answer: '4' },
-            { question: '(5 + 5) ÷ 2', answer: '5' },
-            { question: '8 ÷ 2 + 3', answer: '7' },
-            { question: '2 × 3 + 4', answer: '10' },
-            { question: '15 - 3 × 3', answer: '6' },
-            { question: '(4 + 2) × 3', answer: '18' },
-            { question: '12 ÷ 3 + 5', answer: '9' },
-            { question: '2 + 6 ÷ 2', answer: '5' },
-            { question: '(8 - 3) × 2', answer: '10' },
-            { question: '4 × 2 - 1', answer: '7' }
-        ];
-        const problem = pemdasProblems[Math.floor(Math.random() * pemdasProblems.length)];
-        return { type: 'math', question: `${problem.question} = ?`, answer: problem.answer, isPemdas: true };
+
+    case '*':
+      a = rand(min, max);
+      b = rand(min, max);
+      return { type: 'math', question: `${a} × ${b} = ?`, answer: `${a * b}` };
+
+    case '/': {
+      b = rand(1, 10);
+      const q = rand(1, 10);
+      a = b * q;
+      return { type: 'math', question: `${a} ÷ ${b} = ?`, answer: `${q}` };
     }
-    
-    // Difficulties 1-5: Standard operations
-    const operations = config.operations || ['+'];
-    const [minVal, maxVal] = config.range || [1, 9];
-    const operation = operations[Math.floor(Math.random() * operations.length)];
-    
-    let a, b, question, answer;
-    
-    switch (operation) {
-        case '+':
-            a = Math.floor(Math.random() * (maxVal - minVal + 1)) + minVal;
-            b = Math.floor(Math.random() * (maxVal - minVal + 1)) + minVal;
-            question = `${a} + ${b} = ?`;
-            answer = (a + b).toString();
-            break;
-        case '-':
-            // Ensure positive result
-            a = Math.floor(Math.random() * (maxVal - minVal + 1)) + minVal;
-            b = Math.floor(Math.random() * a) + 1; // b is always less than or equal to a
-            question = `${a} - ${b} = ?`;
-            answer = (a - b).toString();
-            break;
-        case '*': {
-            const [multMin, multMax] = config.multiplyRange || [1, 12];
-            a = Math.floor(Math.random() * (multMax - multMin + 1)) + multMin;
-            b = Math.floor(Math.random() * (multMax - multMin + 1)) + multMin;
-            question = `${a} × ${b} = ?`;
-            answer = (a * b).toString();
-            break;
-        }
-        case '/': {
-            // Ensure clean division
-            const [divMin, divMax] = config.divisionRange || [1, 12];
-            b = Math.floor(Math.random() * (divMax - divMin + 1)) + divMin;
-            const quotient = Math.floor(Math.random() * 10) + 1;
-            a = b * quotient;
-            question = `${a} ÷ ${b} = ?`;
-            answer = quotient.toString();
-            break;
-        }
-        default:
-            a = Math.floor(Math.random() * 9) + 1;
-            b = Math.floor(Math.random() * 9) + 1;
-            question = `${a} + ${b} = ?`;
-            answer = (a + b).toString();
-    }
-    
-    return { type: 'math', question, answer };
+
+    default:
+      return { type: 'math', question: `1 + 1 = ?`, answer: '2' };
+  }
 };
 
-// ===== Writing/Spelling Item Selection =====
+const rand = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
 
-// Get a word from the appropriate difficulty pool, locale-aware
+// ============================================================
+// ✍️ WRITING
+// ============================================================
+
+const buildWritingPools = (index = []) => ({
+  1: index.filter(w => w.length >= 3 && w.length <= 5),
+  2: index.filter(w => w.length >= 5 && w.length <= 7),
+  3: index.filter(w => w.length >= 6 && w.length <= 8),
+  4: index.filter(w => w.length >= 7 && w.length <= 10),
+  5: index.filter(w => w.length >= 9),
+  6: index.filter(w => w.length >= 8),   // ← overlap ensures non-empty
+  7: index.filter(w => w.length >= 6),   // ← guaranteed non-empty
+});
+
 export const getWordForDifficulty = async (difficulty, locale = 'en') => {
-    const content = await loadGameContent(locale);
+  const content = await loadGameContent(locale);
 
-    const pools = buildWritingDifficultyPools(content.writingWordIndex);
+  const pools = buildWritingPools(content.writingWordIndex || []);
 
-    // Map difficulty (1-7) to pool (1-5)
-    const poolNumber = Math.min(difficulty, 5);
-    const pool = pools[poolNumber];
+  const rawPool = pools[difficulty];
+  const pool = rawPool && rawPool.length > 0 ? rawPool : pools[5];
 
-    if (!pool || pool.length === 0) {
-        const fallbackPool = pools[1];
-        const item = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
-        return {
-            word: item.word.toUpperCase(),
-            displayName: item.displayName,
-            image: item.imagePath
-        };
-    }
+  const item = pickRandom(pool, pickRandom(pools[1], null));
 
-    const item = pool[Math.floor(Math.random() * pool.length)];
-    return {
-        word: item.word.toUpperCase(),
-        displayName: item.displayName,
-        image: item.imagePath
-    };
+  if (!item) {
+    return { word: 'ERROR', displayName: 'Error', image: '' };
+  }
+
+  return {
+    word: item.word.toUpperCase(),
+    displayName: item.displayName,
+    image: item.imagePath
+  };
 };

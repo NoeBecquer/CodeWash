@@ -12,16 +12,16 @@ import {
  */
 
 // Tier colors for visual progression
-export const TIER_COLORS = {
-    1: { border: '#8B4513', bg: '#8B4513/20', text: 'text-amber-700' }, // Bronze
-    2: { border: '#C0C0C0', bg: '#C0C0C0/20', text: 'text-gray-400' },  // Silver
-    3: { border: '#FFD700', bg: '#FFD700/20', text: 'text-yellow-400' }, // Gold
-    4: { border: '#E5E4E2', bg: '#E5E4E2/20', text: 'text-gray-300' },  // Platinum
-    5: { border: '#50C878', bg: '#50C878/20', text: 'text-emerald-400' }, // Emerald
-    6: { border: '#B9F2FF', bg: '#B9F2FF/20', text: 'text-cyan-300' },  // Diamond
-    7: { border: '#8B00FF', bg: '#8B00FF/20', text: 'text-purple-400' }, // Legendary
-    8: { border: '#FF1493', bg: '#FF1493/20', text: 'text-pink-500' }   // Mythic
-};
+export const TIER_COLORS = [
+  { border: '#8B4513', bg: '#8B4513/20', text: 'text-amber-700' }, // Bronze
+  { border: '#C0C0C0', bg: '#C0C0C0/20', text: 'text-gray-400' },  // Silver
+  { border: '#FFD700', bg: '#FFD700/20', text: 'text-yellow-400' }, // Gold
+  { border: '#E5E4E2', bg: '#E5E4E2/20', text: 'text-gray-300' },  // Platinum
+  { border: '#50C878', bg: '#50C878/20', text: 'text-emerald-400' }, // Emerald
+  { border: '#B9F2FF', bg: '#B9F2FF/20', text: 'text-cyan-300' },  // Diamond
+  { border: '#8B00FF', bg: '#8B00FF/20', text: 'text-purple-400' }, // Legendary
+  { border: '#FF1493', bg: '#FF1493/20', text: 'text-pink-500' }   // Mythic
+];
 
 export const TIER_NAMES = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Emerald', 'Diamond', 'Legendary', 'Mythic'];
 
@@ -303,7 +303,7 @@ export const ACHIEVEMENTS = {
         isTiered: false,
         checkUnlock: (stats, skills) => {
             return Object.values(skills).some(s => 
-                (s.earnedBadges && s.earnedBadges.length >= 8)
+                (s.earnedBadges && s.earnedBadges.length >= 7)
             );
         }
     }
