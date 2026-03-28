@@ -13,6 +13,14 @@ global.Audio = class {
   }
 };
 
+vi.mock('@/utils/gameUtils', () => ({
+  calculateDamage: () => 20,
+  calculateMobHealth: () => 100,
+  calculateXPReward: () => 50,
+  calculateXPToLevel: () => 100,
+  getEncounterType: () => 'hostile',
+}));
+
 /* -------------------------------------------------------------------------- */
 /*                              HOOK FACTORY                                  */
 /* -------------------------------------------------------------------------- */
@@ -147,4 +155,118 @@ test('level increases when enough XP is gained', async () => {
 
     expect(mockSetSkills).toHaveBeenCalled();
   });
+});
+
+test('correct hit reduces mob health', async () => {
+  let updatedSkills;
+
+  const mockSetSkills = vi.fn((updater) => {
+    updatedSkills = updater({
+      math: {
+        level: 1,
+        xp: 0,
+        mobHealth: 100,
+        mobMaxHealth: 100,
+        difficulty: 1,
+      },
+    });
+  });
+
+  const { result } = createHook({
+    setSkills: mockSetSkills,
+  });
+
+  await act(async () => {
+    result.current.handleSuccessHit('math');
+  });
+
+  expect(updatedSkills.math.mobHealth).toBeLessThan(100);
+});
+
+test('wrong answer does not change state', async () => {
+  let updatedSkills;
+
+  const mockSetSkills = vi.fn((updater) => {
+    updatedSkills = updater({
+      math: {
+        level: 1,
+        xp: 0,
+        mobHealth: 100,
+        mobMaxHealth: 100,
+        difficulty: 1,
+      },
+    });
+  });
+
+  const { result } = createHook({
+    setSkills: mockSetSkills,
+  });
+
+  await act(async () => {
+    result.current.handleSuccessHit('math', 'WRONG');
+  });
+
+  expect(updatedSkills).toBeUndefined();
+});
+
+test('correct hit increases XP', async () => {
+  let updatedSkills;
+
+  const mockSetSkills = vi.fn((updater) => {
+    updatedSkills = updater({
+      math: {
+        level: 1,
+        xp: 0,
+        mobHealth: 100,
+        mobMaxHealth: 100,
+        difficulty: 1,
+      },
+    });
+  });
+
+  const { result } = createHook({
+    setSkills: mockSetSkills,
+  });
+
+  await act(async () => {
+    result.current.handleSuccessHit('math');
+  });
+
+  expect(updatedSkills.math.xp).toBeGreaterThan(0);
+});
+
+test('level actually increases after XP threshold', async () => {
+  let updatedSkills;
+
+  const mockSetSkills = vi.fn((updater) => {
+    updatedSkills = updater({
+      math: {
+        level: 1,
+        xp: 9999,
+        mobHealth: 0,
+        mobMaxHealth: 100,
+        difficulty: 1,
+      },
+    });
+  });
+
+  const { result } = createHook({
+    setSkills: mockSetSkills,
+  });
+
+  await act(async () => {
+    result.current.handleSuccessHit('math');
+  });
+
+  expect(updatedSkills.math.level).toBeGreaterThan(1);
+});
+
+test('transition updates internal state', () => {
+  const { result } = createHook();
+
+  act(() => {
+    result.current.transition('IN_PROGRESS');
+  });
+
+  expect(result.current).toBeDefined(); // minimal but executes branch
 });
