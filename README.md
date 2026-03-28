@@ -76,6 +76,8 @@ Explore the full technical documentation of the project:
 - 🎤 [Microphone Feature](./project/docs/MICROPHONE_FEATURE.md)
 - ⚡ [Performance Analysis](./project/docs/performance)
 - 🧠 [Architecture Schema](./project/docs/schema)
+- 🛠️ [Technical Decisions](./project/docs/DECISIONS.md)
+- 🧹 [Refactoring Log](./project/docs/REFACTORING_LOG.md)
 
 ---
 
