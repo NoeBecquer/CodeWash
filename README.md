@@ -68,6 +68,17 @@ who come after us.
 
 ---
 
+## Documentation
+
+Explore the full technical documentation of the project:
+
+- 📖 **[Project Documentation](./project/docs)**
+- 🎤 [Microphone Feature](./project/docs/MICROPHONE_FEATURE.md)
+- ⚡ [Performance Analysis](./project/docs/performance)
+- 🧠 [Architecture Schema](./project/docs/schema)
+
+---
+
 ## Features
 
 <code>❯ Bug Reporting</code>
