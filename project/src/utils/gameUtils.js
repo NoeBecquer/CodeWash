@@ -14,9 +14,13 @@ import {
 
 const gameContentCache = new Map();
 
-const pickRandom = (arr, fallback) => {
-  if (!arr || arr.length === 0) return fallback;
-  return arr[Math.floor(Math.random() * arr.length)];
+export const pickRandom = (arr, fallback) => {
+  if (!Array.isArray(arr) || arr.length === 0) {
+    return fallback;
+  }
+
+  const index = Math.floor(Math.random() * arr.length);
+  return arr[index];
 };
 
 const safeArray = (arr) => (Array.isArray(arr) ? arr : []);
@@ -194,27 +198,55 @@ export const calculateXPToLevel = (difficulty, level) => {
 // 📖 READING
 // ============================================================
 
+let lastWord = null;
+
+const pickUnique = (arr, fallback) => {
+  if (!Array.isArray(arr) || arr.length === 0) return fallback;
+
+  let word;
+  let tries = 0;
+
+  do {
+    const index = Math.floor(Math.random() * arr.length);
+    word = arr[index];
+    tries++;
+  } while (word === lastWord && tries < 5);
+
+  lastWord = word;
+  return word;
+};
+
+export const getReadingDifficultyFromLevel = (level) => {
+  return Math.min(7, Math.floor((level - 1) / 10) + 1);
+};
+
 export const getReadingWord = async (difficulty, locale = 'en') => {
   const content = await loadGameContent(locale);
 
   if (difficulty === 7 && content.funnyLongWords?.length) {
-    return pickRandom(content.funnyLongWords, 'HELLO');
+    return pickUnique(content.funnyLongWords, 'HELLO');
   }
 
   const config =
     DIFFICULTY_CONTENT.reading[difficulty] ||
     DIFFICULTY_CONTENT.reading[1];
 
-  const length = String(config?.charLength || 3);
+const length = config?.charLength || 3;
 
-  const words =
-    content.readingWords?.[length] ||
-    content.readingWords?.['3'] ||
-    ['cat'];
+const words =
+  content.readingWords?.[length] ||
+  content.readingWords?.[String(length)] ||
+  content.readingWords?.[3];
 
-  return pickRandom(words, 'cat');
+if (!words) {
+  console.warn('⚠️ FALLBACK TRIGGERED');
+}
+
+return pickUnique(words || ['cat'], 'cat');
 };
 
+// ============================================================
+// 🎮 GAME RENDEREzR
 // ============================================================
 // ➕ MATH
 // ============================================================
@@ -278,6 +310,22 @@ const buildWritingPools = (index = []) => ({
   6: index.filter(w => w.length >= 8),   // ← overlap ensures non-empty
   7: index.filter(w => w.length >= 6),   // ← guaranteed non-empty
 });
+
+export const getChallengeDifficulty = (skill, skillState) => {
+  const currentDiff = skillState.difficulty || 1;
+
+  const baseDiff =
+    getEncounterType(skillState.level) === 'miniboss'
+      ? Math.min(7, currentDiff + 1)
+      : currentDiff;
+
+  if (skill.challengeType === 'reading') {
+    return getReadingDifficultyFromLevel(skillState.level);
+  }
+
+  return baseDiff;
+};
+
 
 export const getWordForDifficulty = async (difficulty, locale = 'en') => {
   const content = await loadGameContent(locale);

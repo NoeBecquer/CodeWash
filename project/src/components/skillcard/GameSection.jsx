@@ -3,6 +3,7 @@ import MemoryGame from './game/MemoryGame';
 import SimonGame from './game/SimonGame';
 import InputGame from './game/InputGame';
 import CleaningGame from './game/CleaningGame';
+import ReadingGame from './game/ReadingGame';
 
 const GameSection = ({
   config,
@@ -42,6 +43,7 @@ const GameSection = ({
   if (config.id === 'patterns') {
     return (
       <SimonGame
+        key={challenge.id}
         axolotlColors={game.axolotlColors}
         litAxolotl={game.litAxolotl}
         handleAxolotlClick={game.handleAxolotlClick}
@@ -68,9 +70,23 @@ if (config.id === 'cleaning') {
   );
 }
 
+if (config.id === 'reading') {
+  return (
+    <ReadingGame
+      key={challenge.id}
+      config={config}
+      challenge={challenge}
+      isListening={isListening}
+      displaySpokenText={displaySpokenText}
+      onMicClick={onMicClick}
+    />
+  );
+} 
+
   // INPUT (default)
   return (
     <InputGame
+      key={challenge.id}
       config={config}
       challenge={challenge}
       mathInput={game.userAnswer}

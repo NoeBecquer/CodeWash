@@ -9,9 +9,14 @@ export const generateChallenge = async (type, diff) => {
 
     if (type === 'reading') { 
         const w = await getReadingWord(diff);
-        return { type, question: w, answer: w }; 
+        return { 
+            id: Date.now() + Math.random(), // ✅ ADD THIS
+            type, 
+            question: w, 
+            answer: w 
+        }; 
     }
-
+    
     if (type === 'writing') {
         const wd = await getWordForDifficulty(diff);
         return { 

@@ -13,7 +13,6 @@ import HPBar from './HPBar';
 import XPBar from './XPBar';
 import GameSection from './GameSection';
 import BattlePortal from './BattlePortal';
-import CleaningGame from './game/CleaningGame';
 
 const PRESTIGE_LEVEL_THRESHOLD = 20;
 const MIN_SPOKEN_TEXT_LENGTH = 2;
@@ -32,7 +31,6 @@ const SkillCard = ({ config, data, themeData, isCenter, isBattling, mobName, mob
     const prevDamageCount = useRef(0);
     const inputRef = useRef(null);
     const readingWordRef = useRef(null);
-    const prevSpokenTextRef = useRef('');
 
     const [showParentalModal, setShowParentalModal] = useState(false);
 
@@ -186,22 +184,29 @@ const SkillCard = ({ config, data, themeData, isCenter, isBattling, mobName, mob
         prevDamageCount.current = damageNumbers.length;
     }, [damageNumbers]);
 
-    // Detect wrong reading answer based on spoken text changes
-    useEffect(() => {
-        if (config.challengeType === 'reading' && isBattling && spokenText && spokenText !== 'Listening...' && spokenText !== 'Mic Off') {
-            if (spokenText !== prevSpokenTextRef.current) {
-                if (challenge?.answer) {
-                    const homophones = HOMOPHONES[challenge.answer];
-                    const isCorrect = normalizeText(spokenText) === normalizeText(challenge.answer) || (homophones && homophones.includes(spokenText));
-                    if (!isCorrect && spokenText.length >= MIN_SPOKEN_TEXT_LENGTH) {
-                        setIsReadingWrong(true);
-                        setTimeout(() => setIsReadingWrong(false), 500);
-                    }
-                }
-                prevSpokenTextRef.current = spokenText;
-            }
-        }
-    }, [spokenText, config.challengeType, isBattling, challenge?.answer]);
+// -----------------------------
+// Reading feedback ONLY (no validation)
+// -----------------------------
+const [isReadingActive, setIsReadingActive] = useState(false);
+
+useEffect(() => {
+  if (
+    config.challengeType !== 'reading' ||
+    !isBattling ||
+    !spokenText ||
+    spokenText === 'Listening...' ||
+    spokenText === 'Mic Off'
+  ) return;
+
+  clearTimeout(readingWordRef.current);
+
+  setIsReadingActive(true);
+
+  readingWordRef.current = setTimeout(() => {
+    setIsReadingActive(false);
+  }, 300);
+
+}, [spokenText, isBattling, config.challengeType]);
 
     // Resolve displayed spoken text (keep internal English values for comparisons)
     const displaySpokenText = spokenText === 'Listening...'
