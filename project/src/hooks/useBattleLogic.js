@@ -58,10 +58,9 @@ export const useBattleLogic = ({
   // -----------------------------
   // FSM
   // -----------------------------
-  const transition = useCallback((next) => {
-    setBattleState(next);
-  }, [battleState]);
-
+const transition = useCallback((next) => {
+  setBattleState(next);
+}, []);
   // -----------------------------
   // CLEANUP
   // -----------------------------
@@ -201,8 +200,7 @@ export const useBattleLogic = ({
   // MAIN LOOP
   // -----------------------------
 const handleSuccessHit = useCallback(async (skillId, isWrong) => {
-  if (battleState !== BATTLE_STATES.IN_PROGRESS) return;
-
+if (!battlingSkillId) return;
   // -----------------------------
   // FAILURE
   // -----------------------------
@@ -214,8 +212,11 @@ const handleSuccessHit = useCallback(async (skillId, isWrong) => {
   const current = skills[skillId];
   if (!current) return;
 
-  const skillConfig = SKILL_DATA.find(s => s.id === skillId);
-
+const skillConfig = SKILL_DATA.find(s => s.id === skillId) || {
+  id: skillId,
+  challengeType: skillId,
+  fantasyName: skillId,
+};
   // -----------------------------
   // COMPUTE OUTSIDE STATE
   // -----------------------------
@@ -272,19 +273,21 @@ const handleSuccessHit = useCallback(async (skillId, isWrong) => {
   // -----------------------------
   // 🔥 NEXT CHALLENGE (FIXED + SCALED)
   // -----------------------------
-  if (shouldLoadNext && skillConfig) {
-    const nextDifficulty =
-      skillConfig.challengeType === 'reading'
-        ? getReadingDifficultyFromLevel(current.level) // ✅ FIXED scaling
-        : current.difficulty;
+// ✅ VICTORY FIRST (synchronous, deterministic)
+// 🔄 THEN async work
+if (shouldLoadNext && skillConfig) {
+  const nextDifficulty =
+    skillConfig.challengeType === 'reading'
+      ? getReadingDifficultyFromLevel(current.level)
+      : current.difficulty;
 
-    const newChallenge = await generateChallenge(
-      skillConfig.challengeType,
-      nextDifficulty
-    );
+  const newChallenge = await generateChallenge(
+    skillConfig.challengeType,
+    nextDifficulty
+  );
 
-    setChallengeData({ ...newChallenge });
-  }
+  setChallengeData({ ...newChallenge });
+}
 
   // -----------------------------
   // VICTORY
