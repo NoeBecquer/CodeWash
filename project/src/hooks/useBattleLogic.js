@@ -59,7 +59,6 @@ export const useBattleLogic = ({
   // FSM
   // -----------------------------
   const transition = useCallback((next) => {
-    console.log(`⚔️ ${battleState} → ${next}`);
     setBattleState(next);
   }, [battleState]);
 
