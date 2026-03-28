@@ -36,6 +36,15 @@ import { useBattleLogic } from './hooks/useBattleLogic';
 import { readStoredProfileStats } from './utils/profileStorage';
 
 import { useVoiceRecognition } from './hooks/useVoiceRecognition';
+import {
+  normalizeSpeech,
+  normalizePhoneticWord
+} from './utils/phoneticUtils';
+
+import { normalizeText } from './utils/gameUtils';
+import { HOMOPHONES } from './constants/gameData';
+import { getReadingDifficultyFromLevel } from './utils/gameUtils';
+
 
 // ---------------------------------------------------------------------------
 // Module-level constants
@@ -103,13 +112,14 @@ const App = () => {
     const [achievementToast, setAchievementToast] = useState(null);
     const [isListening,      setIsListening]       = useState(false);
     const [spokenText,       setSpokenText]        = useState('');
+    const [finalSpokenText,  setFinalSpokenText]   = useState(''); // For displaying the final answer after processing
 
     // ------------------------------------------------------------------- refs
     const challengeDataRef = useRef(null);
     const damageIdRef      = useRef(0);
     const loginTrackedRef  = useRef(false);
     const bgmManager       = useRef(getBGMManager());
-
+    const requestIdRef = useRef(0);
     // ------------------------------------------------------------ persistence
 
     const checkAchievements = useCallback((oldStats, newStats, oldSkills, newSkills) => {
@@ -194,13 +204,60 @@ const App = () => {
     [stats, skills]);
 
     // ------------------------------------------------- voice recognition
-    const { startVoiceListener, stopVoiceRecognition, toggleMicListener } = useVoiceRecognition({
-        challengeDataRef,
-        battlingSkillId,
-        onCorrect: useCallback((id) => handleSuccessHit(id),         [handleSuccessHit]),   // eslint-disable-line
-        onWrong:   useCallback((id) => handleSuccessHit(id, 'WRONG'), [handleSuccessHit]),  // eslint-disable-line
-        setIsListening,
-        setSpokenText,
+
+
+const lastProcessedRef = useRef('');
+
+useEffect(() => {
+  if (!spokenText) return;
+  if (!challengeData) return;
+  if (!battlingSkillId) return;
+
+  // prevent duplicate processing
+  if (spokenText === lastProcessedRef.current) return;
+  lastProcessedRef.current = spokenText;
+
+  const normalizedSpoken = normalizeSpeech(spokenText);
+  const normalizedAnswer = normalizePhoneticWord(
+    normalizeText(challengeData.answer || '')
+  );
+
+  if (!normalizedSpoken || normalizedSpoken.length < 2) return;
+
+  const homophones = HOMOPHONES[challengeData.answer];
+  const normalizedHomophones = homophones?.map(h =>
+    normalizePhoneticWord(normalizeText(h))
+  );
+
+  const isCorrect =
+    normalizedSpoken === normalizedAnswer ||
+    (normalizedHomophones && normalizedHomophones.includes(normalizedSpoken));
+  if (isCorrect) {
+    handleSuccessHit(battlingSkillId);
+  } else {
+    // optional: only trigger wrong on FINAL speech
+    handleSuccessHit(battlingSkillId, 'WRONG');
+  }
+}, [spokenText, challengeData, battlingSkillId, handleSuccessHit]);
+
+useEffect(() => {
+  lastProcessedRef.current = '';
+}, [challengeData]);
+
+    useEffect(() => {
+      challengeDataRef.current = challengeData;
+    }, [challengeData]);
+
+    const {
+      startVoiceListener,
+      stopVoiceRecognition,
+      toggleMicListener
+    } = useVoiceRecognition({
+      challengeDataRef,
+      battlingSkillId,
+      setIsListening,
+      setSpokenText,
+      setFinalSpokenText
     });
 
     // ----------------------------------------- handleSuccessHit helpers
@@ -224,42 +281,89 @@ const App = () => {
     };
 
     // ------------------------------------------------------- battle lifecycle
-const startBattle = async (id) => {
-    if (typeof id !== 'string') {
-        console.error('❌ Invalid id:', id);
-        return;
-    }
+const startBattle = useCallback(async (id) => {
+  // -----------------------------
+  // VALIDATION
+  // -----------------------------
+  if (typeof id !== 'string') {
+    console.error('❌ Invalid id:', id);
+    return;
+  }
 
-    const skill = SKILL_DATA.find(s => s.id === id);
-    const skillState = skills[id];
+  const skill = SKILL_DATA.find(s => s.id === id);
+  const skillState = skills[id];
 
-    if (!skill || !skillState) {
-        console.error('❌ Invalid battle start:', { id, skillState, skillData: skill });
-        return;
-    }
+  if (!skill || !skillState) {
+    console.error('❌ Invalid battle start:', { id, skillState, skill });
+    return;
+  }
 
-    const currentDiff = skillState.difficulty || 1;
+  // -----------------------------
+  // COMPUTE DIFFICULTY
+  // -----------------------------
+const computeDifficulty = () => {
+  const currentDiff = skillState.difficulty || 1;
 
-    const challengeDiff =
-        getEncounterType(skillState.level) === 'miniboss'
-            ? Math.min(7, currentDiff + 1)
-            : currentDiff;
+  const baseDiff =
+    getEncounterType(skillState.level) === 'miniboss'
+      ? Math.min(7, currentDiff + 1)
+      : currentDiff;
 
-    const challenge = await generateChallenge(skill.challengeType, challengeDiff);
+  if (skill.challengeType === 'reading') {
+    return getReadingDifficultyFromLevel(skillState.level);
+  }
 
+  return baseDiff;
+};
+
+const challengeDiff = computeDifficulty();
+  // -----------------------------
+  // ASYNC SAFETY
+  // -----------------------------
+  const requestId = ++requestIdRef.current;
+
+  try {
+    const challenge = await generateChallenge(
+      skill.challengeType,
+      challengeDiff
+    );
+
+    // cancel outdated requests
+    if (requestId !== requestIdRef.current) return;
+
+    // -----------------------------
+    // STATE UPDATE
+    // -----------------------------
     setBattlingSkillId(id);
     setBattleDifficulty(challengeDiff);
-    setChallengeData(challenge);
+    setChallengeData({ ...challenge }); // force new ref
 
-    transition('IN_PROGRESS'); // ✅ THIS IS THE MISSING PIECE
+    transition('IN_PROGRESS');
 
+    // -----------------------------
+    // SIDE EFFECTS
+    // -----------------------------
     playClick();
     startBGM();
 
-    if (skill.challengeType === 'reading' && window.webkitSpeechRecognition) {
-        startVoiceListener(id);
+    if (
+      skill.challengeType === 'reading' &&
+      'webkitSpeechRecognition' in window
+    ) {
+      startVoiceListener(id);
     }
-};
+
+  } catch (err) {
+    console.error('❌ Failed to start battle:', err);
+  }
+
+}, [
+  skills,
+  generateChallenge,
+  transition,
+  startBGM,
+  startVoiceListener
+]);
 
     const handleStartBattle = useCallback((id) => {
       startBattle(id);
