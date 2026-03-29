@@ -188,6 +188,36 @@ Initial structure lacked clear separation.
 
 ---
 
+## 10. Bug Reporting System (Email-Based)
+
+### Context
+The subject required the implementation of a bug reporting feature allowing users to submit detailed reports including context such as logs, screenshots, or game state.
+
+An initial approach using GitHub Issues was considered, but it introduced a major limitation: users needed a GitHub account to submit reports. This created unnecessary friction and reduced accessibility.
+
+### Decision
+We implemented an email-based bug reporting system using the `mailto:` protocol.
+
+The system:
+- generates a structured bug report (description, environment, timestamp)
+- opens the user’s default email client with a pre-filled message
+- allows downloading a full JSON report containing detailed debug data (game state, stats, etc.)
+
+The logic was extracted into a dedicated utility module (`bugReportUtils.js`) to separate business logic from UI.
+
+### Consequences
+- no authentication required → improved accessibility
+- no backend needed → reduced complexity
+- leverages user’s existing email client → reliable and simple
+
+However:
+- requires the user to have an email client configured
+- debug data cannot be automatically attached (handled via downloadable file instead)
+
+This trade-off was considered acceptable given the project scope and constraints.
+
+---
+
 ## Conclusion
 
 The technical decisions made during this project aim to transform the codebase into a maintainable, scalable, and testable application.
