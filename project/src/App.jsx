@@ -488,7 +488,12 @@ const challengeDiff = computeDifficulty();
                 onParentVerified={setParentVerified} currentSkills={skills} />
 
             <ResetModal  isOpen={isResetOpen}    onClose={() => setIsResetOpen(false)}    onConfirm={handleReset} />
-            <BugReportModal isOpen={isBugReportOpen} onClose={() => setIsBugReportOpen(false)} />
+            <BugReportModal 
+                isOpen={isBugReportOpen} 
+                onClose={() => setIsBugReportOpen(false)}
+                stats={stats}
+                skills={skills}
+                />
 
             <TopRightControls
               isFullscreen={isFullscreen}
