@@ -231,6 +231,40 @@ Avoids hardcoding values across the application and simplifies future extensions
 
 ---
 
+## 6.1 Bug Reporting System
+
+Files:
+- `BugReportModal.jsx`
+- `bugReportUtils.js`
+
+Responsibilities:
+
+* Allows users to report issues directly from the application
+* Generates structured reports including:
+  * user description
+  * environment data (user agent, screen size)
+  * timestamp
+  * game state (stats, skills)
+* Opens the user’s email client with a pre-filled report
+* Provides a downloadable JSON file containing full debug data
+
+Architecture:
+
+* UI is handled by `BugReportModal`
+* Business logic is extracted into `bugReportUtils`
+* Clear separation between presentation and logic
+
+Design Choice:
+
+An email-based solution was chosen instead of GitHub integration to:
+* avoid authentication requirements
+* improve accessibility
+* reduce system complexity (no backend)
+
+Constraint:
+
+* Depends on user having an email client configured
+
 ## 7. Design Decisions
 
 ### 7.1 Custom Hooks Instead of External State Libraries
